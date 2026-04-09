@@ -249,4 +249,7 @@ Public Class Competitor
         End If
     End Sub
 
+    Private Sub Competitor_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Dashboard.Show()
+    End Sub
 End Class

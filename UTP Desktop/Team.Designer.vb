@@ -234,7 +234,6 @@ Partial Class Team
         ' 
         ' ButtonExportExcel
         ' 
-        ButtonExportExcel.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         ButtonExportExcel.Location = New Point(600, 157)
         ButtonExportExcel.Name = "ButtonExportExcel"
         ButtonExportExcel.Size = New Size(110, 21)
@@ -244,7 +243,6 @@ Partial Class Team
         ' 
         ' ButtonImportExcel
         ' 
-        ButtonImportExcel.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         ButtonImportExcel.Location = New Point(720, 157)
         ButtonImportExcel.Name = "ButtonImportExcel"
         ButtonImportExcel.Size = New Size(120, 21)

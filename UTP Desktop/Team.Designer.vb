@@ -44,7 +44,7 @@ Partial Class Team
         ColEdit = New DataGridViewButtonColumn()
         ColTeamName = New DataGridViewTextBoxColumn()
         ColInfo = New DataGridViewTextBoxColumn()
-        ColPict = New DataGridViewTextBoxColumn()
+        ColPict = New DataGridViewImageColumn()
         PanelBottom = New Panel()
         TextBoxSearch = New TextBox()
         ButtonSearch = New Button()
@@ -73,7 +73,7 @@ Partial Class Team
         LabelTitle.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTitle.Location = New Point(375, 9)
         LabelTitle.Name = "LabelTitle"
-        LabelTitle.Size = New Size(133, 28)
+        LabelTitle.Size = New Size(107, 21)
         LabelTitle.TabIndex = 0
         LabelTitle.Text = "Team Entries"
         ' 
@@ -83,7 +83,7 @@ Partial Class Team
         LabelTeam.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTeam.Location = New Point(40, 54)
         LabelTeam.Name = "LabelTeam"
-        LabelTeam.Size = New Size(51, 19)
+        LabelTeam.Size = New Size(39, 13)
         LabelTeam.TabIndex = 1
         LabelTeam.Text = "Team*"
         ' 
@@ -91,7 +91,7 @@ Partial Class Team
         ' 
         TextBoxTeam.Location = New Point(100, 51)
         TextBoxTeam.Name = "TextBoxTeam"
-        TextBoxTeam.Size = New Size(200, 23)
+        TextBoxTeam.Size = New Size(200, 20)
         TextBoxTeam.TabIndex = 2
         ' 
         ' LabelTeamInfo
@@ -100,7 +100,7 @@ Partial Class Team
         LabelTeamInfo.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTeamInfo.Location = New Point(23, 76)
         LabelTeamInfo.Name = "LabelTeamInfo"
-        LabelTeamInfo.Size = New Size(75, 19)
+        LabelTeamInfo.Size = New Size(58, 13)
         LabelTeamInfo.TabIndex = 3
         LabelTeamInfo.Text = "Team Info"
         ' 
@@ -108,7 +108,7 @@ Partial Class Team
         ' 
         TextBoxTeamInfo.Location = New Point(100, 73)
         TextBoxTeamInfo.Name = "TextBoxTeamInfo"
-        TextBoxTeamInfo.Size = New Size(200, 23)
+        TextBoxTeamInfo.Size = New Size(200, 20)
         TextBoxTeamInfo.TabIndex = 4
         ' 
         ' CheckBoxUseFlag
@@ -116,7 +116,7 @@ Partial Class Team
         CheckBoxUseFlag.AutoSize = True
         CheckBoxUseFlag.Location = New Point(100, 98)
         CheckBoxUseFlag.Name = "CheckBoxUseFlag"
-        CheckBoxUseFlag.Size = New Size(185, 21)
+        CheckBoxUseFlag.Size = New Size(140, 17)
         CheckBoxUseFlag.TabIndex = 5
         CheckBoxUseFlag.Text = "Use Country Flag (Logo)"
         CheckBoxUseFlag.UseVisualStyleBackColor = True
@@ -126,7 +126,7 @@ Partial Class Team
         LabelCountry.AutoSize = True
         LabelCountry.Location = New Point(43, 121)
         LabelCountry.Name = "LabelCountry"
-        LabelCountry.Size = New Size(57, 17)
+        LabelCountry.Size = New Size(43, 13)
         LabelCountry.TabIndex = 6
         LabelCountry.Text = "Country"
         ' 
@@ -136,7 +136,7 @@ Partial Class Team
         ComboBoxCountry.Items.AddRange(New Object() {"--select--", "Indonesia", "Malaysia", "Singapore"})
         ComboBoxCountry.Location = New Point(100, 118)
         ComboBoxCountry.Name = "ComboBoxCountry"
-        ComboBoxCountry.Size = New Size(121, 25)
+        ComboBoxCountry.Size = New Size(121, 21)
         ComboBoxCountry.TabIndex = 7
         ComboBoxCountry.Text = "--select--"
         ' 
@@ -146,7 +146,7 @@ Partial Class Team
         LabelTeamPic.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTeamPic.Location = New Point(340, 43)
         LabelTeamPic.Name = "LabelTeamPic"
-        LabelTeamPic.Size = New Size(96, 19)
+        LabelTeamPic.Size = New Size(73, 13)
         LabelTeamPic.TabIndex = 8
         LabelTeamPic.Text = "Team Picture"
         ' 
@@ -203,7 +203,7 @@ Partial Class Team
         LabelNew.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelNew.Location = New Point(575, 121)
         LabelNew.Name = "LabelNew"
-        LabelNew.Size = New Size(44, 20)
+        LabelNew.Size = New Size(34, 15)
         LabelNew.TabIndex = 13
         LabelNew.Text = "NEW"
         ' 
@@ -220,7 +220,7 @@ Partial Class Team
         LabelTotalRecords.AutoSize = True
         LabelTotalRecords.Location = New Point(15, 161)
         LabelTotalRecords.Name = "LabelTotalRecords"
-        LabelTotalRecords.Size = New Size(117, 17)
+        LabelTotalRecords.Size = New Size(89, 13)
         LabelTotalRecords.TabIndex = 15
         LabelTotalRecords.Text = "Total Records : 5"
         ' 
@@ -253,6 +253,7 @@ Partial Class Team
         ' DataGridViewTeam
         ' 
         DataGridViewTeam.AllowUserToAddRows = False
+        DataGridViewTeam.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         DataGridViewTeam.BackgroundColor = Color.White
         DataGridViewTeam.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewTeam.Columns.AddRange(New DataGridViewColumn() {ColDelete, ColEdit, ColTeamName, ColInfo, ColPict})
@@ -325,7 +326,7 @@ Partial Class Team
         ' 
         TextBoxSearch.Location = New Point(15, 13)
         TextBoxSearch.Name = "TextBoxSearch"
-        TextBoxSearch.Size = New Size(180, 23)
+        TextBoxSearch.Size = New Size(180, 20)
         TextBoxSearch.TabIndex = 0
         ' 
         ' ButtonSearch
@@ -361,7 +362,7 @@ Partial Class Team
         ' 
         ' Team
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 17.0F)
+        AutoScaleDimensions = New SizeF(6.0F, 13.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.WhiteSmoke
         ClientSize = New Size(860, 653)
@@ -425,7 +426,7 @@ Partial Class Team
     Friend WithEvents ColEdit As System.Windows.Forms.DataGridViewButtonColumn
     Friend WithEvents ColTeamName As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColInfo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColPict As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ColPict As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents PanelBottom As System.Windows.Forms.Panel
     Friend WithEvents TextBoxSearch As System.Windows.Forms.TextBox
     Friend WithEvents ButtonSearch As System.Windows.Forms.Button

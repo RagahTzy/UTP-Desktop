@@ -6,6 +6,12 @@ Public Class Competitor
     Dim selectedCompetitorId As Integer = 0
 
     Private Sub Competitor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        dgvCompetitors.AutoGenerateColumns = False
+        colName.DataPropertyName = "Name"
+        colTeam.DataPropertyName = "TeamName"
+        colTeamInfo.DataPropertyName = "TeamInfo"
+        colCompPict.DataPropertyName = "ProfilePic"
+
         BuatTabelOtomatis()
         LoadDropdownTeam()
         LoadGridTeams()

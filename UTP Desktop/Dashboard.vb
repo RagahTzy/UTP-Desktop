@@ -14,4 +14,11 @@
         Application.Exit()
     End Sub
 
+    Private Sub pnlMain_Paint(sender As Object, e As PaintEventArgs) Handles pnlMain.Paint
+
+    End Sub
+
+    Private Sub lblTatamiID_Click(sender As Object, e As EventArgs) Handles lblTatamiID.Click
+
+    End Sub
 End Class

@@ -40,12 +40,10 @@ Partial Class Competitor
     Friend WithEvents dgvTeams As DataGridView
     Friend WithEvents colTeamMain As DataGridViewTextBoxColumn
     Friend WithEvents dgvCompetitors As DataGridView
-    Friend WithEvents colBlank1 As DataGridViewTextBoxColumn
-    Friend WithEvents colBlank2 As DataGridViewTextBoxColumn
     Friend WithEvents colName As DataGridViewTextBoxColumn
     Friend WithEvents colTeam As DataGridViewTextBoxColumn
     Friend WithEvents colTeamInfo As DataGridViewTextBoxColumn
-    Friend WithEvents colCompPict As DataGridViewTextBoxColumn
+    Friend WithEvents colCompPict As DataGridViewImageColumn
     Friend WithEvents lblTotalRecords As Label
     Friend WithEvents btnDeleteAll As Button
 
@@ -75,12 +73,10 @@ Partial Class Competitor
         dgvTeams = New DataGridView()
         colTeamMain = New DataGridViewTextBoxColumn()
         dgvCompetitors = New DataGridView()
-        colBlank1 = New DataGridViewTextBoxColumn()
-        colBlank2 = New DataGridViewTextBoxColumn()
         colName = New DataGridViewTextBoxColumn()
         colTeam = New DataGridViewTextBoxColumn()
         colTeamInfo = New DataGridViewTextBoxColumn()
-        colCompPict = New DataGridViewTextBoxColumn()
+        colCompPict = New DataGridViewImageColumn()
         lblTotalRecords = New Label()
         btnDeleteAll = New Button()
         CType(pbProfilePic, ComponentModel.ISupportInitialize).BeginInit()
@@ -293,24 +289,12 @@ Partial Class Competitor
         dgvCompetitors.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
         dgvCompetitors.BackgroundColor = Color.White
         dgvCompetitors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvCompetitors.Columns.AddRange(New DataGridViewColumn() {colBlank1, colBlank2, colName, colTeam, colTeamInfo, colCompPict})
+        dgvCompetitors.Columns.AddRange(New DataGridViewColumn() {colName, colTeam, colTeamInfo, colCompPict})
         dgvCompetitors.Location = New Point(180, 240)
         dgvCompetitors.Name = "dgvCompetitors"
         dgvCompetitors.RowHeadersVisible = False
         dgvCompetitors.Size = New Size(620, 310)
         dgvCompetitors.TabIndex = 2
-        ' 
-        ' colBlank1
-        ' 
-        colBlank1.HeaderText = ""
-        colBlank1.Name = "colBlank1"
-        colBlank1.Width = 30
-        ' 
-        ' colBlank2
-        ' 
-        colBlank2.HeaderText = ""
-        colBlank2.Name = "colBlank2"
-        colBlank2.Width = 30
         ' 
         ' colName
         ' 
@@ -322,7 +306,7 @@ Partial Class Competitor
         ' 
         colTeam.HeaderText = "Team"
         colTeam.Name = "colTeam"
-        colTeam.Width = 120
+        colTeam.Width = 150
         ' 
         ' colTeamInfo
         ' 
@@ -332,9 +316,9 @@ Partial Class Competitor
         ' 
         ' colCompPict
         ' 
+        colCompPict.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         colCompPict.HeaderText = "Comp. Pict"
         colCompPict.Name = "colCompPict"
-        colCompPict.Width = 120
         ' 
         ' lblTotalRecords
         ' 

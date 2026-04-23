@@ -6,6 +6,12 @@ Public Class Team
     Dim selectedTeamId As Integer = 0
 
     Private Sub Team_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DataGridViewTeam.AutoGenerateColumns = False
+
+        ColTeamName.DataPropertyName = "TeamName"
+        ColInfo.DataPropertyName = "TeamInfo"
+        ColPict.DataPropertyName = "Pict"
+
         BuatTabelOtomatis()
         LoadDataTeam()
     End Sub

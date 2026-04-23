@@ -44,7 +44,7 @@ Partial Class Team
         ColEdit = New DataGridViewButtonColumn()
         ColTeamName = New DataGridViewTextBoxColumn()
         ColInfo = New DataGridViewTextBoxColumn()
-        ColPict = New DataGridViewTextBoxColumn()
+        ColPict = New DataGridViewImageColumn()
         PanelBottom = New Panel()
         TextBoxSearch = New TextBox()
         ButtonSearch = New Button()
@@ -426,7 +426,7 @@ Partial Class Team
     Friend WithEvents ColEdit As System.Windows.Forms.DataGridViewButtonColumn
     Friend WithEvents ColTeamName As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColInfo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ColPict As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ColPict As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents PanelBottom As System.Windows.Forms.Panel
     Friend WithEvents TextBoxSearch As System.Windows.Forms.TextBox
     Friend WithEvents ButtonSearch As System.Windows.Forms.Button

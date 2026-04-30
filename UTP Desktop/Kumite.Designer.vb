@@ -4,7 +4,6 @@
 Partial Class Kumite
     Inherits System.Windows.Forms.Form
 
-    'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -16,7 +15,6 @@ Partial Class Kumite
         End Try
     End Sub
 
-    'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
@@ -307,7 +305,6 @@ Partial Class Kumite
         BtnSwap.UseVisualStyleBackColor = False
         ' 
         ' BtnLoadNextMatch
-        ' 
         BtnLoadNextMatch.BackColor = Color.Gold
         BtnLoadNextMatch.FlatStyle = FlatStyle.Flat
         BtnLoadNextMatch.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold)

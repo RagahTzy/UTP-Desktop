@@ -1,4 +1,6 @@
 ﻿Public Class Kumite
+
+    ' ==================== Scoring Buttons AKA ====================
     Private Sub BtnIpponAKA_Click(sender As Object, e As EventArgs) Handles BtnIpponAKA.Click
 
     End Sub

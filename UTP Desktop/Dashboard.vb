@@ -20,15 +20,16 @@
 
     ' ==================== Form Closed ====================
     Private Sub Dashboard_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        ' Perintah ini yang akan menghentikan seluruh aplikasi secara total
         Application.Exit()
     End Sub
 
     Private Sub pnlMain_Paint(sender As Object, e As PaintEventArgs) Handles pnlMain.Paint
-
+        ' Biarkan kosong jika tidak ada custom paint
     End Sub
 
     Private Sub lblTatamiID_Click(sender As Object, e As EventArgs) Handles lblTatamiID.Click
-
+        ' Biarkan kosong jika tidak ada aksi saat diklik
     End Sub
 
 End Class

@@ -60,5 +60,15 @@
         frm.ShowDialog()
     End Sub
 
+    Private Sub BtnHantei_Click(sender As Object, e As EventArgs) Handles BtnHantei.Click
+        Dim frmDecision As New ManualDecision()
+        frmDecision.ShowDialog()
+    End Sub
+
+    ' ==================== Form Closed ====================
+    ' Mengembalikan user ke form Dashboard ketika form Kumite ditutup
+    Private Sub Kumite_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Dashboard.Show()
+    End Sub
 
 End Class

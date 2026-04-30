@@ -1,5 +1,14 @@
 ﻿Public Class FrmScoreboardSetting
-    Private Sub tabKumite_Click(sender As Object, e As EventArgs) Handles tabKumite.Click
+
+    ' Sub New ini adalah fungsi yang PERTAMA KALI dipanggil saat Play (F5) ditekan
+    Public Sub New()
+
+        ' 1. Ini untuk membangun bingkai jendelanya yang kosong
+        InitializeComponent()
+
+        ' 2. INI KUNCINYA: Memanggil fungsi untuk mengisi tombol, warna, dan tab!
+        SetupAdditionalUI()
 
     End Sub
+
 End Class

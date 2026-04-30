@@ -2,74 +2,102 @@
 
 Public Class ListOfCompetitor
 
-    Dim connString As String = "Data Source=database.db;Version=3;"
+    ' Samakan dengan Competitor.vb dan Team.vb
+    Dim connString As String = "Data Source=DB_Karate.sqlite;Version=3;"
 
     Private Sub ListOfCompetitor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadTeam()
+        LoadCompetitor("")
     End Sub
 
     ' LOAD TEAM KE LISTBOX
     Private Sub LoadTeam()
         Using conn As New SQLiteConnection(connString)
-            conn.Open()
-
-            Dim query As String = "SELECT nama_team FROM team"
-            Using cmd As New SQLiteCommand(query, conn)
-                Using reader As SQLiteDataReader = cmd.ExecuteReader()
-                    ListBoxTeam.Items.Clear()
-
-                    While reader.Read()
-                        ListBoxTeam.Items.Add(reader("nama_team").ToString())
-                    End While
+            Try
+                conn.Open()
+                Dim query As String = "SELECT TeamName FROM Team"
+                Using cmd As New SQLiteCommand(query, conn)
+                    Using reader As SQLiteDataReader = cmd.ExecuteReader()
+                        ListBoxTeam.Items.Clear()
+                        While reader.Read()
+                            ListBoxTeam.Items.Add(reader("TeamName").ToString())
+                        End While
+                    End Using
                 End Using
-            End Using
+            Catch ex As Exception
+                MessageBox.Show("Gagal load team: " & ex.Message)
+            End Try
         End Using
     End Sub
 
     ' KLIK TEAM → LOAD DATA GRID
     Private Sub ListBoxTeam_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBoxTeam.SelectedIndexChanged
         If ListBoxTeam.SelectedItem IsNot Nothing Then
-            LoadCompetitor(ListBoxTeam.SelectedItem.ToString())
+            LoadCompetitor("", ListBoxTeam.SelectedItem.ToString())
         End If
     End Sub
 
-    Private Sub LoadCompetitor(team As String)
-        Using conn As New SQLiteConnection(connString)
-            conn.Open()
+    ' LOAD COMPETITOR
+    Private Sub LoadCompetitor(Optional keyword As String = "", Optional filterTeam As String = "")
+        Dim query As String = "SELECT ID, Name, TeamName, TeamInfo FROM Competitor WHERE (Name LIKE @key OR TeamName LIKE @key)"
+        If Not String.IsNullOrEmpty(filterTeam) Then
+            query &= " AND TeamName = @filterTeam"
+        End If
 
-            Dim query As String = "SELECT name, team, team_info FROM competitor WHERE team = @team"
-            Using cmd As New SQLiteCommand(query, conn)
-                cmd.Parameters.AddWithValue("@team", team)
+        Using conn As New SQLiteConnection(connString)
+            Try
+                conn.Open()
+                Dim cmd As New SQLiteCommand(query, conn)
+                cmd.Parameters.AddWithValue("@key", "%" & keyword & "%")
+                If Not String.IsNullOrEmpty(filterTeam) Then
+                    cmd.Parameters.AddWithValue("@filterTeam", filterTeam)
+                End If
 
                 Dim adapter As New SQLiteDataAdapter(cmd)
                 Dim dt As New DataTable()
                 adapter.Fill(dt)
-
                 DataGridView1.DataSource = dt
-            End Using
+
+                ' Sembunyikan kolom ID
+                If DataGridView1.Columns.Contains("ID") Then
+                    DataGridView1.Columns("ID").Visible = False
+                End If
+            Catch ex As Exception
+                MessageBox.Show("Gagal load competitor: " & ex.Message)
+            End Try
         End Using
     End Sub
-    Private Sub InitDatabase()
-        Using conn As New SQLiteConnection(connString)
-            conn.Open()
 
-            Dim sql As String = "
-        CREATE TABLE IF NOT EXISTS team (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nama_team TEXT
-        );
+    ' SEARCH
+    Private Sub BtnSearch_Click(sender As Object, e As EventArgs) Handles BtnSearch.Click
+        LoadCompetitor(TxtSearch.Text)
+    End Sub
 
-        CREATE TABLE IF NOT EXISTS competitor (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            team TEXT,
-            team_info TEXT
-        );"
+    Private Sub BtnClearSearch_Click(sender As Object, e As EventArgs) Handles BtnClearSearch.Click
+        TxtSearch.Clear()
+        ListBoxTeam.ClearSelected()
+        LoadCompetitor("")
+    End Sub
 
-            Using cmd As New SQLiteCommand(sql, conn)
-                cmd.ExecuteNonQuery()
-            End Using
-        End Using
+    ' CLEAR FILTER TEAM
+    Private Sub BtnClear_Click(sender As Object, e As EventArgs) Handles BtnClear.Click
+        ListBoxTeam.ClearSelected()
+        TxtSearch.Clear()
+        LoadCompetitor("")
+    End Sub
+
+    ' CLOSE
+    Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
+        Me.Close()
+    End Sub
+
+    ' SELECT - tutup form dan kembalikan data yang dipilih
+    Private Sub BtnSelect_Click(sender As Object, e As EventArgs) Handles BtnSelect.Click
+        If DataGridView1.SelectedRows.Count > 0 Then
+            Me.Close()
+        Else
+            MessageBox.Show("Pilih kompetitor terlebih dahulu.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 
 End Class

@@ -45,6 +45,7 @@ Public Class Team
                     adapter.Fill(dt)
                     DataGridViewTeam.DataSource = dt
 
+                    ' Ini sebenarnya tidak diperlukan lagi, tapi dibiarkan untuk keamanan
                     If DataGridViewTeam.Columns.Contains("ID") Then DataGridViewTeam.Columns("ID").Visible = False
 
                     LabelTotalRecords.Text = "Total Records : " & dt.Rows.Count.ToString()
@@ -128,9 +129,15 @@ Public Class Team
     Private Sub DataGridViewTeam_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridViewTeam.CellContentClick
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = DataGridViewTeam.Rows(e.RowIndex)
-            selectedTeamId = Convert.ToInt32(row.Cells("ID").Value)
 
-            If e.ColumnIndex = DataGridViewTeam.Columns("ColDelete").Index Then
+            ' CARA BENAR MENGAMBIL ID: Ambil dari DataRowView (sumber datanya), bukan dari row grid-nya.
+            Dim drv As DataRowView = CType(row.DataBoundItem, DataRowView)
+            selectedTeamId = Convert.ToInt32(drv("ID"))
+
+            Dim namaKolom As String = DataGridViewTeam.Columns(e.ColumnIndex).Name
+
+            ' Mengecek aksi berdasarkan nama kolom (Lebih Aman)
+            If namaKolom = "ColDelete" Then
                 If MessageBox.Show("Yakin hapus tim ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                     Using conn As New SQLiteConnection(connString)
                         Using cmd As New SQLiteCommand("DELETE FROM Team WHERE ID=@id", conn)
@@ -142,13 +149,15 @@ Public Class Team
                     LoadDataTeam()
                 End If
 
-            ElseIf e.ColumnIndex = DataGridViewTeam.Columns("ColEdit").Index Then
+            ElseIf namaKolom = "ColEdit" Then
                 LabelNew.Text = "EDIT"
-                TextBoxTeam.Text = row.Cells("TeamName").Value.ToString()
-                TextBoxTeamInfo.Text = row.Cells("TeamInfo").Value.ToString()
 
-                If Not IsDBNull(row.Cells("Pict").Value) Then
-                    Dim imgBytes As Byte() = CType(row.Cells("Pict").Value, Byte())
+                ' Mengambil data juga menggunakan DataRowView agar pasti terbaca
+                TextBoxTeam.Text = drv("TeamName").ToString()
+                TextBoxTeamInfo.Text = drv("TeamInfo").ToString()
+
+                If Not IsDBNull(drv("Pict")) AndAlso drv("Pict") IsNot Nothing Then
+                    Dim imgBytes As Byte() = CType(drv("Pict"), Byte())
                     Using ms As New MemoryStream(imgBytes)
                         PictureBoxTeam.Image = Image.FromStream(ms)
                         PictureBoxTeam.SizeMode = PictureBoxSizeMode.Zoom
@@ -188,9 +197,11 @@ Public Class Team
             sb.AppendLine("ID,TeamName,TeamInfo")
             For Each row As DataGridViewRow In DataGridViewTeam.Rows
                 If Not row.IsNewRow Then
-                    Dim id = row.Cells("ID").Value.ToString()
-                    Dim nama = row.Cells("TeamName").Value?.ToString().Replace(",", " ")
-                    Dim info = row.Cells("TeamInfo").Value?.ToString().Replace(",", " ")
+                    ' Gunakan DataBoundItem agar nilainya pasti valid saat diexport
+                    Dim drv As DataRowView = CType(row.DataBoundItem, DataRowView)
+                    Dim id = drv("ID").ToString()
+                    Dim nama = drv("TeamName")?.ToString().Replace(",", " ")
+                    Dim info = drv("TeamInfo")?.ToString().Replace(",", " ")
                     sb.AppendLine($"{id},{nama},{info}")
                 End If
             Next

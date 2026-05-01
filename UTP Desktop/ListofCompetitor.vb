@@ -5,6 +5,12 @@ Public Class ListOfCompetitor
     ' Samakan dengan Competitor.vb dan Team.vb
     Dim connString As String = "Data Source=DB_Karate.sqlite;Version=3;"
 
+    ' Property untuk menyimpan data yang dipilih
+    Public SelectedCompetitorId As Integer = 0
+    Public SelectedCompetitorName As String = ""
+    Public SelectedTeamName As String = ""
+    Public SelectedTeamInfo As String = ""
+
     Private Sub ListOfCompetitor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadTeam()
         LoadCompetitor("")
@@ -94,6 +100,14 @@ Public Class ListOfCompetitor
     ' SELECT - tutup form dan kembalikan data yang dipilih
     Private Sub BtnSelect_Click(sender As Object, e As EventArgs) Handles BtnSelect.Click
         If DataGridView1.SelectedRows.Count > 0 Then
+            Dim row As DataGridViewRow = DataGridView1.SelectedRows(0)
+            Dim drv As DataRowView = CType(row.DataBoundItem, DataRowView)
+            
+            SelectedCompetitorId = Convert.ToInt32(drv("ID"))
+            SelectedCompetitorName = drv("Name").ToString()
+            SelectedTeamName = If(drv("TeamName") IsNot Nothing, drv("TeamName").ToString(), "")
+            SelectedTeamInfo = If(drv("TeamInfo") IsNot Nothing, drv("TeamInfo").ToString(), "")
+            
             Me.Close()
         Else
             MessageBox.Show("Pilih kompetitor terlebih dahulu.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)

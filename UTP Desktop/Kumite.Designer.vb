@@ -85,6 +85,7 @@ Partial Class Kumite
         BtnAoResetScore = New Button()
         BtnAoSenshu = New Button()
         PanelAKA = New Panel()
+        Button1 = New Button()
         AKAVR = New Button()
         LblAkaTitle = New Label()
         PicAkaProfile = New PictureBox()
@@ -170,7 +171,6 @@ Partial Class Kumite
         BtnStartScoreboard = New Button()
         BtnStartTimer = New Button()
         BtnResetTimer = New Button()
-        Button1 = New Button()
         PanelHeader.SuspendLayout()
         PanelFooter.SuspendLayout()
         PanelMainCenter.SuspendLayout()
@@ -775,9 +775,9 @@ Partial Class Kumite
         ' LblAoMainScore
         ' 
         LblAoMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
-        LblAoMainScore.Location = New Point(640, 30)
+        LblAoMainScore.Location = New Point(630, 30)
         LblAoMainScore.Name = "LblAoMainScore"
-        LblAoMainScore.Size = New Size(60, 60)
+        LblAoMainScore.Size = New Size(116, 60)
         LblAoMainScore.TabIndex = 10
         LblAoMainScore.Text = "0"
         LblAoMainScore.TextAlign = ContentAlignment.MiddleCenter
@@ -867,6 +867,14 @@ Partial Class Kumite
         PanelAKA.Name = "PanelAKA"
         PanelAKA.Size = New Size(751, 260)
         PanelAKA.TabIndex = 0
+        ' 
+        ' Button1
+        ' 
+        Button1.Location = New Point(10, 129)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(70, 30)
+        Button1.TabIndex = 17
+        Button1.Text = "Kiken"
         ' 
         ' AKAVR
         ' 
@@ -1161,9 +1169,9 @@ Partial Class Kumite
         ' LblAkaMainScore
         ' 
         LblAkaMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
-        LblAkaMainScore.Location = New Point(640, 30)
+        LblAkaMainScore.Location = New Point(626, 33)
         LblAkaMainScore.Name = "LblAkaMainScore"
-        LblAkaMainScore.Size = New Size(60, 60)
+        LblAkaMainScore.Size = New Size(109, 60)
         LblAkaMainScore.TabIndex = 11
         LblAkaMainScore.Text = "0"
         LblAkaMainScore.TextAlign = ContentAlignment.MiddleCenter
@@ -1682,14 +1690,6 @@ Partial Class Kumite
         BtnResetTimer.TabIndex = 10
         BtnResetTimer.Text = "Reset Timer"
         BtnResetTimer.UseVisualStyleBackColor = True
-        ' 
-        ' Button1
-        ' 
-        Button1.Location = New Point(10, 129)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(70, 30)
-        Button1.TabIndex = 17
-        Button1.Text = "Kiken"
         ' 
         ' Kumite
         ' 

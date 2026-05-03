@@ -135,7 +135,7 @@ Partial Class Shortcut
         btnRemove.Name = "btnRemove"
         btnRemove.Size = New Size(170, 35)
         btnRemove.TabIndex = 3
-        btnRemove.Text = "Romove  🚫"
+        btnRemove.Text = "Remove  🚫" ' TYPO DIPERBAIKI DI SINI
         btnRemove.UseVisualStyleBackColor = True
         ' 
         ' btnSave
@@ -177,15 +177,17 @@ Partial Class Shortcut
         ' lblCurrentAction
         ' 
         lblCurrentAction.AutoSize = True
+        lblCurrentAction.Font = New Font("Segoe UI", 9.0F, FontStyle.Regular)
         lblCurrentAction.Location = New Point(15, 440)
         lblCurrentAction.Name = "lblCurrentAction"
         lblCurrentAction.Size = New Size(103, 15)
         lblCurrentAction.TabIndex = 7
-        lblCurrentAction.Text = "Current Action :  –"
+        lblCurrentAction.Text = "Current Action :  -"
         ' 
         ' txtCurrentAction
         ' 
         txtCurrentAction.BackColor = Color.White
+        txtCurrentAction.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         txtCurrentAction.Location = New Point(15, 465)
         txtCurrentAction.Multiline = True
         txtCurrentAction.Name = "txtCurrentAction"
@@ -193,7 +195,7 @@ Partial Class Shortcut
         txtCurrentAction.Size = New Size(670, 60)
         txtCurrentAction.TabIndex = 8
         ' 
-        ' FormKeyboardShortcut
+        ' Shortcut
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
@@ -210,7 +212,7 @@ Partial Class Shortcut
         Controls.Add(pnlStatus)
         FormBorderStyle = FormBorderStyle.FixedSingle
         MaximizeBox = False
-        Name = "FormKeyboardShortcut"
+        Name = "Shortcut" ' NAMA FORM DISAMAKAN DENGAN NAMA CLASS
         StartPosition = FormStartPosition.CenterScreen
         Text = "Keyboard Shortcut Setup"
         pnlStatus.ResumeLayout(False)
@@ -220,7 +222,6 @@ Partial Class Shortcut
         PerformLayout()
     End Sub
 
-    ' Deklarasi Friend tetap sama di bawah...
     Friend WithEvents pnlStatus As Panel
     Friend WithEvents lblCurrentStatus As Label
     Friend WithEvents lblStatusValue As Label

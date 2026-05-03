@@ -1,6 +1,7 @@
 Public Class Shortcut
     ' Variabel untuk menandai kita sedang merekam tombol keyboard
     Private isRecording As Boolean = False
+    Private isShortcutActive As Boolean = True ' Status ON/OFF
 
     Private Sub Shortcut_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.DoubleBuffered = True
@@ -21,6 +22,9 @@ Public Class Shortcut
                 Exit Sub
             End If
 
+            ' Mencegah bunyi "ding" Windows dan mencegah tombol memicu kontrol lain (seperti spasi)
+            e.SuppressKeyPress = True
+
             ' Susun nama shortcut secara otomatis
             Dim strShortcut As String = ""
             If e.Control Then strShortcut &= "Control+"
@@ -39,14 +43,12 @@ Public Class Shortcut
                 btnChange.Enabled = True
                 btnSave.Enabled = True
                 btnSave.ForeColor = Color.Black
+                lvShortcuts.Enabled = True ' Aktifkan tabel kembali
             End If
-
-            ' Hentikan fungsi tombol asli windows agar tidak konflik
-            e.Handled = True
         End If
     End Sub
 
-    ' --- PERBAIKAN TOMBOL CHANGE ---
+    ' --- LOGIKA TOMBOL CHANGE ---
     Private Sub btnChange_Click(sender As Object, e As EventArgs) Handles btnChange.Click
         If lvShortcuts.SelectedItems.Count > 0 Then
             ' Aktifkan mode mendengarkan keyboard
@@ -54,12 +56,71 @@ Public Class Shortcut
             txtCurrentAction.Text = ">>> SEKARANG TEKAN TOMBOL DI KEYBOARD ANDA... <<<"
             txtCurrentAction.ForeColor = Color.Red
             btnChange.Enabled = False
+
+            ' Trik: Kunci tabel sementara agar user tidak klik baris lain saat merekam
+            lvShortcuts.Enabled = False
+
+            ' Trik: Lepaskan fokus dari tombol agar KeyDown form bekerja sempurna
+            Me.ActiveControl = Nothing
         Else
             MessageBox.Show("Pilih salah satu item di tabel terlebih dahulu!", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
 
-    ' --- SISA KODE (ISI DATA & DRAW ITEM) TETAP SAMA ---
+    ' --- LOGIKA TOMBOL REMOVE ---
+    Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
+        If lvShortcuts.SelectedItems.Count > 0 Then
+            lvShortcuts.SelectedItems(0).SubItems(1).Text = "None"
+            btnSave.Enabled = True
+            btnSave.ForeColor = Color.Black
+        Else
+            MessageBox.Show("Pilih action yang ingin dihapus shortcut-nya!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' --- LOGIKA TOMBOL SAVE ---
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        MessageBox.Show("Pengaturan shortcut berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        btnSave.Enabled = False
+        btnSave.ForeColor = Color.DarkGray
+    End Sub
+
+    ' --- LOGIKA TOMBOL TOGGLE ON/OFF (DENGAN ANIMASI SWITCH) ---
+    Private Sub btnToggle_Click(sender As Object, e As EventArgs) Handles btnToggle.Click
+        isShortcutActive = Not isShortcutActive
+
+        If isShortcutActive Then
+            ' --- Tampilan Saat ON ---
+            lblStatusValue.Text = "ON"
+            lblStatusValue.ForeColor = Color.FromArgb(0, 192, 239) ' Warna Cyan
+            lblTurnOff.Text = "Turn off"
+
+            ' Animasi Switch ke Kanan (Biru)
+            btnToggle.BackColor = Color.FromArgb(0, 120, 215)
+            btnToggle.TextAlign = ContentAlignment.MiddleRight
+        Else
+            ' --- Tampilan Saat OFF ---
+            lblStatusValue.Text = "OFF"
+            lblStatusValue.ForeColor = Color.Gray
+            lblTurnOff.Text = "Turn on"
+
+            ' Animasi Switch ke Kiri (Abu-abu)
+            btnToggle.BackColor = Color.DarkGray
+            btnToggle.TextAlign = ContentAlignment.MiddleLeft
+        End If
+    End Sub
+
+    ' --- LOGIKA TOMBOL RESET ---
+    Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
+        Dim confirm = MessageBox.Show("Yakin ingin mereset ke default?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If confirm = DialogResult.Yes Then
+            isiDataShortcut()
+            btnSave.Enabled = True
+            btnSave.ForeColor = Color.Black
+        End If
+    End Sub
+
+    ' --- LOGIKA TABEL & TAMPILAN (TIDAK ADA YANG DIUBAH) ---
     Private Sub isiDataShortcut()
         If lvShortcuts Is Nothing Then Exit Sub
         lvShortcuts.Items.Clear()
@@ -116,11 +177,7 @@ Public Class Shortcut
             Dim actionName As String = lvShortcuts.SelectedItems(0).Text
             lblCurrentAction.Text = "Current Action : " & actionName
             txtCurrentAction.Text = actionName
+            txtCurrentAction.ForeColor = Color.Black
         End If
-    End Sub
-
-    Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
-        isiDataShortcut()
-        btnSave.Enabled = False
     End Sub
 End Class

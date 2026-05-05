@@ -32,11 +32,61 @@ Partial Class Kumite
         BtnSwap = New Button()
         BtnLoadNextMatch = New Button()
         PanelFooter = New Panel()
+        BtnSettings = New Button()
+        BtnLogActivity = New Button()
+        BtnShortcut = New Button()
+        BtnDisplay = New Button()
+        BtnVolume = New Button()
+        BtnResetHantei = New Button()
+        BtnHantei = New Button()
+        BtnHikiwake = New Button()
         BtnResetMatch = New Button()
         BtnSaveMatch = New Button()
         PanelMainCenter = New Panel()
         PanelAO = New Panel()
+        AOVR = New Button()
+        LblAoTitle = New Label()
+        PicAoProfile = New PictureBox()
+        PnlAoInfo = New Panel()
+        LblAoNameTitle = New Label()
+        TxtAoNameMain = New TextBox()
+        BtnAoUserIcon1 = New Button()
+        LblAoTeamTitle = New Label()
+        TxtAoTeam = New TextBox()
+        BtnAoSearch2 = New Button()
+        LblAoTeamInfoTitle = New Label()
+        TxtAoTeamInfo = New TextBox()
+        PicAoTeamLogo = New PictureBox()
+        BtnAoKiken = New Button()
+        BtnAoShikkaku = New Button()
+        BtnAoKnockedOut = New Button()
+        PnlAoPenalty = New Panel()
+        LabelAoPenaltyP = New Label()
+        BtnAo1C = New Button()
+        BtnAo2C = New Button()
+        BtnAo3C = New Button()
+        BtnAoHC = New Button()
+        BtnAoH = New Button()
+        PnlAoScoreSummary = New Panel()
+        LblAoScoreSummaryTitle = New Label()
+        LblAoIpponCount = New Label()
+        LblAoWazaariCount = New Label()
+        LblAoYukoCount = New Label()
+        BtnAoVR = New Button()
+        DgvAoHistory = New DataGridView()
+        ColNoAo = New DataGridViewTextBoxColumn()
+        ColTimerAo = New DataGridViewTextBoxColumn()
+        ColTypeAo = New DataGridViewTextBoxColumn()
+        LblAoMainScore = New Label()
+        BtnAoIppon = New Button()
+        BtnAoWazaari = New Button()
+        BtnAoYuko = New Button()
+        BtnAoShowWinner = New Button()
+        BtnAoResetScore = New Button()
+        BtnAoSenshu = New Button()
         PanelAKA = New Panel()
+        Button1 = New Button()
+        AKAVR = New Button()
         LblAkaTitle = New Label()
         PicAkaProfile = New PictureBox()
         PnlAkaInfo = New Panel()
@@ -48,8 +98,6 @@ Partial Class Kumite
         BtnAkaSearch2 = New Button()
         LblAkaTeamInfoTitle = New Label()
         TxtAkaTeamInfo = New TextBox()
-        BtnAkaUpdateInfo = New Button()
-        BtnAkaSwap = New Button()
         PicAkaTeamLogo = New PictureBox()
         BtnAkaKiken = New Button()
         BtnAkaShikkaku = New Button()
@@ -123,69 +171,16 @@ Partial Class Kumite
         BtnStartScoreboard = New Button()
         BtnStartTimer = New Button()
         BtnResetTimer = New Button()
-        AKAVR = New Button()
-        ' --- Deklarasi Komponen AO ---
-        LblAoTitle = New Label()
-        PicAoProfile = New PictureBox()
-        PnlAoInfo = New Panel()
-        LblAoNameTitle = New Label()
-        TxtAoNameMain = New TextBox()
-        BtnAoUserIcon1 = New Button()
-        LblAoTeamTitle = New Label()
-        TxtAoTeam = New TextBox()
-        BtnAoSearch2 = New Button()
-        LblAoTeamInfoTitle = New Label()
-        TxtAoTeamInfo = New TextBox()
-        BtnAoUpdateInfo = New Button()
-        BtnAoSwap = New Button()
-        PicAoTeamLogo = New PictureBox()
-
-        BtnAoKiken = New Button()
-        BtnAoShikkaku = New Button()
-        BtnAoKnockedOut = New Button()
-
-        PnlAoPenalty = New Panel()
-        LabelAoPenaltyP = New Label()
-        BtnAo1C = New Button()
-        BtnAo2C = New Button()
-        BtnAo3C = New Button()
-        BtnAoHC = New Button()
-        BtnAoH = New Button()
-
-        PnlAoScoreSummary = New Panel()
-        LblAoScoreSummaryTitle = New Label()
-        LblAoIpponCount = New Label()
-        LblAoWazaariCount = New Label()
-        LblAoYukoCount = New Label()
-
-        BtnAoVR = New Button()
-        AOVR = New Button() ' Button status VR seperti AKAVR
-
-        DgvAoHistory = New DataGridView()
-        ColNoAo = New DataGridViewTextBoxColumn()
-        ColTimerAo = New DataGridViewTextBoxColumn()
-        ColTypeAo = New DataGridViewTextBoxColumn()
-
-        LblAoMainScore = New Label()
-        BtnAoIppon = New Button()
-        BtnAoWazaari = New Button()
-        BtnAoYuko = New Button()
-
-        BtnAoShowWinner = New Button()
-        BtnAoResetScore = New Button()
-        BtnAoSenshu = New Button()
-        ' --- Deklarasi Komponen Footer ---
-        BtnSettings = New Button()
-        BtnLogActivity = New Button()
-        BtnShortcut = New Button()
-        BtnDisplay = New Button()
-        BtnVolume = New Button()
-        BtnResetHantei = New Button()
-        BtnHantei = New Button()
-        BtnHikiwake = New Button()
         PanelHeader.SuspendLayout()
         PanelFooter.SuspendLayout()
         PanelMainCenter.SuspendLayout()
+        PanelAO.SuspendLayout()
+        CType(PicAoProfile, ComponentModel.ISupportInitialize).BeginInit()
+        PnlAoInfo.SuspendLayout()
+        CType(PicAoTeamLogo, ComponentModel.ISupportInitialize).BeginInit()
+        PnlAoPenalty.SuspendLayout()
+        PnlAoScoreSummary.SuspendLayout()
+        CType(DgvAoHistory, ComponentModel.ISupportInitialize).BeginInit()
         PanelAKA.SuspendLayout()
         CType(PicAkaProfile, ComponentModel.ISupportInitialize).BeginInit()
         PnlAkaInfo.SuspendLayout()
@@ -208,9 +203,6 @@ Partial Class Kumite
         CType(NumMatchMin, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumMatchSec, ComponentModel.ISupportInitialize).BeginInit()
         PnlYellowTimerBox.SuspendLayout()
-        CType(PicAoProfile, ComponentModel.ISupportInitialize).BeginInit()
-        CType(PicAoTeamLogo, ComponentModel.ISupportInitialize).BeginInit()
-        CType(DgvAoHistory, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' PanelHeader
@@ -233,7 +225,7 @@ Partial Class Kumite
         ' LblNextMatch
         ' 
         LblNextMatch.BackColor = Color.Gold
-        LblNextMatch.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblNextMatch.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         LblNextMatch.Location = New Point(10, 8)
         LblNextMatch.Name = "LblNextMatch"
         LblNextMatch.Size = New Size(80, 24)
@@ -244,7 +236,7 @@ Partial Class Kumite
         ' TxtAkaName
         ' 
         TxtAkaName.BorderStyle = BorderStyle.FixedSingle
-        TxtAkaName.Font = New Font("Segoe UI", 9.0F)
+        TxtAkaName.Font = New Font("Segoe UI", 9F)
         TxtAkaName.Location = New Point(100, 9)
         TxtAkaName.Name = "TxtAkaName"
         TxtAkaName.Size = New Size(150, 23)
@@ -264,7 +256,7 @@ Partial Class Kumite
         ' LblVS
         ' 
         LblVS.BackColor = Color.Gold
-        LblVS.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblVS.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         LblVS.Location = New Point(295, 8)
         LblVS.Name = "LblVS"
         LblVS.Size = New Size(30, 24)
@@ -286,7 +278,7 @@ Partial Class Kumite
         ' TxtAoName
         ' 
         TxtAoName.BorderStyle = BorderStyle.FixedSingle
-        TxtAoName.Font = New Font("Segoe UI", 9.0F)
+        TxtAoName.Font = New Font("Segoe UI", 9F)
         TxtAoName.Location = New Point(370, 9)
         TxtAoName.Name = "TxtAoName"
         TxtAoName.Size = New Size(150, 23)
@@ -305,6 +297,7 @@ Partial Class Kumite
         BtnSwap.UseVisualStyleBackColor = False
         ' 
         ' BtnLoadNextMatch
+        ' 
         BtnLoadNextMatch.BackColor = Color.Gold
         BtnLoadNextMatch.FlatStyle = FlatStyle.Flat
         BtnLoadNextMatch.Font = New Font("Segoe UI", 8.25F, FontStyle.Bold)
@@ -333,8 +326,9 @@ Partial Class Kumite
         PanelFooter.Name = "PanelFooter"
         PanelFooter.Size = New Size(1050, 47)
         PanelFooter.TabIndex = 1
-        ' --- BUTTONS FOOTER ---
+        ' 
         ' BtnSettings
+        ' 
         BtnSettings.BackColor = Color.White
         BtnSettings.FlatStyle = FlatStyle.Flat
         BtnSettings.Location = New Point(10, 6)
@@ -343,8 +337,9 @@ Partial Class Kumite
         BtnSettings.TabIndex = 2
         BtnSettings.Text = "Settings ⚙"
         BtnSettings.UseVisualStyleBackColor = False
-
+        ' 
         ' BtnLogActivity
+        ' 
         BtnLogActivity.BackColor = Color.White
         BtnLogActivity.FlatStyle = FlatStyle.Flat
         BtnLogActivity.Location = New Point(100, 6)
@@ -353,8 +348,9 @@ Partial Class Kumite
         BtnLogActivity.TabIndex = 3
         BtnLogActivity.Text = "Log Activity"
         BtnLogActivity.UseVisualStyleBackColor = False
-
+        ' 
         ' BtnShortcut
+        ' 
         BtnShortcut.BackColor = Color.White
         BtnShortcut.FlatStyle = FlatStyle.Flat
         BtnShortcut.Location = New Point(190, 6)
@@ -363,8 +359,9 @@ Partial Class Kumite
         BtnShortcut.TabIndex = 4
         BtnShortcut.Text = "Shortcut ⌨"
         BtnShortcut.UseVisualStyleBackColor = False
-
+        ' 
         ' BtnDisplay
+        ' 
         BtnDisplay.BackColor = Color.White
         BtnDisplay.FlatStyle = FlatStyle.Flat
         BtnDisplay.Location = New Point(400, 6)
@@ -373,8 +370,9 @@ Partial Class Kumite
         BtnDisplay.TabIndex = 5
         BtnDisplay.Text = "🖥"
         BtnDisplay.UseVisualStyleBackColor = False
-
+        ' 
         ' BtnVolume
+        ' 
         BtnVolume.BackColor = Color.White
         BtnVolume.FlatStyle = FlatStyle.Flat
         BtnVolume.Location = New Point(440, 6)
@@ -383,8 +381,9 @@ Partial Class Kumite
         BtnVolume.TabIndex = 6
         BtnVolume.Text = "🔊"
         BtnVolume.UseVisualStyleBackColor = False
-
+        ' 
         ' BtnResetHantei
+        ' 
         BtnResetHantei.BackColor = Color.White
         BtnResetHantei.FlatStyle = FlatStyle.Flat
         BtnResetHantei.Location = New Point(480, 6)
@@ -393,8 +392,9 @@ Partial Class Kumite
         BtnResetHantei.TabIndex = 7
         BtnResetHantei.Text = "Reset Hantei ⮌"
         BtnResetHantei.UseVisualStyleBackColor = False
-
+        ' 
         ' BtnHantei
+        ' 
         BtnHantei.BackColor = Color.White
         BtnHantei.FlatStyle = FlatStyle.Flat
         BtnHantei.Location = New Point(580, 6)
@@ -403,8 +403,9 @@ Partial Class Kumite
         BtnHantei.TabIndex = 8
         BtnHantei.Text = "Hantei 🏳"
         BtnHantei.UseVisualStyleBackColor = False
-
+        ' 
         ' BtnHikiwake
+        ' 
         BtnHikiwake.BackColor = Color.White
         BtnHikiwake.FlatStyle = FlatStyle.Flat
         BtnHikiwake.Location = New Point(660, 6)
@@ -474,11 +475,20 @@ Partial Class Kumite
         PanelAO.Name = "PanelAO"
         PanelAO.Size = New Size(751, 260)
         PanelAO.TabIndex = 1
-        ' --- HEADER PANEL BIRU ---
+        ' 
+        ' AOVR
+        ' 
+        AOVR.Location = New Point(290, 216)
+        AOVR.Name = "AOVR"
+        AOVR.Size = New Size(119, 25)
+        AOVR.TabIndex = 0
+        AOVR.Text = "AO VR Requested"
+        ' 
         ' LblAoTitle
+        ' 
         LblAoTitle.BackColor = Color.DodgerBlue
         LblAoTitle.Dock = DockStyle.Top
-        LblAoTitle.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        LblAoTitle.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         LblAoTitle.ForeColor = Color.White
         LblAoTitle.Location = New Point(0, 0)
         LblAoTitle.Name = "LblAoTitle"
@@ -486,17 +496,18 @@ Partial Class Kumite
         LblAoTitle.TabIndex = 0
         LblAoTitle.Text = "AO"
         LblAoTitle.TextAlign = ContentAlignment.MiddleCenter
-
-        ' --- BAGIAN KIRI (FOTO & INFO) ---
+        ' 
         ' PicAoProfile
+        ' 
         PicAoProfile.BorderStyle = BorderStyle.FixedSingle
         PicAoProfile.Location = New Point(10, 30)
         PicAoProfile.Name = "PicAoProfile"
         PicAoProfile.Size = New Size(60, 60)
         PicAoProfile.TabIndex = 1
         PicAoProfile.TabStop = False
-
+        ' 
         ' PnlAoInfo
+        ' 
         PnlAoInfo.Controls.Add(LblAoNameTitle)
         PnlAoInfo.Controls.Add(TxtAoNameMain)
         PnlAoInfo.Controls.Add(BtnAoUserIcon1)
@@ -505,101 +516,114 @@ Partial Class Kumite
         PnlAoInfo.Controls.Add(BtnAoSearch2)
         PnlAoInfo.Controls.Add(LblAoTeamInfoTitle)
         PnlAoInfo.Controls.Add(TxtAoTeamInfo)
-        PnlAoInfo.Controls.Add(BtnAoUpdateInfo)
-        PnlAoInfo.Controls.Add(BtnAoSwap)
         PnlAoInfo.Controls.Add(PicAoTeamLogo)
         PnlAoInfo.Location = New Point(80, 25)
         PnlAoInfo.Name = "PnlAoInfo"
         PnlAoInfo.Size = New Size(320, 100)
         PnlAoInfo.TabIndex = 2
-
+        ' 
         ' LblAoNameTitle
+        ' 
         LblAoNameTitle.AutoSize = True
         LblAoNameTitle.Location = New Point(0, 8)
         LblAoNameTitle.Name = "LblAoNameTitle"
         LblAoNameTitle.Size = New Size(39, 15)
+        LblAoNameTitle.TabIndex = 0
         LblAoNameTitle.Text = "Name"
-
+        ' 
         ' TxtAoNameMain
+        ' 
         TxtAoNameMain.Location = New Point(60, 5)
         TxtAoNameMain.Name = "TxtAoNameMain"
         TxtAoNameMain.Size = New Size(160, 23)
+        TxtAoNameMain.TabIndex = 1
         TxtAoNameMain.Text = "Farhan Nugraha"
-
+        ' 
         ' BtnAoUserIcon1
+        ' 
         BtnAoUserIcon1.Location = New Point(225, 4)
         BtnAoUserIcon1.Name = "BtnAoUserIcon1"
         BtnAoUserIcon1.Size = New Size(25, 25)
+        BtnAoUserIcon1.TabIndex = 2
         BtnAoUserIcon1.Text = "👤"
-
+        ' 
         ' LblAoTeamTitle
+        ' 
         LblAoTeamTitle.AutoSize = True
         LblAoTeamTitle.Location = New Point(0, 38)
         LblAoTeamTitle.Name = "LblAoTeamTitle"
         LblAoTeamTitle.Size = New Size(36, 15)
+        LblAoTeamTitle.TabIndex = 3
         LblAoTeamTitle.Text = "Team"
-
+        ' 
         ' TxtAoTeam
+        ' 
         TxtAoTeam.Location = New Point(60, 35)
         TxtAoTeam.Name = "TxtAoTeam"
         TxtAoTeam.Size = New Size(160, 23)
+        TxtAoTeam.TabIndex = 4
         TxtAoTeam.Text = "Dojo Rajawali"
-
+        ' 
         ' BtnAoSearch2
+        ' 
         BtnAoSearch2.Location = New Point(225, 33)
         BtnAoSearch2.Name = "BtnAoSearch2"
         BtnAoSearch2.Size = New Size(25, 25)
+        BtnAoSearch2.TabIndex = 5
         BtnAoSearch2.Text = "🔍"
-
+        ' 
         ' LblAoTeamInfoTitle
+        ' 
         LblAoTeamInfoTitle.AutoSize = True
         LblAoTeamInfoTitle.Location = New Point(0, 68)
         LblAoTeamInfoTitle.Name = "LblAoTeamInfoTitle"
         LblAoTeamInfoTitle.Size = New Size(60, 15)
+        LblAoTeamInfoTitle.TabIndex = 6
         LblAoTeamInfoTitle.Text = "Team Info"
-
+        ' 
         ' TxtAoTeamInfo
+        ' 
         TxtAoTeamInfo.Location = New Point(60, 65)
         TxtAoTeamInfo.Name = "TxtAoTeamInfo"
         TxtAoTeamInfo.Size = New Size(100, 23)
+        TxtAoTeamInfo.TabIndex = 7
         TxtAoTeamInfo.Text = "INKAI"
-
-        ' BtnAoUpdateInfo
-        BtnAoUpdateInfo.Location = New Point(100, 95)
-        BtnAoUpdateInfo.Name = "BtnAoUpdateInfo"
-        BtnAoUpdateInfo.Size = New Size(100, 25)
-        BtnAoUpdateInfo.Text = "↑ Update Info"
-
-        ' BtnAoSwap
-        BtnAoSwap.Location = New Point(205, 95)
-        BtnAoSwap.Name = "BtnAoSwap"
-        BtnAoSwap.Size = New Size(30, 25)
-        BtnAoSwap.Text = "⇅"
-
+        ' 
         ' PicAoTeamLogo
+        ' 
         PicAoTeamLogo.BorderStyle = BorderStyle.FixedSingle
         PicAoTeamLogo.Location = New Point(271, 11)
         PicAoTeamLogo.Name = "PicAoTeamLogo"
         PicAoTeamLogo.Size = New Size(39, 41)
+        PicAoTeamLogo.TabIndex = 10
         PicAoTeamLogo.TabStop = False
-
-        ' --- BUTTON KIRI BAWAH ---
+        ' 
+        ' BtnAoKiken
+        ' 
         BtnAoKiken.Location = New Point(10, 130)
         BtnAoKiken.Name = "BtnAoKiken"
         BtnAoKiken.Size = New Size(70, 30)
+        BtnAoKiken.TabIndex = 3
         BtnAoKiken.Text = "Kiken"
-
+        ' 
+        ' BtnAoShikkaku
+        ' 
         BtnAoShikkaku.Location = New Point(10, 165)
         BtnAoShikkaku.Name = "BtnAoShikkaku"
         BtnAoShikkaku.Size = New Size(70, 30)
+        BtnAoShikkaku.TabIndex = 4
         BtnAoShikkaku.Text = "Shikkaku"
-
+        ' 
+        ' BtnAoKnockedOut
+        ' 
         BtnAoKnockedOut.Location = New Point(10, 200)
         BtnAoKnockedOut.Name = "BtnAoKnockedOut"
         BtnAoKnockedOut.Size = New Size(70, 40)
+        BtnAoKnockedOut.TabIndex = 5
         BtnAoKnockedOut.Text = "Knocked Out"
-
-        ' --- PENALTY BUTTONS ---
+        ' 
+        ' PnlAoPenalty
+        ' 
         PnlAoPenalty.BorderStyle = BorderStyle.FixedSingle
         PnlAoPenalty.Controls.Add(LabelAoPenaltyP)
         PnlAoPenalty.Controls.Add(BtnAo1C)
@@ -610,31 +634,60 @@ Partial Class Kumite
         PnlAoPenalty.Location = New Point(90, 130)
         PnlAoPenalty.Name = "PnlAoPenalty"
         PnlAoPenalty.Size = New Size(270, 45)
-
+        PnlAoPenalty.TabIndex = 6
+        ' 
+        ' LabelAoPenaltyP
+        ' 
         LabelAoPenaltyP.Font = New Font("Segoe UI", 20.25F, FontStyle.Bold)
         LabelAoPenaltyP.Location = New Point(5, -1)
         LabelAoPenaltyP.Name = "LabelAoPenaltyP"
         LabelAoPenaltyP.Size = New Size(34, 39)
+        LabelAoPenaltyP.TabIndex = 0
         LabelAoPenaltyP.Text = "P"
         LabelAoPenaltyP.TextAlign = ContentAlignment.MiddleCenter
-
+        ' 
+        ' BtnAo1C
+        ' 
         BtnAo1C.Location = New Point(45, 5)
+        BtnAo1C.Name = "BtnAo1C"
         BtnAo1C.Size = New Size(35, 30)
+        BtnAo1C.TabIndex = 1
         BtnAo1C.Text = "1C"
+        ' 
+        ' BtnAo2C
+        ' 
         BtnAo2C.Location = New Point(85, 5)
+        BtnAo2C.Name = "BtnAo2C"
         BtnAo2C.Size = New Size(35, 30)
+        BtnAo2C.TabIndex = 2
         BtnAo2C.Text = "2C"
+        ' 
+        ' BtnAo3C
+        ' 
         BtnAo3C.Location = New Point(125, 5)
+        BtnAo3C.Name = "BtnAo3C"
         BtnAo3C.Size = New Size(35, 30)
+        BtnAo3C.TabIndex = 3
         BtnAo3C.Text = "3C"
+        ' 
+        ' BtnAoHC
+        ' 
         BtnAoHC.Location = New Point(165, 5)
+        BtnAoHC.Name = "BtnAoHC"
         BtnAoHC.Size = New Size(35, 30)
+        BtnAoHC.TabIndex = 4
         BtnAoHC.Text = "HC"
+        ' 
+        ' BtnAoH
+        ' 
         BtnAoH.Location = New Point(205, 5)
+        BtnAoH.Name = "BtnAoH"
         BtnAoH.Size = New Size(35, 30)
+        BtnAoH.TabIndex = 5
         BtnAoH.Text = "H"
-
-        ' --- SCORE SUMMARY ---
+        ' 
+        ' PnlAoScoreSummary
+        ' 
         PnlAoScoreSummary.BorderStyle = BorderStyle.FixedSingle
         PnlAoScoreSummary.Controls.Add(LblAoScoreSummaryTitle)
         PnlAoScoreSummary.Controls.Add(LblAoIpponCount)
@@ -643,38 +696,56 @@ Partial Class Kumite
         PnlAoScoreSummary.Location = New Point(90, 185)
         PnlAoScoreSummary.Name = "PnlAoScoreSummary"
         PnlAoScoreSummary.Size = New Size(190, 55)
-
+        PnlAoScoreSummary.TabIndex = 7
+        ' 
+        ' LblAoScoreSummaryTitle
+        ' 
         LblAoScoreSummaryTitle.BackColor = Color.LightGray
         LblAoScoreSummaryTitle.Dock = DockStyle.Top
-        LblAoScoreSummaryTitle.Height = 20
+        LblAoScoreSummaryTitle.Location = New Point(0, 0)
+        LblAoScoreSummaryTitle.Name = "LblAoScoreSummaryTitle"
+        LblAoScoreSummaryTitle.Size = New Size(188, 20)
+        LblAoScoreSummaryTitle.TabIndex = 0
         LblAoScoreSummaryTitle.Text = "Score Summary"
         LblAoScoreSummaryTitle.TextAlign = ContentAlignment.MiddleCenter
-
+        ' 
+        ' LblAoIpponCount
+        ' 
         LblAoIpponCount.AutoSize = True
         LblAoIpponCount.Location = New Point(5, 25)
+        LblAoIpponCount.Name = "LblAoIpponCount"
+        LblAoIpponCount.Size = New Size(50, 15)
+        LblAoIpponCount.TabIndex = 1
         LblAoIpponCount.Text = "Ippon  0"
-
+        ' 
+        ' LblAoWazaariCount
+        ' 
         LblAoWazaariCount.AutoSize = True
         LblAoWazaariCount.Location = New Point(70, 25)
+        LblAoWazaariCount.Name = "LblAoWazaariCount"
+        LblAoWazaariCount.Size = New Size(65, 15)
+        LblAoWazaariCount.TabIndex = 2
         LblAoWazaariCount.Text = "Waza-ari  0"
-
+        ' 
+        ' LblAoYukoCount
+        ' 
         LblAoYukoCount.AutoSize = True
         LblAoYukoCount.Location = New Point(5, 40)
+        LblAoYukoCount.Name = "LblAoYukoCount"
+        LblAoYukoCount.Size = New Size(46, 15)
+        LblAoYukoCount.TabIndex = 3
         LblAoYukoCount.Text = "Yuko  0"
-
-        ' --- VR REQUEST ---
+        ' 
+        ' BtnAoVR
+        ' 
         BtnAoVR.Location = New Point(290, 185)
         BtnAoVR.Name = "BtnAoVR"
         BtnAoVR.Size = New Size(119, 25)
+        BtnAoVR.TabIndex = 8
         BtnAoVR.Text = "VR"
-
-        AOVR.Location = New Point(290, 216)
-        AOVR.Name = "AOVR"
-        AOVR.Size = New Size(119, 25)
-        AOVR.Text = "AO VR Requested"
-
-        ' --- BAGIAN KANAN (HISTORY & POINT) ---
+        ' 
         ' DgvAoHistory
+        ' 
         DgvAoHistory.BackgroundColor = Color.White
         DgvAoHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DgvAoHistory.Columns.AddRange(New DataGridViewColumn() {ColNoAo, ColTimerAo, ColTypeAo})
@@ -682,58 +753,97 @@ Partial Class Kumite
         DgvAoHistory.Name = "DgvAoHistory"
         DgvAoHistory.RowHeadersVisible = False
         DgvAoHistory.Size = New Size(200, 170)
-
+        DgvAoHistory.TabIndex = 9
+        ' 
+        ' ColNoAo
+        ' 
         ColNoAo.HeaderText = "No"
+        ColNoAo.Name = "ColNoAo"
         ColNoAo.Width = 30
+        ' 
+        ' ColTimerAo
+        ' 
         ColTimerAo.HeaderText = "Timer"
+        ColTimerAo.Name = "ColTimerAo"
         ColTimerAo.Width = 60
+        ' 
+        ' ColTypeAo
+        ' 
         ColTypeAo.HeaderText = "Type"
-        ColTypeAo.Width = 100
-
+        ColTypeAo.Name = "ColTypeAo"
+        ' 
         ' LblAoMainScore
-        LblAoMainScore.Font = New Font("Segoe UI", 36.0F, FontStyle.Bold)
-        LblAoMainScore.Location = New Point(640, 30)
+        ' 
+        LblAoMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
+        LblAoMainScore.Location = New Point(630, 30)
         LblAoMainScore.Name = "LblAoMainScore"
-        LblAoMainScore.Size = New Size(60, 60)
+        LblAoMainScore.Size = New Size(116, 60)
+        LblAoMainScore.TabIndex = 10
         LblAoMainScore.Text = "0"
         LblAoMainScore.TextAlign = ContentAlignment.MiddleCenter
-
-        ' --- TOMBOL POINT ---
+        ' 
+        ' BtnAoIppon
+        ' 
         BtnAoIppon.BackColor = Color.LightCyan
         BtnAoIppon.FlatStyle = FlatStyle.Flat
         BtnAoIppon.Location = New Point(630, 100)
+        BtnAoIppon.Name = "BtnAoIppon"
         BtnAoIppon.Size = New Size(80, 25)
+        BtnAoIppon.TabIndex = 11
         BtnAoIppon.Text = "Ippon 3"
-
+        BtnAoIppon.UseVisualStyleBackColor = False
+        ' 
+        ' BtnAoWazaari
+        ' 
         BtnAoWazaari.BackColor = Color.LightCyan
         BtnAoWazaari.FlatStyle = FlatStyle.Flat
         BtnAoWazaari.Location = New Point(630, 135)
+        BtnAoWazaari.Name = "BtnAoWazaari"
         BtnAoWazaari.Size = New Size(80, 25)
+        BtnAoWazaari.TabIndex = 12
         BtnAoWazaari.Text = "Waza-ari 2"
-
+        BtnAoWazaari.UseVisualStyleBackColor = False
+        ' 
+        ' BtnAoYuko
+        ' 
         BtnAoYuko.BackColor = Color.LightCyan
         BtnAoYuko.FlatStyle = FlatStyle.Flat
         BtnAoYuko.Location = New Point(630, 170)
+        BtnAoYuko.Name = "BtnAoYuko"
         BtnAoYuko.Size = New Size(80, 25)
+        BtnAoYuko.TabIndex = 13
         BtnAoYuko.Text = "Yuko 1"
-
-        ' --- BOTTOM BUTTONS ---
+        BtnAoYuko.UseVisualStyleBackColor = False
+        ' 
+        ' BtnAoShowWinner
+        ' 
         BtnAoShowWinner.Location = New Point(420, 210)
+        BtnAoShowWinner.Name = "BtnAoShowWinner"
         BtnAoShowWinner.Size = New Size(80, 30)
+        BtnAoShowWinner.TabIndex = 14
         BtnAoShowWinner.Text = "Show Winner"
-
+        ' 
+        ' BtnAoResetScore
+        ' 
         BtnAoResetScore.Location = New Point(525, 210)
+        BtnAoResetScore.Name = "BtnAoResetScore"
         BtnAoResetScore.Size = New Size(80, 30)
+        BtnAoResetScore.TabIndex = 15
         BtnAoResetScore.Text = "Reset Score"
-
+        ' 
+        ' BtnAoSenshu
+        ' 
         BtnAoSenshu.Location = New Point(630, 210)
+        BtnAoSenshu.Name = "BtnAoSenshu"
         BtnAoSenshu.Size = New Size(80, 30)
+        BtnAoSenshu.TabIndex = 16
         BtnAoSenshu.Text = "Senshu"
         ' 
         ' PanelAKA
         ' 
         PanelAKA.BackColor = Color.White
         PanelAKA.BorderStyle = BorderStyle.FixedSingle
+        PanelAKA.Controls.Add(Button1)
         PanelAKA.Controls.Add(AKAVR)
         PanelAKA.Controls.Add(LblAkaTitle)
         PanelAKA.Controls.Add(PicAkaProfile)
@@ -758,11 +868,27 @@ Partial Class Kumite
         PanelAKA.Size = New Size(751, 260)
         PanelAKA.TabIndex = 0
         ' 
+        ' Button1
+        ' 
+        Button1.Location = New Point(10, 129)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(70, 30)
+        Button1.TabIndex = 17
+        Button1.Text = "Kiken"
+        ' 
+        ' AKAVR
+        ' 
+        AKAVR.Location = New Point(290, 216)
+        AKAVR.Name = "AKAVR"
+        AKAVR.Size = New Size(119, 25)
+        AKAVR.TabIndex = 18
+        AKAVR.Text = "AKA VR Requested"
+        ' 
         ' LblAkaTitle
         ' 
         LblAkaTitle.BackColor = Color.Crimson
         LblAkaTitle.Dock = DockStyle.Top
-        LblAkaTitle.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        LblAkaTitle.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         LblAkaTitle.ForeColor = Color.White
         LblAkaTitle.Location = New Point(0, 0)
         LblAkaTitle.Name = "LblAkaTitle"
@@ -790,8 +916,6 @@ Partial Class Kumite
         PnlAkaInfo.Controls.Add(BtnAkaSearch2)
         PnlAkaInfo.Controls.Add(LblAkaTeamInfoTitle)
         PnlAkaInfo.Controls.Add(TxtAkaTeamInfo)
-        PnlAkaInfo.Controls.Add(BtnAkaUpdateInfo)
-        PnlAkaInfo.Controls.Add(BtnAkaSwap)
         PnlAkaInfo.Controls.Add(PicAkaTeamLogo)
         PnlAkaInfo.Location = New Point(80, 25)
         PnlAkaInfo.Name = "PnlAkaInfo"
@@ -864,22 +988,6 @@ Partial Class Kumite
         TxtAkaTeamInfo.Size = New Size(100, 23)
         TxtAkaTeamInfo.TabIndex = 7
         TxtAkaTeamInfo.Text = "INKAI"
-        ' 
-        ' BtnAkaUpdateInfo
-        ' 
-        BtnAkaUpdateInfo.Location = New Point(100, 95)
-        BtnAkaUpdateInfo.Name = "BtnAkaUpdateInfo"
-        BtnAkaUpdateInfo.Size = New Size(100, 25)
-        BtnAkaUpdateInfo.TabIndex = 8
-        BtnAkaUpdateInfo.Text = "↑ Update Info"
-        ' 
-        ' BtnAkaSwap
-        ' 
-        BtnAkaSwap.Location = New Point(205, 95)
-        BtnAkaSwap.Name = "BtnAkaSwap"
-        BtnAkaSwap.Size = New Size(30, 25)
-        BtnAkaSwap.TabIndex = 9
-        BtnAkaSwap.Text = "⇅"
         ' 
         ' PicAkaTeamLogo
         ' 
@@ -1060,10 +1168,10 @@ Partial Class Kumite
         ' 
         ' LblAkaMainScore
         ' 
-        LblAkaMainScore.Font = New Font("Segoe UI", 36.0F, FontStyle.Bold)
-        LblAkaMainScore.Location = New Point(640, 30)
+        LblAkaMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
+        LblAkaMainScore.Location = New Point(626, 33)
         LblAkaMainScore.Name = "LblAkaMainScore"
-        LblAkaMainScore.Size = New Size(60, 60)
+        LblAkaMainScore.Size = New Size(109, 60)
         LblAkaMainScore.TabIndex = 11
         LblAkaMainScore.Text = "0"
         LblAkaMainScore.TextAlign = ContentAlignment.MiddleCenter
@@ -1527,7 +1635,7 @@ Partial Class Kumite
         ' LblMatchTimerValue
         ' 
         LblMatchTimerValue.AutoSize = True
-        LblMatchTimerValue.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblMatchTimerValue.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
         LblMatchTimerValue.Location = New Point(79, 8)
         LblMatchTimerValue.Name = "LblMatchTimerValue"
         LblMatchTimerValue.Size = New Size(54, 21)
@@ -1583,17 +1691,9 @@ Partial Class Kumite
         BtnResetTimer.Text = "Reset Timer"
         BtnResetTimer.UseVisualStyleBackColor = True
         ' 
-        ' AKAVR
-        ' 
-        AKAVR.Location = New Point(290, 216)
-        AKAVR.Name = "AKAVR"
-        AKAVR.Size = New Size(119, 25)
-        AKAVR.TabIndex = 18
-        AKAVR.Text = "AKA VR Requested"
-        ' 
         ' Kumite
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.White
         ClientSize = New Size(1050, 656)
@@ -1607,6 +1707,15 @@ Partial Class Kumite
         PanelHeader.PerformLayout()
         PanelFooter.ResumeLayout(False)
         PanelMainCenter.ResumeLayout(False)
+        PanelAO.ResumeLayout(False)
+        CType(PicAoProfile, ComponentModel.ISupportInitialize).EndInit()
+        PnlAoInfo.ResumeLayout(False)
+        PnlAoInfo.PerformLayout()
+        CType(PicAoTeamLogo, ComponentModel.ISupportInitialize).EndInit()
+        PnlAoPenalty.ResumeLayout(False)
+        PnlAoScoreSummary.ResumeLayout(False)
+        PnlAoScoreSummary.PerformLayout()
+        CType(DgvAoHistory, ComponentModel.ISupportInitialize).EndInit()
         PanelAKA.ResumeLayout(False)
         CType(PicAkaProfile, ComponentModel.ISupportInitialize).EndInit()
         PnlAkaInfo.ResumeLayout(False)
@@ -1636,9 +1745,6 @@ Partial Class Kumite
         CType(NumMatchSec, ComponentModel.ISupportInitialize).EndInit()
         PnlYellowTimerBox.ResumeLayout(False)
         PnlYellowTimerBox.PerformLayout()
-        CType(PicAoProfile, ComponentModel.ISupportInitialize).EndInit()
-        CType(PicAoTeamLogo, ComponentModel.ISupportInitialize).EndInit()
-        CType(DgvAoHistory, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
 
     End Sub
@@ -1717,8 +1823,6 @@ Partial Class Kumite
     Friend WithEvents BtnAkaSearch2 As Button
     Friend WithEvents LblAkaTeamInfoTitle As Label
     Friend WithEvents TxtAkaTeamInfo As TextBox
-    Friend WithEvents BtnAkaUpdateInfo As Button
-    Friend WithEvents BtnAkaSwap As Button
     Friend WithEvents BtnAkaKiken As Button
     Friend WithEvents BtnAkaShikkaku As Button
     Friend WithEvents BtnAkaKnockedOut As Button
@@ -1761,8 +1865,6 @@ Partial Class Kumite
     Friend WithEvents BtnAoSearch2 As Button
     Friend WithEvents LblAoTeamInfoTitle As Label
     Friend WithEvents TxtAoTeamInfo As TextBox
-    Friend WithEvents BtnAoUpdateInfo As Button
-    Friend WithEvents BtnAoSwap As Button
     Friend WithEvents PicAoTeamLogo As PictureBox
     Friend WithEvents BtnAoKiken As Button
     Friend WithEvents BtnAoShikkaku As Button
@@ -1801,5 +1903,6 @@ Partial Class Kumite
     Friend WithEvents BtnResetHantei As Button
     Friend WithEvents BtnHantei As Button
     Friend WithEvents BtnHikiwake As Button
+    Friend WithEvents Button1 As Button
 
 End Class

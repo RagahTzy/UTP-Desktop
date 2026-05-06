@@ -20,9 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Shortcut.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Shortcut.vb" />
     <Compile Update="Shortcut.Designer.vb">
       <DependentUpon>Shortcut.vb</DependentUpon>
     </Compile>

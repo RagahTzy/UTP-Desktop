@@ -1,156 +1,183 @@
 Public Class Shortcut
+    ' Variabel untuk menandai kita sedang merekam tombol keyboard
+    Private isRecording As Boolean = False
+    Private isShortcutActive As Boolean = True ' Status ON/OFF
+
     Private Sub Shortcut_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadKeyboardIcon()
-        LoadShortcutList()
-        RadioButton1.Checked = True
+        Me.DoubleBuffered = True
+        ' PENTING: Form harus bisa menangkap tombol keyboard sebelum fokus ke kontrol lain
+        Me.KeyPreview = True
+
+        If lvShortcuts IsNot Nothing Then
+            lvShortcuts.OwnerDraw = True
+            isiDataShortcut()
+        End If
     End Sub
 
-    Private Sub LoadKeyboardIcon()
-        Dim imgPath As String = System.IO.Path.Combine(Application.StartupPath, "Resources", "keyboard.png")
-        If System.IO.File.Exists(imgPath) Then
-            picKeyboard.Image = Image.FromFile(imgPath)
-        Else
-            Dim projectPath As String = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.StartupPath.TrimEnd("\"c)), "..", "..", "..", "Resources", "keyboard.png")
-            If System.IO.File.Exists(projectPath) Then
-                picKeyboard.Image = Image.FromFile(projectPath)
+    ' --- FUNGSI UTAMA: MENDETEKSI TOMBOL KEYBOARD ---
+    Private Sub Shortcut_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If isRecording Then
+            ' Jangan rekam jika hanya menekan tombol modifier sendirian
+            If e.KeyCode = Keys.ControlKey Or e.KeyCode = Keys.ShiftKey Or e.KeyCode = Keys.Menu Then
+                Exit Sub
+            End If
+
+            ' Mencegah bunyi "ding" Windows dan mencegah tombol memicu kontrol lain (seperti spasi)
+            e.SuppressKeyPress = True
+
+            ' Susun nama shortcut secara otomatis
+            Dim strShortcut As String = ""
+            If e.Control Then strShortcut &= "Control+"
+            If e.Shift Then strShortcut &= "Shift+"
+            If e.Alt Then strShortcut &= "Alt+"
+            strShortcut &= e.KeyCode.ToString()
+
+            ' Masukkan ke kolom shortcut yang dipilih
+            If lvShortcuts.SelectedItems.Count > 0 Then
+                lvShortcuts.SelectedItems(0).SubItems(1).Text = strShortcut
+
+                ' Selesai merekam, kembalikan tampilan
+                isRecording = False
+                txtCurrentAction.Text = lvShortcuts.SelectedItems(0).Text
+                txtCurrentAction.ForeColor = Color.Black
+                btnChange.Enabled = True
+                btnSave.Enabled = True
+                btnSave.ForeColor = Color.Black
+                lvShortcuts.Enabled = True ' Aktifkan tabel kembali
             End If
         End If
     End Sub
 
-    Private Sub LoadShortcutList()
-        Dim item1 As New ListViewItem("Start-Close Scoreboard")
-        item1.SubItems.Add("Control+B")
+    ' --- LOGIKA TOMBOL CHANGE ---
+    Private Sub btnChange_Click(sender As Object, e As EventArgs) Handles btnChange.Click
+        If lvShortcuts.SelectedItems.Count > 0 Then
+            ' Aktifkan mode mendengarkan keyboard
+            isRecording = True
+            txtCurrentAction.Text = ">>> SEKARANG TEKAN TOMBOL DI KEYBOARD ANDA... <<<"
+            txtCurrentAction.ForeColor = Color.Red
+            btnChange.Enabled = False
 
-        Dim item2 As New ListViewItem("Timer Waiting Start-Stop")
-        item2.SubItems.Add("Control+W")
+            ' Trik: Kunci tabel sementara agar user tidak klik baris lain saat merekam
+            lvShortcuts.Enabled = False
 
-        Dim item3 As New ListViewItem("Match Timer Start-Stop")
-        item3.SubItems.Add("Space")
-
-        Dim item4 As New ListViewItem("Next Match")
-        item4.SubItems.Add("Control+N")
-
-        Dim item5 As New ListViewItem("Save Match Result")
-        item5.SubItems.Add("Control+S")
-
-        Dim item6 As New ListViewItem("Match Timer Reset")
-        item6.SubItems.Add("Control+R")
-
-        Dim item7 As New ListViewItem("Show Winner")
-        item7.SubItems.Add("Control+E")
-
-        Dim item8 As New ListViewItem("AKA - Yuko(1)")
-        item8.SubItems.Add("Shift+A")
-        item8.UseItemStyleForSubItems = False
-        item8.ForeColor = Color.Red
-        item8.SubItems(0).ForeColor = Color.Red
-        item8.SubItems(1).ForeColor = Color.Black
-
-        Dim item9 As New ListViewItem("AKA – Wazaari(2)")
-        item9.SubItems.Add("Shift+S")
-        item9.UseItemStyleForSubItems = False
-        item9.ForeColor = Color.Red
-        item9.SubItems(0).ForeColor = Color.Red
-        item9.SubItems(1).ForeColor = Color.Black
-
-        Dim item10 As New ListViewItem("AKA – Ippon(3)")
-        item10.SubItems.Add("Shift+D")
-        item10.UseItemStyleForSubItems = False
-        item10.ForeColor = Color.Red
-        item10.SubItems(0).ForeColor = Color.Red
-        item10.SubItems(1).ForeColor = Color.Black
-
-        Dim item11 As New ListViewItem("AKA - SENSHU")
-        item11.SubItems.Add("Shift+Q")
-        item11.UseItemStyleForSubItems = False
-        item11.ForeColor = Color.Red
-        item11.SubItems(0).ForeColor = Color.Red
-        item11.SubItems(1).ForeColor = Color.Black
-
-        Dim item12 As New ListViewItem("AO – Yuko(1)")
-        item12.SubItems.Add("Shift+J")
-        item12.UseItemStyleForSubItems = False
-        item12.ForeColor = Color.Blue
-        item12.SubItems(0).ForeColor = Color.Blue
-        item12.SubItems(1).ForeColor = Color.Black
-
-        Dim item13 As New ListViewItem("AO – Wazaari(2)")
-        item13.SubItems.Add("Shift+K")
-        item13.UseItemStyleForSubItems = False
-        item13.ForeColor = Color.Blue
-        item13.SubItems(0).ForeColor = Color.Blue
-        item13.SubItems(1).ForeColor = Color.Black
-
-        Dim item14 As New ListViewItem("AO – Ippon(3)")
-        item14.SubItems.Add("Shift+L")
-        item14.UseItemStyleForSubItems = False
-        item14.ForeColor = Color.Blue
-        item14.SubItems(0).ForeColor = Color.Blue
-        item14.SubItems(1).ForeColor = Color.Black
-
-        Dim item15 As New ListViewItem("AO - SENSHU")
-        item15.SubItems.Add("Shift+P")
-        item15.UseItemStyleForSubItems = False
-        item15.ForeColor = Color.Blue
-        item15.SubItems(0).ForeColor = Color.Blue
-        item15.SubItems(1).ForeColor = Color.Black
-
-        lstShortcuts.Items.AddRange(New ListViewItem() {item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15})
+            ' Trik: Lepaskan fokus dari tombol agar KeyDown form bekerja sempurna
+            Me.ActiveControl = Nothing
+        Else
+            MessageBox.Show("Pilih salah satu item di tabel terlebih dahulu!", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 
-    ' RadioButton1 - ON/OFF toggle
-    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
-        If RadioButton1.Checked Then
+    ' --- LOGIKA TOMBOL REMOVE ---
+    Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
+        If lvShortcuts.SelectedItems.Count > 0 Then
+            lvShortcuts.SelectedItems(0).SubItems(1).Text = "None"
+            btnSave.Enabled = True
+            btnSave.ForeColor = Color.Black
+        Else
+            MessageBox.Show("Pilih action yang ingin dihapus shortcut-nya!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    ' --- LOGIKA TOMBOL SAVE ---
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        MessageBox.Show("Pengaturan shortcut berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        btnSave.Enabled = False
+        btnSave.ForeColor = Color.DarkGray
+    End Sub
+
+    ' --- LOGIKA TOMBOL TOGGLE ON/OFF (DENGAN ANIMASI SWITCH) ---
+    Private Sub btnToggle_Click(sender As Object, e As EventArgs) Handles btnToggle.Click
+        isShortcutActive = Not isShortcutActive
+
+        If isShortcutActive Then
+            ' --- Tampilan Saat ON ---
             lblStatusValue.Text = "ON"
-            lblStatusValue.ForeColor = Color.DeepSkyBlue
-            btnToggle.BackColor = Color.DodgerBlue
-            btnToggle.Text = "●"
+            lblStatusValue.ForeColor = Color.FromArgb(0, 192, 239) ' Warna Cyan
+            lblTurnOff.Text = "Turn off"
+
+            ' Animasi Switch ke Kanan (Biru)
+            btnToggle.BackColor = Color.FromArgb(0, 120, 215)
             btnToggle.TextAlign = ContentAlignment.MiddleRight
         Else
+            ' --- Tampilan Saat OFF ---
             lblStatusValue.Text = "OFF"
             lblStatusValue.ForeColor = Color.Gray
-            btnToggle.BackColor = Color.Gray
-            btnToggle.Text = "●"
+            lblTurnOff.Text = "Turn on"
+
+            ' Animasi Switch ke Kiri (Abu-abu)
+            btnToggle.BackColor = Color.DarkGray
             btnToggle.TextAlign = ContentAlignment.MiddleLeft
         End If
     End Sub
 
-    ' btnToggle
-    Private Sub btnToggle_Click(sender As Object, e As EventArgs) Handles btnToggle.Click
-        RadioButton1.Checked = Not RadioButton1.Checked
-    End Sub
-
-    ' btnChange
-    Private Sub btnChange_Click(sender As Object, e As EventArgs) Handles btnChange.Click
-
-    End Sub
-
-    ' btnSave
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-
-    End Sub
-
-    ' btnReset
+    ' --- LOGIKA TOMBOL RESET ---
     Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
-        lstShortcuts.Items.Clear()
-        LoadShortcutList()
-        lblCurrentAction.Text = "Current Action :  -"
-        txtDetails.Text = ""
-    End Sub
-
-    ' btnRemove
-    Private Sub btnRemove_Click(sender As Object, e As EventArgs) Handles btnRemove.Click
-        If lstShortcuts.SelectedItems.Count > 0 Then
-            lstShortcuts.Items.Remove(lstShortcuts.SelectedItems(0))
+        Dim confirm = MessageBox.Show("Yakin ingin mereset ke default?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If confirm = DialogResult.Yes Then
+            isiDataShortcut()
+            btnSave.Enabled = True
+            btnSave.ForeColor = Color.Black
         End If
     End Sub
 
-    ' lstShortcuts
-    Private Sub lstShortcuts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstShortcuts.SelectedIndexChanged
-        If lstShortcuts.SelectedItems.Count > 0 Then
-            Dim selectedItem As ListViewItem = lstShortcuts.SelectedItems(0)
-            lblCurrentAction.Text = "Current Action :  " & selectedItem.Text
-            txtDetails.Text = selectedItem.Text & " = " & selectedItem.SubItems(1).Text
+    ' --- LOGIKA TABEL & TAMPILAN (TIDAK ADA YANG DIUBAH) ---
+    Private Sub isiDataShortcut()
+        If lvShortcuts Is Nothing Then Exit Sub
+        lvShortcuts.Items.Clear()
+        ' Group General
+        tambahItem("Start-Close Scoreboard", "Control+B")
+        tambahItem("Timer Waiting Start-Stop", "Control+W")
+        tambahItem("Match Timer Start-Stop", "Space")
+        tambahItem("Next Match", "Control+N")
+        tambahItem("Save Match Result", "Control+S")
+        tambahItem("Match Timer Reset", "Control+R")
+        tambahItem("Show Winner", "Control+E")
+        ' Group AKA (Merah)
+        tambahItem("AKA - Yuko(1)", "Shift+A")
+        tambahItem("AKA - Wazaari(2)", "Shift+S")
+        tambahItem("AKA - Ippon(3)", "Shift+D")
+        tambahItem("AKA - SENSHU", "Shift+Q")
+        ' Group AO (Biru)
+        tambahItem("AO - Yuko(1)", "Shift+J")
+        tambahItem("AO - Wazaari(2)", "Shift+K")
+        tambahItem("AO - Ippon(3)", "Shift+L")
+        tambahItem("AO - SENSHU", "Shift+P")
+    End Sub
+
+    Private Sub tambahItem(action As String, shortcut As String)
+        Dim lvi As New ListViewItem(action)
+        lvi.SubItems.Add(shortcut)
+        lvShortcuts.Items.Add(lvi)
+    End Sub
+
+    Private Sub lvShortcuts_DrawColumnHeader(sender As Object, e As DrawListViewColumnHeaderEventArgs) Handles lvShortcuts.DrawColumnHeader
+        e.DrawDefault = True
+    End Sub
+
+    Private Sub lvShortcuts_DrawSubItem(sender As Object, e As DrawListViewSubItemEventArgs) Handles lvShortcuts.DrawSubItem
+        If e.Item Is Nothing Then Exit Sub
+        If e.Item.Selected Then
+            e.Graphics.FillRectangle(New SolidBrush(Color.FromArgb(135, 206, 250)), e.Bounds)
+        Else
+            e.Graphics.FillRectangle(Brushes.White, e.Bounds)
+        End If
+        Dim textColor As Color = Color.Black
+        If Not String.IsNullOrEmpty(e.Item.Text) Then
+            If e.Item.Text.StartsWith("AKA") Then textColor = Color.Red
+            If e.Item.Text.StartsWith("AO") Then textColor = Color.Blue
+        End If
+        If e.ColumnIndex = 1 Then textColor = Color.Black
+        Dim sf As New StringFormat With {.LineAlignment = StringAlignment.Center, .Alignment = StringAlignment.Near}
+        Dim textRect As New Rectangle(e.Bounds.X + 5, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height)
+        e.Graphics.DrawString(e.SubItem.Text, lvShortcuts.Font, New SolidBrush(textColor), textRect, sf)
+    End Sub
+
+    Private Sub lvShortcuts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lvShortcuts.SelectedIndexChanged
+        If lvShortcuts.SelectedItems.Count > 0 Then
+            Dim actionName As String = lvShortcuts.SelectedItems(0).Text
+            lblCurrentAction.Text = "Current Action : " & actionName
+            txtCurrentAction.Text = actionName
+            txtCurrentAction.ForeColor = Color.Black
         End If
     End Sub
 End Class

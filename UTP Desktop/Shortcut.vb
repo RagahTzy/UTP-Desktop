@@ -13,9 +13,10 @@ Public Class Shortcut
 
         If lvShortcuts IsNot Nothing Then
             lvShortcuts.OwnerDraw = True
+            ' 1. Load data default dulu
             isiDataShortcut()
 
-            ' Ambil data yang sudah tersimpan di GlobalConfig (jika ada) 
+            ' 2. Ambil data yang sudah tersimpan di GlobalConfig (jika ada) 
             ' agar ListView menampilkan shortcut yang sedang aktif saat ini
             MuatDariGlobalConfig()
         End If
@@ -117,7 +118,7 @@ Public Class Shortcut
         MessageBox.Show("Pengaturan shortcut berhasil diterapkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
         btnSave.Enabled = False
         btnSave.ForeColor = Color.DarkGray
-        ' Disarankan menutup form setelah save agar fokus kembali ke Scoreboard
+        ' Otomatis tutup agar perubahan langsung di-load di Form Kumite
         Me.Close()
     End Sub
 
@@ -163,19 +164,18 @@ Public Class Shortcut
     Private Sub isiDataShortcut()
         If lvShortcuts Is Nothing Then Exit Sub
         lvShortcuts.Items.Clear()
-        ' Daftar aksi standar Karate/Kumite
+
+        ' DAFTAR AKSI - Harus SAMA PERSIS dengan Select Case di Kumite.vb
         tambahItem("Start-Close Scoreboard", "Control+B")
-        tambahItem("Timer Waiting Start-Stop", "Control+W")
         tambahItem("Match Timer Start-Stop", "Space")
-        tambahItem("Next Match", "Control+N")
-        tambahItem("Save Match Result", "Control+S")
         tambahItem("Match Timer Reset", "Control+R")
-        tambahItem("Show Winner", "Control+E")
+
         ' AKA Group
         tambahItem("AKA - Yuko(1)", "Shift+A")
         tambahItem("AKA - Wazaari(2)", "Shift+S")
         tambahItem("AKA - Ippon(3)", "Shift+D")
         tambahItem("AKA - SENSHU", "Shift+Q")
+
         ' AO Group
         tambahItem("AO - Yuko(1)", "Shift+J")
         tambahItem("AO - Wazaari(2)", "Shift+K")
@@ -211,7 +211,6 @@ Public Class Shortcut
             If e.Item.Text.Contains("AO") Then textColor = Color.Blue
         End If
 
-        ' Kolom shortcut selalu hitam agar mudah dibaca
         If e.ColumnIndex = 1 Then textColor = Color.Black
 
         Dim sf As New StringFormat With {.LineAlignment = StringAlignment.Center, .Alignment = StringAlignment.Near}

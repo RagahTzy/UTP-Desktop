@@ -85,6 +85,7 @@ Partial Class Kumite
         BtnAoResetScore = New Button()
         BtnAoSenshu = New Button()
         PanelAKA = New Panel()
+        Button1 = New Button()
         AKAVR = New Button()
         LblAkaTitle = New Label()
         PicAkaProfile = New PictureBox()
@@ -170,7 +171,7 @@ Partial Class Kumite
         BtnStartScoreboard = New Button()
         BtnStartTimer = New Button()
         BtnResetTimer = New Button()
-        Button1 = New Button()
+        StopScoreboard = New Button()
         PanelHeader.SuspendLayout()
         PanelFooter.SuspendLayout()
         PanelMainCenter.SuspendLayout()
@@ -225,7 +226,7 @@ Partial Class Kumite
         ' LblNextMatch
         ' 
         LblNextMatch.BackColor = Color.Gold
-        LblNextMatch.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        LblNextMatch.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         LblNextMatch.Location = New Point(10, 8)
         LblNextMatch.Name = "LblNextMatch"
         LblNextMatch.Size = New Size(80, 24)
@@ -236,7 +237,7 @@ Partial Class Kumite
         ' TxtAkaName
         ' 
         TxtAkaName.BorderStyle = BorderStyle.FixedSingle
-        TxtAkaName.Font = New Font("Segoe UI", 9F)
+        TxtAkaName.Font = New Font("Segoe UI", 9.0F)
         TxtAkaName.Location = New Point(100, 9)
         TxtAkaName.Name = "TxtAkaName"
         TxtAkaName.Size = New Size(150, 23)
@@ -256,7 +257,7 @@ Partial Class Kumite
         ' LblVS
         ' 
         LblVS.BackColor = Color.Gold
-        LblVS.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        LblVS.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         LblVS.Location = New Point(295, 8)
         LblVS.Name = "LblVS"
         LblVS.Size = New Size(30, 24)
@@ -278,7 +279,7 @@ Partial Class Kumite
         ' TxtAoName
         ' 
         TxtAoName.BorderStyle = BorderStyle.FixedSingle
-        TxtAoName.Font = New Font("Segoe UI", 9F)
+        TxtAoName.Font = New Font("Segoe UI", 9.0F)
         TxtAoName.Location = New Point(370, 9)
         TxtAoName.Name = "TxtAoName"
         TxtAoName.Size = New Size(150, 23)
@@ -488,7 +489,7 @@ Partial Class Kumite
         ' 
         LblAoTitle.BackColor = Color.DodgerBlue
         LblAoTitle.Dock = DockStyle.Top
-        LblAoTitle.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        LblAoTitle.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         LblAoTitle.ForeColor = Color.White
         LblAoTitle.Location = New Point(0, 0)
         LblAoTitle.Name = "LblAoTitle"
@@ -774,10 +775,10 @@ Partial Class Kumite
         ' 
         ' LblAoMainScore
         ' 
-        LblAoMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
-        LblAoMainScore.Location = New Point(640, 30)
+        LblAoMainScore.Font = New Font("Segoe UI", 36.0F, FontStyle.Bold)
+        LblAoMainScore.Location = New Point(630, 30)
         LblAoMainScore.Name = "LblAoMainScore"
-        LblAoMainScore.Size = New Size(60, 60)
+        LblAoMainScore.Size = New Size(116, 60)
         LblAoMainScore.TabIndex = 10
         LblAoMainScore.Text = "0"
         LblAoMainScore.TextAlign = ContentAlignment.MiddleCenter
@@ -868,6 +869,14 @@ Partial Class Kumite
         PanelAKA.Size = New Size(751, 260)
         PanelAKA.TabIndex = 0
         ' 
+        ' Button1
+        ' 
+        Button1.Location = New Point(10, 129)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(70, 30)
+        Button1.TabIndex = 17
+        Button1.Text = "Kiken"
+        ' 
         ' AKAVR
         ' 
         AKAVR.Location = New Point(290, 216)
@@ -880,7 +889,7 @@ Partial Class Kumite
         ' 
         LblAkaTitle.BackColor = Color.Crimson
         LblAkaTitle.Dock = DockStyle.Top
-        LblAkaTitle.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
+        LblAkaTitle.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
         LblAkaTitle.ForeColor = Color.White
         LblAkaTitle.Location = New Point(0, 0)
         LblAkaTitle.Name = "LblAkaTitle"
@@ -1160,10 +1169,10 @@ Partial Class Kumite
         ' 
         ' LblAkaMainScore
         ' 
-        LblAkaMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
-        LblAkaMainScore.Location = New Point(640, 30)
+        LblAkaMainScore.Font = New Font("Segoe UI", 36.0F, FontStyle.Bold)
+        LblAkaMainScore.Location = New Point(626, 33)
         LblAkaMainScore.Name = "LblAkaMainScore"
-        LblAkaMainScore.Size = New Size(60, 60)
+        LblAkaMainScore.Size = New Size(109, 60)
         LblAkaMainScore.TabIndex = 11
         LblAkaMainScore.Text = "0"
         LblAkaMainScore.TextAlign = ContentAlignment.MiddleCenter
@@ -1229,6 +1238,7 @@ Partial Class Kumite
         ' 
         PanelSidebarRight.BackColor = Color.WhiteSmoke
         PanelSidebarRight.BorderStyle = BorderStyle.FixedSingle
+        PanelSidebarRight.Controls.Add(StopScoreboard)
         PanelSidebarRight.Controls.Add(ResetTimer)
         PanelSidebarRight.Controls.Add(LblScboardType)
         PanelSidebarRight.Controls.Add(LblSenshuStyle)
@@ -1257,7 +1267,7 @@ Partial Class Kumite
         ' 
         ResetTimer.BackColor = Color.Gold
         ResetTimer.FlatStyle = FlatStyle.Flat
-        ResetTimer.Location = New Point(25, 508)
+        ResetTimer.Location = New Point(24, 504)
         ResetTimer.Name = "ResetTimer"
         ResetTimer.Size = New Size(207, 28)
         ResetTimer.TabIndex = 10
@@ -1627,7 +1637,7 @@ Partial Class Kumite
         ' LblMatchTimerValue
         ' 
         LblMatchTimerValue.AutoSize = True
-        LblMatchTimerValue.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
+        LblMatchTimerValue.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
         LblMatchTimerValue.Location = New Point(79, 8)
         LblMatchTimerValue.Name = "LblMatchTimerValue"
         LblMatchTimerValue.Size = New Size(54, 21)
@@ -1683,17 +1693,20 @@ Partial Class Kumite
         BtnResetTimer.Text = "Reset Timer"
         BtnResetTimer.UseVisualStyleBackColor = True
         ' 
-        ' Button1
+        ' StopScoreboard
         ' 
-        Button1.Location = New Point(10, 129)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(70, 30)
-        Button1.TabIndex = 17
-        Button1.Text = "Kiken"
+        StopScoreboard.BackColor = Color.Red
+        StopScoreboard.FlatStyle = FlatStyle.Flat
+        StopScoreboard.Location = New Point(25, 536)
+        StopScoreboard.Name = "StopScoreboard"
+        StopScoreboard.Size = New Size(207, 28)
+        StopScoreboard.TabIndex = 17
+        StopScoreboard.Text = "Stop Scoreboard"
+        StopScoreboard.UseVisualStyleBackColor = False
         ' 
         ' Kumite
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.White
         ClientSize = New Size(1050, 656)
@@ -1904,5 +1917,6 @@ Partial Class Kumite
     Friend WithEvents BtnHantei As Button
     Friend WithEvents BtnHikiwake As Button
     Friend WithEvents Button1 As Button
+    Friend WithEvents StopScoreboard As Button
 
 End Class

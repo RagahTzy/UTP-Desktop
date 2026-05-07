@@ -111,9 +111,11 @@ Partial Class Log_Activity
         ' 
         DataGridView1.AllowUserToResizeRows = False
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        DataGridView1.BackgroundColor = SystemColors.ButtonFace
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridView1.Columns.AddRange(New DataGridViewColumn() {colCategories, colActivity, colActivityType, colDateTime, colMatchTime, colUserName})
-        DataGridView1.Location = New Point(1, 254)
+        DataGridView1.GridColor = SystemColors.Window
+        DataGridView1.Location = New Point(12, 253)
         DataGridView1.Name = "DataGridView1"
         DataGridView1.ReadOnly = True
         DataGridView1.RowHeadersWidth = 62

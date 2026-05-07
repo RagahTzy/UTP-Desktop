@@ -127,6 +127,7 @@ Partial Class Kumite
         BtnAkaResetScore = New Button()
         BtnAkaSenshu = New Button()
         PanelSidebarRight = New Panel()
+        StopScoreboard = New Button()
         ResetTimer = New Button()
         LblScboardType = New Label()
         LblSenshuStyle = New Label()
@@ -171,7 +172,7 @@ Partial Class Kumite
         BtnStartScoreboard = New Button()
         BtnStartTimer = New Button()
         BtnResetTimer = New Button()
-        StopScoreboard = New Button()
+        BtnSaveWinPoint = New Button()
         PanelHeader.SuspendLayout()
         PanelFooter.SuspendLayout()
         PanelMainCenter.SuspendLayout()
@@ -1238,6 +1239,7 @@ Partial Class Kumite
         ' 
         PanelSidebarRight.BackColor = Color.WhiteSmoke
         PanelSidebarRight.BorderStyle = BorderStyle.FixedSingle
+        PanelSidebarRight.Controls.Add(BtnSaveWinPoint)
         PanelSidebarRight.Controls.Add(StopScoreboard)
         PanelSidebarRight.Controls.Add(ResetTimer)
         PanelSidebarRight.Controls.Add(LblScboardType)
@@ -1262,6 +1264,17 @@ Partial Class Kumite
         PanelSidebarRight.Name = "PanelSidebarRight"
         PanelSidebarRight.Size = New Size(263, 569)
         PanelSidebarRight.TabIndex = 2
+        ' 
+        ' StopScoreboard
+        ' 
+        StopScoreboard.BackColor = Color.Red
+        StopScoreboard.FlatStyle = FlatStyle.Flat
+        StopScoreboard.Location = New Point(25, 536)
+        StopScoreboard.Name = "StopScoreboard"
+        StopScoreboard.Size = New Size(207, 28)
+        StopScoreboard.TabIndex = 17
+        StopScoreboard.Text = "Stop Scoreboard"
+        StopScoreboard.UseVisualStyleBackColor = False
         ' 
         ' ResetTimer
         ' 
@@ -1693,16 +1706,14 @@ Partial Class Kumite
         BtnResetTimer.Text = "Reset Timer"
         BtnResetTimer.UseVisualStyleBackColor = True
         ' 
-        ' StopScoreboard
+        ' BtnSaveWinPoint
         ' 
-        StopScoreboard.BackColor = Color.Red
-        StopScoreboard.FlatStyle = FlatStyle.Flat
-        StopScoreboard.Location = New Point(25, 536)
-        StopScoreboard.Name = "StopScoreboard"
-        StopScoreboard.Size = New Size(207, 28)
-        StopScoreboard.TabIndex = 17
-        StopScoreboard.Text = "Stop Scoreboard"
-        StopScoreboard.UseVisualStyleBackColor = False
+        BtnSaveWinPoint.Location = New Point(168, 202)
+        BtnSaveWinPoint.Name = "BtnSaveWinPoint"
+        BtnSaveWinPoint.Size = New Size(44, 23)
+        BtnSaveWinPoint.TabIndex = 18
+        BtnSaveWinPoint.Text = "Save"
+        BtnSaveWinPoint.UseVisualStyleBackColor = True
         ' 
         ' Kumite
         ' 
@@ -1918,5 +1929,6 @@ Partial Class Kumite
     Friend WithEvents BtnHikiwake As Button
     Friend WithEvents Button1 As Button
     Friend WithEvents StopScoreboard As Button
+    Friend WithEvents BtnSaveWinPoint As Button
 
 End Class

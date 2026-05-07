@@ -1,4 +1,6 @@
-﻿Public Module ModGlobalConfig
+﻿Imports System.Data.SQLite
+
+Public Module ModGlobalConfig
     Public ShortcutSettings As New Dictionary(Of String, String)
     Public IsShortcutEnabled As Boolean = True
 
@@ -25,5 +27,32 @@
         ShortcutSettings("AO - Wazaari(2)") = "Shift+K"
         ShortcutSettings("AO - Ippon(3)") = "Shift+L"
         ShortcutSettings("AO - SENSHU") = "Shift+P"
+    End Sub
+
+    ' Simple logger helper to insert activity into LogActivity table
+    Public Sub LogActivity(category As String, activity As String, activityType As String, Optional matchTime As String = "", Optional userName As String = "")
+        Try
+            Using conn As New SQLiteConnection("Data Source=DB_Karate.sqlite;Version=3;")
+                conn.Open()
+                ' Ensure table exists so logging works even if Log_Activity form not opened
+                Dim createSql As String = "CREATE TABLE IF NOT EXISTS LogActivity (Id INTEGER PRIMARY KEY AUTOINCREMENT, Categories TEXT, Activity TEXT, ActivityType TEXT, DateTime TEXT, MatchTime TEXT, UserName TEXT)"
+                Using cc As New SQLiteCommand(createSql, conn)
+                    cc.ExecuteNonQuery()
+                End Using
+
+                Dim sql As String = "INSERT INTO LogActivity (Categories, Activity, ActivityType, DateTime, MatchTime, UserName) VALUES (@cat,@act,@type,@dt,@mt,@user)"
+                Using cmd As New SQLiteCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@cat", category)
+                    cmd.Parameters.AddWithValue("@act", activity)
+                    cmd.Parameters.AddWithValue("@type", activityType)
+                    cmd.Parameters.AddWithValue("@dt", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+                    cmd.Parameters.AddWithValue("@mt", matchTime)
+                    cmd.Parameters.AddWithValue("@user", If(String.IsNullOrEmpty(userName), Environment.UserName, userName))
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+        Catch ex As Exception
+            ' Fail silently to avoid breaking UI
+        End Try
     End Sub
 End Module

@@ -227,7 +227,7 @@ Partial Class Kumite
         ' LblNextMatch
         ' 
         LblNextMatch.BackColor = Color.Gold
-        LblNextMatch.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblNextMatch.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         LblNextMatch.Location = New Point(10, 8)
         LblNextMatch.Name = "LblNextMatch"
         LblNextMatch.Size = New Size(80, 24)
@@ -238,7 +238,7 @@ Partial Class Kumite
         ' TxtAkaName
         ' 
         TxtAkaName.BorderStyle = BorderStyle.FixedSingle
-        TxtAkaName.Font = New Font("Segoe UI", 9.0F)
+        TxtAkaName.Font = New Font("Segoe UI", 9F)
         TxtAkaName.Location = New Point(100, 9)
         TxtAkaName.Name = "TxtAkaName"
         TxtAkaName.Size = New Size(150, 23)
@@ -258,7 +258,7 @@ Partial Class Kumite
         ' LblVS
         ' 
         LblVS.BackColor = Color.Gold
-        LblVS.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblVS.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         LblVS.Location = New Point(295, 8)
         LblVS.Name = "LblVS"
         LblVS.Size = New Size(30, 24)
@@ -280,7 +280,7 @@ Partial Class Kumite
         ' TxtAoName
         ' 
         TxtAoName.BorderStyle = BorderStyle.FixedSingle
-        TxtAoName.Font = New Font("Segoe UI", 9.0F)
+        TxtAoName.Font = New Font("Segoe UI", 9F)
         TxtAoName.Location = New Point(370, 9)
         TxtAoName.Name = "TxtAoName"
         TxtAoName.Size = New Size(150, 23)
@@ -490,7 +490,7 @@ Partial Class Kumite
         ' 
         LblAoTitle.BackColor = Color.DodgerBlue
         LblAoTitle.Dock = DockStyle.Top
-        LblAoTitle.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        LblAoTitle.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         LblAoTitle.ForeColor = Color.White
         LblAoTitle.Location = New Point(0, 0)
         LblAoTitle.Name = "LblAoTitle"
@@ -776,7 +776,7 @@ Partial Class Kumite
         ' 
         ' LblAoMainScore
         ' 
-        LblAoMainScore.Font = New Font("Segoe UI", 36.0F, FontStyle.Bold)
+        LblAoMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
         LblAoMainScore.Location = New Point(630, 30)
         LblAoMainScore.Name = "LblAoMainScore"
         LblAoMainScore.Size = New Size(116, 60)
@@ -890,7 +890,7 @@ Partial Class Kumite
         ' 
         LblAkaTitle.BackColor = Color.Crimson
         LblAkaTitle.Dock = DockStyle.Top
-        LblAkaTitle.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        LblAkaTitle.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         LblAkaTitle.ForeColor = Color.White
         LblAkaTitle.Location = New Point(0, 0)
         LblAkaTitle.Name = "LblAkaTitle"
@@ -1170,7 +1170,7 @@ Partial Class Kumite
         ' 
         ' LblAkaMainScore
         ' 
-        LblAkaMainScore.Font = New Font("Segoe UI", 36.0F, FontStyle.Bold)
+        LblAkaMainScore.Font = New Font("Segoe UI", 36F, FontStyle.Bold)
         LblAkaMainScore.Location = New Point(626, 33)
         LblAkaMainScore.Name = "LblAkaMainScore"
         LblAkaMainScore.Size = New Size(109, 60)
@@ -1650,7 +1650,7 @@ Partial Class Kumite
         ' LblMatchTimerValue
         ' 
         LblMatchTimerValue.AutoSize = True
-        LblMatchTimerValue.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblMatchTimerValue.Font = New Font("Segoe UI", 12F, FontStyle.Bold)
         LblMatchTimerValue.Location = New Point(79, 8)
         LblMatchTimerValue.Name = "LblMatchTimerValue"
         LblMatchTimerValue.Size = New Size(54, 21)
@@ -1717,7 +1717,7 @@ Partial Class Kumite
         ' 
         ' Kumite
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.White
         ClientSize = New Size(1050, 656)

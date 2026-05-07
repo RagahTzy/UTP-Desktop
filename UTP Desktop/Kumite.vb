@@ -1,5 +1,8 @@
 ﻿Public Class Kumite
 
+    Public Shared AkaPenaltyColor As Color = Color.Red
+    Public frmScoreboard As Scoreboard
+
     ' ==================== Buka Jendela ListOfCompetitor ====================
     Private Sub OpenCompetitor_Click(sender As Object, e As EventArgs) Handles BtnAkaIcon.Click, BtnAoIcon.Click, BtnAkaUserIcon1.Click, BtnAoUserIcon1.Click
         Dim frmCompetitor As New ListOfCompetitor()
@@ -67,14 +70,14 @@
     End Sub
 
     ' ==================== AKA PENALTY BUTTONS ====================
-    ' BtnAka1C → hanya 1C merah
+    ' BtnAka1C → hanya 1C terwarna
     Private Sub BtnAka1C_Click(sender As Object, e As EventArgs) Handles BtnAka1C.Click
-        If BtnAka1C.BackColor = Color.Red And BtnAka2C.BackColor = SystemColors.Control Then
-            ' Toggle off jika sudah merah sendirian
+        If BtnAka1C.BackColor = AkaPenaltyColor And BtnAka2C.BackColor = SystemColors.Control Then
+            ' Toggle off jika sudah terwarna sendirian
             BtnAka1C.BackColor = SystemColors.Control
             BtnAka1C.ForeColor = Color.Black
         Else
-            BtnAka1C.BackColor = Color.Red : BtnAka1C.ForeColor = Color.White
+            BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
             BtnAka2C.BackColor = SystemColors.Control : BtnAka2C.ForeColor = Color.Black
             BtnAka3C.BackColor = SystemColors.Control : BtnAka3C.ForeColor = Color.Black
             BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
@@ -82,41 +85,38 @@
         End If
     End Sub
 
-    ' BtnAka2C → 1C dan 2C merah
+    ' Lakukan hal yang sama untuk tombol lainnya:
     Private Sub BtnAka2C_Click(sender As Object, e As EventArgs) Handles BtnAka2C.Click
-        BtnAka1C.BackColor = Color.Red : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = Color.Red : BtnAka2C.ForeColor = Color.White
+        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
         BtnAka3C.BackColor = SystemColors.Control : BtnAka3C.ForeColor = Color.Black
         BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
         BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
     End Sub
 
-    ' BtnAka3C → 1C, 2C, 3C merah
     Private Sub BtnAka3C_Click(sender As Object, e As EventArgs) Handles BtnAka3C.Click
-        BtnAka1C.BackColor = Color.Red : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = Color.Red : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = Color.Red : BtnAka3C.ForeColor = Color.White
+        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
         BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
         BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
     End Sub
 
-    ' BtnAkaHC → 1C, 2C, 3C, HC merah
     Private Sub BtnAkaHC_Click(sender As Object, e As EventArgs) Handles BtnAkaHC.Click
-        BtnAka1C.BackColor = Color.Red : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = Color.Red : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = Color.Red : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = Color.Red : BtnAkaHC.ForeColor = Color.White
+        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = AkaPenaltyColor : BtnAkaHC.ForeColor = Color.White
         BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
     End Sub
 
-    ' BtnAkaH → Semua merah, lalu AO jadi winner (Hansoku)
     Private Sub BtnAkaH_Click(sender As Object, e As EventArgs) Handles BtnAkaH.Click
-        BtnAka1C.BackColor = Color.Red : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = Color.Red : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = Color.Red : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = Color.Red : BtnAkaHC.ForeColor = Color.White
-        BtnAkaH.BackColor = Color.Red : BtnAkaH.ForeColor = Color.White
-        ShowAoWinner() ' Jika AKA Hansoku, maka AO menang
+        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = AkaPenaltyColor : BtnAkaHC.ForeColor = Color.White
+        BtnAkaH.BackColor = AkaPenaltyColor : BtnAkaH.ForeColor = Color.White
+        ShowAoWinner()
     End Sub
 
     ' ==================== AKA VR ====================
@@ -405,4 +405,126 @@
         CheckPointGap()
     End Sub
 
+    Private Sub BtnStartScoreboard_Click(sender As Object, e As EventArgs) Handles BtnStartScoreboard.Click
+        ' Jika form scoreboard belum ada atau tidak sengaja tertutup, buat baru
+        If frmScoreboard Is Nothing OrElse frmScoreboard.IsDisposed Then
+            frmScoreboard = New Scoreboard()
+        End If
+
+        ' Logika Deteksi Monitor Kedua (Projector / TV)
+        If Screen.AllScreens.Length > 1 Then
+            ' Ambil data monitor kedua (index 1)
+            Dim secondMonitor As Screen = Screen.AllScreens(1)
+
+            ' Tampilkan di monitor kedua secara Full Screen
+            frmScoreboard.StartPosition = FormStartPosition.Manual
+            frmScoreboard.Location = secondMonitor.Bounds.Location
+            frmScoreboard.WindowState = FormWindowState.Maximized
+        Else
+            ' Jika sedang tidak colok proyektor/monitor kedua, tampilkan di layar utama
+            frmScoreboard.StartPosition = FormStartPosition.CenterScreen
+            frmScoreboard.WindowState = FormWindowState.Maximized
+        End If
+
+        ' Tampilkan form ke layar
+        frmScoreboard.Show()
+
+        ' Panggil fungsi untuk langsung mengirim data nama & skor ke layar extend
+        UpdateScoreboardDisplay()
+    End Sub
+
+    ' ==================== SINKRONISASI DATA KE TAMPILAN EXTEND ====================
+    Public Sub UpdateScoreboardDisplay()
+        If frmScoreboard IsNot Nothing AndAlso Not frmScoreboard.IsDisposed Then
+            ' 1. Kirim Data Nama Pemain + Tim + Info Tim (Menjadi 2 Baris)
+            frmScoreboard.LblAkaName.Text = TxtAkaNameMain.Text & vbCrLf & TxtAkaTeam.Text & " (" & TxtAkaTeamInfo.Text & ")"
+            frmScoreboard.LblAoName.Text = TxtAoNameMain.Text & vbCrLf & TxtAoTeam.Text & " (" & TxtAoTeamInfo.Text & ")"
+
+            ' Sesuaikan font sedikit agar 2 baris teks muat dengan rapi
+            frmScoreboard.LblAkaName.Font = New Font("Consolas", 24, FontStyle.Bold)
+            frmScoreboard.LblAoName.Font = New Font("Consolas", 24, FontStyle.Bold)
+
+            ' 2. Kirim Data Skor & Footer Info
+            frmScoreboard.LblAkaScore.Text = LblAkaMainScore.Text
+            frmScoreboard.LblAoScore.Text = LblAoMainScore.Text
+            frmScoreboard.LblTimer.Text = LblMatchTimerValue.Text
+            frmScoreboard.LblTatami.Text = "TATAMI" & vbCrLf & NumTatami.Value.ToString()
+            frmScoreboard.LblMatchDesc.Text = TxtMatchDesc.Text
+
+            ' 3. Sinkronisasi Warna Penalti
+            UpdateScoreboardPenalties()
+        End If
+    End Sub
+
+    ' Fungsi Khusus Mendeteksi Warna Penalti
+    Public Sub UpdateScoreboardPenalties()
+        If frmScoreboard IsNot Nothing AndAlso Not frmScoreboard.IsDisposed Then
+            ' Urutan tombol dari Kumite.vb
+            Dim akaBtns = {BtnAka1C, BtnAka2C, BtnAka3C, BtnAkaHC, BtnAkaH}
+            Dim aoBtns = {BtnAo1C, BtnAo2C, BtnAo3C, BtnAoHC, BtnAoH}
+
+            For i = 0 To 4
+                ' ================== LOGIKA AKA ==================
+                ' Cek spesifik: Apakah background tombol AKA sedang menggunakan warna penalti?
+                If akaBtns(i).BackColor = AkaPenaltyColor Then
+                    ' Jika ya, beri kotak fill warna di belakang teks (BackColor) dan ubah teks jadi Putih
+                    frmScoreboard.AkaPenLabels(i).BackColor = AkaPenaltyColor
+                    frmScoreboard.AkaPenLabels(i).ForeColor = Color.White
+                Else
+                    ' Jika tidak, buat background jadi transparan dan teksnya abu-abu (Default)
+                    frmScoreboard.AkaPenLabels(i).BackColor = Color.Transparent
+                    frmScoreboard.AkaPenLabels(i).ForeColor = Color.LightGray
+                End If
+
+
+                ' ================== LOGIKA AO ==================
+                ' Cek spesifik: Apakah background tombol AO sedang biru?
+                If aoBtns(i).BackColor = Color.Blue Then
+                    ' Jika ya, beri kotak fill biru di belakang teks dan ubah teks jadi Putih
+                    frmScoreboard.AoPenLabels(i).BackColor = Color.Blue
+                    frmScoreboard.AoPenLabels(i).ForeColor = Color.White
+                Else
+                    ' Jika tidak, kembalikan ke default
+                    frmScoreboard.AoPenLabels(i).BackColor = Color.Transparent
+                    frmScoreboard.AoPenLabels(i).ForeColor = Color.LightGray
+                End If
+            Next
+        End If
+    End Sub
+
+    ' ==================== FUNGSI "LIVE" LISTENER (TRIGGER OTOMATIS) ====================
+
+    ' 1. Otomatis ter-update jika Anda MENGUBAH TEKS apapun di UI
+    Private Sub SyncTextToExtend_Live(sender As Object, e As EventArgs) Handles TxtAkaNameMain.TextChanged, TxtAkaTeam.TextChanged, TxtAkaTeamInfo.TextChanged, TxtAoNameMain.TextChanged, TxtAoTeam.TextChanged, TxtAoTeamInfo.TextChanged, TxtMatchDesc.TextChanged
+        UpdateScoreboardDisplay()
+    End Sub
+
+    ' 2. Otomatis ter-update jika SKOR BERTAMBAH/BERKURANG
+    Private Sub SyncScoreToExtend_Live(sender As Object, e As EventArgs) Handles LblAkaMainScore.TextChanged, LblAoMainScore.TextChanged
+        UpdateScoreboardDisplay()
+    End Sub
+
+    ' 3. Otomatis ter-update jika TIMER BERUBAH DETIKNYA
+    Private Sub SyncTimerToExtend_Live(sender As Object, e As EventArgs) Handles LblMatchTimerValue.TextChanged
+        If frmScoreboard IsNot Nothing AndAlso Not frmScoreboard.IsDisposed Then
+            frmScoreboard.LblTimer.Text = LblMatchTimerValue.Text
+        End If
+    End Sub
+
+    ' 4. Otomatis ter-update HANYA SAAT WARNA TOMBOL PENALTI DIKLIK
+    Private Sub SyncPenaltyToExtend_Live(sender As Object, e As EventArgs) Handles BtnAka1C.BackColorChanged, BtnAka2C.BackColorChanged, BtnAka3C.BackColorChanged, BtnAkaHC.BackColorChanged, BtnAkaH.BackColorChanged, BtnAo1C.BackColorChanged, BtnAo2C.BackColorChanged, BtnAo3C.BackColorChanged, BtnAoHC.BackColorChanged, BtnAoH.BackColorChanged
+        UpdateScoreboardPenalties()
+    End Sub
+
+    ' ==================== HENTIKAN/TUTUP SCOREBOARD ====================
+    Private Sub StopScoreboard_Click(sender As Object, e As EventArgs) Handles StopScoreboard.Click
+        ' Cek apakah form scoreboard sedang aktif/terbuka
+        If frmScoreboard IsNot Nothing AndAlso Not frmScoreboard.IsDisposed Then
+            frmScoreboard.Close()     ' Tutup jendela extend scoreboard
+            frmScoreboard = Nothing   ' Kosongkan variabel dari memori
+            MessageBox.Show("Scoreboard Extend telah dihentikan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBox.Show("Scoreboard Extend sedang tidak berjalan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
 End Class

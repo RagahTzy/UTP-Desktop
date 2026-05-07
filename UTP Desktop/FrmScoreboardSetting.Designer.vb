@@ -124,10 +124,11 @@ Partial Public Class FrmScoreboardSetting
         split.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100))
 
         ' --- LEFT COLUMN ---
-        Dim left As New FlowLayoutPanel() : left.Dock = DockStyle.Fill : left.FlowDirection = FlowDirection.TopDown : left.WrapContents = False
-
         Dim gpP As New GroupBox() : gpP.Text = "Penalties" : gpP.Size = New Size(490, 130)
-        gpP.Controls.Add(BuildPenaltySub("Penalties - AKA (Kumite)", Color.Crimson, 5))
+
+        ' Sambungkan Setelan UI dengan Variabel AKA di Kumite
+        gpP.Controls.Add(BuildPenaltySub("Penalties - AKA (Kumite)", Kumite.AkaPenaltyColor, 5, Sub(newColor) Kumite.AkaPenaltyColor = newColor))
+
         gpP.Controls.Add(BuildPenaltySub("Penalties - AO (Kumite)", Color.DodgerBlue, 245))
 
         Dim gpT As New GroupBox() : gpT.Text = "Kumite Timer & Score" : gpT.Size = New Size(490, 95)
@@ -155,9 +156,9 @@ Partial Public Class FrmScoreboardSetting
         Dim gpR As New GroupBox() : gpR.Size = New Size(490, 200) : gpR.Text = "Round Info"
         AddRoundInfo(gpR)
 
+        ' --- LEFT COLUMN ---
+        Dim left As New FlowLayoutPanel() : left.Dock = DockStyle.Fill : left.FlowDirection = FlowDirection.TopDown : left.WrapContents = False
         left.Controls.AddRange(New Control() {gpP, gpT, gpD, gpR})
-
-
 
         ' --- RIGHT COLUMN ---
         Dim right As New FlowLayoutPanel() : right.Dock = DockStyle.Fill : right.FlowDirection = FlowDirection.TopDown : right.WrapContents = False
@@ -250,7 +251,7 @@ Partial Public Class FrmScoreboardSetting
     End Function
 
     ' --- HELPERS ---
-    Private Function MakeColorPicker(clr As Color) As Panel
+    Private Function MakeColorPicker(clr As Color, Optional onColorChanged As Action(Of Color) = Nothing) As Panel
         Dim p As New Panel() : p.Size = New Size(120, 28) : p.BorderStyle = BorderStyle.FixedSingle : p.BackColor = clr
         Dim btn As New Button() : btn.Text = "Change" : btn.Size = New Size(70, 22) : btn.Location = New Point(46, 2)
         btn.BackColor = Color.White : btn.FlatStyle = FlatStyle.Flat : btn.Font = New Font("Segoe UI", 7)
@@ -258,17 +259,24 @@ Partial Public Class FrmScoreboardSetting
         Dim localP As Panel = p
         AddHandler btn.Click, Sub()
                                   Dim cd As New ColorDialog() : cd.Color = localP.BackColor
-                                  If cd.ShowDialog() = DialogResult.OK Then localP.BackColor = cd.Color
+                                  If cd.ShowDialog() = DialogResult.OK Then
+                                      localP.BackColor = cd.Color
+                                      ' SETIAP GANTI WARNA, UPDATE VARIABELNYA
+                                      If onColorChanged IsNot Nothing Then onColorChanged(cd.Color)
+                                  End If
                               End Sub
         p.Controls.Add(btn)
         Return p
     End Function
 
-    Private Function BuildPenaltySub(title As String, clr As Color, x As Integer) As Panel
+    Private Function BuildPenaltySub(title As String, clr As Color, x As Integer, Optional onBgColorChanged As Action(Of Color) = Nothing) As Panel
         Dim p As New Panel() : p.Location = New Point(x, 20) : p.Size = New Size(235, 100)
         Dim lblT As New Label() : lblT.Text = title : lblT.Font = New Font("Segoe UI", 8.5, FontStyle.Bold) : lblT.Location = New Point(5, 0) : lblT.AutoSize = True
         Dim lblB As New Label() : lblB.Text = "BackColor" : lblB.Location = New Point(5, 28) : lblB.AutoSize = True
-        Dim cp1 As Panel = MakeColorPicker(clr) : cp1.Location = New Point(100, 25)
+
+        ' Lempar Action-nya ke pembuat ColorPicker
+        Dim cp1 As Panel = MakeColorPicker(clr, onBgColorChanged) : cp1.Location = New Point(100, 25)
+
         Dim lblS As New Label() : lblS.Text = "Selected" & vbCrLf & "Text Color" : lblS.Location = New Point(5, 58) : lblS.AutoSize = True
         Dim cp2 As Panel = MakeColorPicker(Color.White) : cp2.Location = New Point(100, 60)
         p.Controls.AddRange(New Control() {lblT, lblB, cp1, lblS, cp2})

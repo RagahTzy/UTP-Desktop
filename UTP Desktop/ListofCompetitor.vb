@@ -1,4 +1,4 @@
-﻿Imports System.Data.SQLite
+Imports System.Data.SQLite
 
 Public Class ListOfCompetitor
 
@@ -21,7 +21,8 @@ Public Class ListOfCompetitor
         Using conn As New SQLiteConnection(connString)
             Try
                 conn.Open()
-                Dim query As String = "SELECT TeamName FROM Team"
+                ' Ambil daftar nama tim langsung dari tabel Competitor, bukan dari tabel Team yang bikin error
+                Dim query As String = "SELECT DISTINCT TeamName FROM Competitor WHERE TeamName IS NOT NULL AND TeamName <> ''"
                 Using cmd As New SQLiteCommand(query, conn)
                     Using reader As SQLiteDataReader = cmd.ExecuteReader()
                         ListBoxTeam.Items.Clear()
@@ -102,12 +103,12 @@ Public Class ListOfCompetitor
         If DataGridView1.SelectedRows.Count > 0 Then
             Dim row As DataGridViewRow = DataGridView1.SelectedRows(0)
             Dim drv As DataRowView = CType(row.DataBoundItem, DataRowView)
-            
+
             SelectedCompetitorId = Convert.ToInt32(drv("ID"))
             SelectedCompetitorName = drv("Name").ToString()
             SelectedTeamName = If(drv("TeamName") IsNot Nothing, drv("TeamName").ToString(), "")
             SelectedTeamInfo = If(drv("TeamInfo") IsNot Nothing, drv("TeamInfo").ToString(), "")
-            
+
             Me.Close()
         Else
             MessageBox.Show("Pilih kompetitor terlebih dahulu.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)

@@ -200,7 +200,6 @@ Public Class Competitor
     End Sub
 
     Private Sub dgvTeams_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTeams.CellContentClick
-
         If e.RowIndex >= 0 Then
             Dim teamName As String = dgvTeams.Rows(e.RowIndex).Cells("TeamName").Value.ToString()
             RefreshData("", teamName)
@@ -255,7 +254,9 @@ Public Class Competitor
         End If
     End Sub
 
+    ' ==================== Form Closed ====================
     Private Sub Competitor_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Dashboard.Show()
     End Sub
+
 End Class

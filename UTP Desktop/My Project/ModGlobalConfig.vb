@@ -1,29 +1,18 @@
 ﻿Public Module ModGlobalConfig
-    ' 1. Dictionary untuk menyimpan daftar shortcut (Aksi -> Tombol)
     Public ShortcutSettings As New Dictionary(Of String, String)
-
-    ' 2. Status ON/OFF shortcut secara global
     Public IsShortcutEnabled As Boolean = True
 
-    ' 3. FLAG TERBARU: Untuk memberi tahu Form Kumite bahwa ada perubahan data
-    ' (PENTING agar sinkronisasi real-time jalan)
+    ' FLAG: Sangat penting agar Form Kumite tahu kapan harus refresh data
     Public NeedRefreshSettings As Boolean = False
 
-    ''' <summary>
-    ''' Mengisi data default saat aplikasi pertama kali dijalankan
-    ''' </summary>
     Public Sub InitDefaultShortcuts()
-        ' Jangan isi ulang jika sudah ada datanya agar settingan user tidak tertimpa default
+        ' Jangan isi ulang jika sudah ada datanya
         If ShortcutSettings.Count > 0 Then Exit Sub
 
-        ' Daftar Shortcut Standar (Sesuaikan teks ini dengan isiDataShortcut di Shortcut.vb)
+        ' Pastikan Nama Aksi (Key) di sini sama dengan yang ada di Kumite.vb
         ShortcutSettings("Start-Close Scoreboard") = "Control+B"
-        ShortcutSettings("Timer Waiting Start-Stop") = "Control+W"
         ShortcutSettings("Match Timer Start-Stop") = "Space"
-        ShortcutSettings("Next Match") = "Control+N"
-        ShortcutSettings("Save Match Result") = "Control+S"
         ShortcutSettings("Match Timer Reset") = "Control+R"
-        ShortcutSettings("Show Winner") = "Control+E"
 
         ' AKA Group
         ShortcutSettings("AKA - Yuko(1)") = "Shift+A"

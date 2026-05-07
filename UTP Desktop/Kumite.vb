@@ -1,6 +1,72 @@
 ﻿Public Class Kumite
+    ' ==================== TAMBAHAN UNTUK SHORTCUT ====================
     ' Variabel lokal untuk menyimpan shortcut agar tidak terus-menerus memanggil Module
     Private localShortcuts As New Dictionary(Of String, String)
+
+    ' Fungsi untuk menyegarkan data shortcut di Form Kumite jika ada perubahan di Form Shortcut
+    Private Sub RefreshLocalSettings()
+        localShortcuts.Clear()
+        For Each kvp In ModGlobalConfig.ShortcutSettings
+            localShortcuts.Add(kvp.Key, kvp.Value)
+        Next
+        ModGlobalConfig.NeedRefreshSettings = False
+    End Sub
+
+    ' Mesin Pendengar Keyboard
+    Private Sub Kumite_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        ' Cek apakah perlu refresh setting
+        If ModGlobalConfig.NeedRefreshSettings Then RefreshLocalSettings()
+
+        ' Cek apakah shortcut ON
+        If ModGlobalConfig.IsShortcutEnabled = False Then Exit Sub
+
+        ' Susun kombinasi tombol
+        Dim pressedKey As String = ""
+        If e.Control Then pressedKey &= "Control+"
+        If e.Shift Then pressedKey &= "Shift+"
+        If e.Alt Then pressedKey &= "Alt+"
+        pressedKey &= e.KeyCode.ToString()
+
+        ' Cari aksi yang sesuai
+        For Each kvp In localShortcuts
+            If kvp.Value = pressedKey Then
+                e.SuppressKeyPress = True
+                e.Handled = True
+                EksekusiAksiShortcut(kvp.Key)
+                Exit For
+            End If
+        Next
+    End Sub
+
+    ' Logika Eksekusi (Menghubungkan Nama di Shortcut ke Tombol Asli)
+    Private Sub EksekusiAksiShortcut(namaAksi As String)
+        Select Case namaAksi
+            Case "Start-Close Scoreboard"
+                BtnStartScoreboard.PerformClick()
+            Case "Match Timer Start-Stop"
+                ' Tambahkan tombol timer kamu di sini jika sudah ada
+            Case "Match Timer Reset"
+                ' Tambahkan tombol reset timer kamu di sini jika sudah ada
+            Case "AKA - Yuko(1)"
+                BtnAkaYuko.PerformClick()
+            Case "AKA - Wazaari(2)"
+                BtnAkaWazaari.PerformClick()
+            Case "AKA - Ippon(3)"
+                BtnAkaIppon.PerformClick()
+            Case "AKA - SENSHU"
+                BtnAkaSenshu.PerformClick()
+            Case "AO - Yuko(1)"
+                BtnAoYuko.PerformClick()
+            Case "AO - Wazaari(2)"
+                BtnAoWazaari.PerformClick()
+            Case "AO - Ippon(3)"
+                BtnAoIppon.PerformClick()
+            Case "AO - SENSHU"
+                BtnAoSenshu.PerformClick()
+        End Select
+    End Sub
+    ' ==================== END SHORTCUT SECTION ====================
+
 
     ' ==================== Load Form ====================
     Private Sub Kumite_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -14,94 +80,6 @@
         RefreshLocalSettings()
     End Sub
 
-    ' Fungsi untuk menyegarkan data shortcut di Form Kumite jika ada perubahan di Form Shortcut
-    Private Sub RefreshLocalSettings()
-        localShortcuts.Clear()
-        For Each kvp In ModGlobalConfig.ShortcutSettings
-            localShortcuts.Add(kvp.Key, kvp.Value)
-        Next
-        ModGlobalConfig.NeedRefreshSettings = False
-    End Sub
-
-    ' ==================== MESIN PENDENGAR KEYBOARD (SHORTCUT) ====================
-    Private Sub Kumite_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        ' CEK: Jika user baru saja mengubah shortcut di form sebelah, update datanya di sini
-        If ModGlobalConfig.NeedRefreshSettings Then RefreshLocalSettings()
-
-        ' 1. Cek apakah shortcut sedang aktif (ON/OFF)
-        If ModGlobalConfig.IsShortcutEnabled = False Then Exit Sub
-
-        ' 2. Susun kombinasi tombol yang ditekan
-        Dim pressedKey As String = ""
-        If e.Control Then pressedKey &= "Control+"
-        If e.Shift Then pressedKey &= "Shift+"
-        If e.Alt Then pressedKey &= "Alt+"
-        pressedKey &= e.KeyCode.ToString()
-
-        ' 3. Cari aksi yang sesuai di Dictionary lokal
-        For Each kvp In localShortcuts
-            If kvp.Value = pressedKey Then
-                ' Hentikan fungsi asli tombol agar tidak bentrok dengan kontrol UI
-                e.SuppressKeyPress = True
-                e.Handled = True
-
-                ' Jalankan fungsi berdasarkan nama aksi
-                EksekusiAksiShortcut(kvp.Key)
-                Exit For
-            End If
-        Next
-    End Sub
-
-    ' ==================== LOGIKA EKSEKUSI AKSI ====================
-    ' Sesuaikan .PerformClick() dengan nama Name (ID) Button di desain form Anda
-    Private Sub EksekusiAksiShortcut(namaAksi As String)
-        Select Case namaAksi
-            ' --- Kelompok AKA (Merah) ---
-            Case "AKA - Yuko(1)"
-                ' Contoh: BtnAkaYuko1.PerformClick()
-
-            Case "AKA - Wazaari(2)"
-                ' Contoh: BtnAkaWazaari2.PerformClick()
-
-            Case "AKA - Ippon(3)"
-                ' Contoh: BtnAkaIppon3.PerformClick()
-
-            Case "AKA - SENSHU"
-                ' Contoh: BtnAkaSenshu.PerformClick()
-
-            ' --- Kelompok AO (Biru) ---
-            Case "AO - Yuko(1)"
-                ' Contoh: BtnAoYuko1.PerformClick()
-
-            Case "AO - Wazaari(2)"
-                ' Contoh: BtnAoWazaari2.PerformClick()
-
-            Case "AO - Ippon(3)"
-                ' Contoh: BtnAoIppon3.PerformClick()
-
-            Case "AO - SENSHU"
-                ' Contoh: BtnAoSenshu.PerformClick()
-
-            ' --- Kelompok General ---
-            Case "Match Timer Start-Stop"
-                ' Contoh: BtnStartStopTimer.PerformClick()
-
-            Case "Match Timer Reset"
-                ' Contoh: BtnResetTimer.PerformClick()
-
-            Case "Start-Close Scoreboard"
-                ' Contoh: BtnDisplayScore.PerformClick()
-
-            Case "Next Match"
-                ' Contoh: BtnNextMatch.PerformClick()
-
-            Case "Save Match Result"
-                ' Contoh: BtnSaveMatch.PerformClick()
-
-            Case "Show Winner"
-                ' Contoh: BtnWinnerInfo.PerformClick()
-        End Select
-    End Sub
 
     ' ==================== Tombol Navigasi & Jendela Lain ====================
 
@@ -156,7 +134,7 @@
     End Sub
 
     ' ====================================================================================
-    '                              AKA SECTION
+    '                                 AKA SECTION
     ' ====================================================================================
 
     ' Button1 dipencet → AO jadi winner
@@ -182,45 +160,70 @@
             BtnAka1C.BackColor = SystemColors.Control
             BtnAka1C.ForeColor = Color.Black
         Else
-            BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-            BtnAka2C.BackColor = SystemColors.Control : BtnAka2C.ForeColor = Color.Black
-            BtnAka3C.BackColor = SystemColors.Control : BtnAka3C.ForeColor = Color.Black
-            BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
-            BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+            BtnAka1C.BackColor = AkaPenaltyColor
+            BtnAka1C.ForeColor = Color.White
+            BtnAka2C.BackColor = SystemColors.Control
+            BtnAka2C.ForeColor = Color.Black
+            BtnAka3C.BackColor = SystemColors.Control
+            BtnAka3C.ForeColor = Color.Black
+            BtnAkaHC.BackColor = SystemColors.Control
+            BtnAkaHC.ForeColor = Color.Black
+            BtnAkaH.BackColor = SystemColors.Control
+            BtnAkaH.ForeColor = Color.Black
         End If
     End Sub
 
     ' Lakukan hal yang sama untuk tombol lainnya:
     Private Sub BtnAka2C_Click(sender As Object, e As EventArgs) Handles BtnAka2C.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = SystemColors.Control : BtnAka3C.ForeColor = Color.Black
-        BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
-        BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = SystemColors.Control
+        BtnAka3C.ForeColor = Color.Black
+        BtnAkaHC.BackColor = SystemColors.Control
+        BtnAkaHC.ForeColor = Color.Black
+        BtnAkaH.BackColor = SystemColors.Control
+        BtnAkaH.ForeColor = Color.Black
     End Sub
 
     Private Sub BtnAka3C_Click(sender As Object, e As EventArgs) Handles BtnAka3C.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
-        BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor
+        BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = SystemColors.Control
+        BtnAkaHC.ForeColor = Color.Black
+        BtnAkaH.BackColor = SystemColors.Control
+        BtnAkaH.ForeColor = Color.Black
     End Sub
 
     Private Sub BtnAkaHC_Click(sender As Object, e As EventArgs) Handles BtnAkaHC.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = AkaPenaltyColor : BtnAkaHC.ForeColor = Color.White
-        BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor
+        BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = AkaPenaltyColor
+        BtnAkaHC.ForeColor = Color.White
+        BtnAkaH.BackColor = SystemColors.Control
+        BtnAkaH.ForeColor = Color.Black
     End Sub
 
     Private Sub BtnAkaH_Click(sender As Object, e As EventArgs) Handles BtnAkaH.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = AkaPenaltyColor : BtnAkaHC.ForeColor = Color.White
-        BtnAkaH.BackColor = AkaPenaltyColor : BtnAkaH.ForeColor = Color.White
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor
+        BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = AkaPenaltyColor
+        BtnAkaHC.ForeColor = Color.White
+        BtnAkaH.BackColor = AkaPenaltyColor
+        BtnAkaH.ForeColor = Color.White
         ShowAoWinner()
     End Sub
 
@@ -292,7 +295,7 @@
     End Sub
 
     ' ====================================================================================
-    '                              AO SECTION
+    '                                 AO SECTION
     ' ====================================================================================
 
     Private Sub BtnAoKiken_Click(sender As Object, e As EventArgs) Handles BtnAoKiken.Click
@@ -313,44 +316,69 @@
             BtnAo1C.BackColor = SystemColors.Control
             BtnAo1C.ForeColor = Color.Black
         Else
-            BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-            BtnAo2C.BackColor = SystemColors.Control : BtnAo2C.ForeColor = Color.Black
-            BtnAo3C.BackColor = SystemColors.Control : BtnAo3C.ForeColor = Color.Black
-            BtnAoHC.BackColor = SystemColors.Control : BtnAoHC.ForeColor = Color.Black
-            BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+            BtnAo1C.BackColor = Color.Blue
+            BtnAo1C.ForeColor = Color.White
+            BtnAo2C.BackColor = SystemColors.Control
+            BtnAo2C.ForeColor = Color.Black
+            BtnAo3C.BackColor = SystemColors.Control
+            BtnAo3C.ForeColor = Color.Black
+            BtnAoHC.BackColor = SystemColors.Control
+            BtnAoHC.ForeColor = Color.Black
+            BtnAoH.BackColor = SystemColors.Control
+            BtnAoH.ForeColor = Color.Black
         End If
     End Sub
 
     Private Sub BtnAo2C_Click(sender As Object, e As EventArgs) Handles BtnAo2C.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = SystemColors.Control : BtnAo3C.ForeColor = Color.Black
-        BtnAoHC.BackColor = SystemColors.Control : BtnAoHC.ForeColor = Color.Black
-        BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = SystemColors.Control
+        BtnAo3C.ForeColor = Color.Black
+        BtnAoHC.BackColor = SystemColors.Control
+        BtnAoHC.ForeColor = Color.Black
+        BtnAoH.BackColor = SystemColors.Control
+        BtnAoH.ForeColor = Color.Black
     End Sub
 
     Private Sub BtnAo3C_Click(sender As Object, e As EventArgs) Handles BtnAo3C.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = Color.Blue : BtnAo3C.ForeColor = Color.White
-        BtnAoHC.BackColor = SystemColors.Control : BtnAoHC.ForeColor = Color.Black
-        BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = Color.Blue
+        BtnAo3C.ForeColor = Color.White
+        BtnAoHC.BackColor = SystemColors.Control
+        BtnAoHC.ForeColor = Color.Black
+        BtnAoH.BackColor = SystemColors.Control
+        BtnAoH.ForeColor = Color.Black
     End Sub
 
     Private Sub BtnAoHC_Click(sender As Object, e As EventArgs) Handles BtnAoHC.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = Color.Blue : BtnAo3C.ForeColor = Color.White
-        BtnAoHC.BackColor = Color.Blue : BtnAoHC.ForeColor = Color.White
-        BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = Color.Blue
+        BtnAo3C.ForeColor = Color.White
+        BtnAoHC.BackColor = Color.Blue
+        BtnAoHC.ForeColor = Color.White
+        BtnAoH.BackColor = SystemColors.Control
+        BtnAoH.ForeColor = Color.Black
     End Sub
 
     Private Sub BtnAoH_Click(sender As Object, e As EventArgs) Handles BtnAoH.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = Color.Blue : BtnAo3C.ForeColor = Color.White
-        BtnAoHC.BackColor = Color.Blue : BtnAoHC.ForeColor = Color.White
-        BtnAoH.BackColor = Color.Blue : BtnAoH.ForeColor = Color.White
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = Color.Blue
+        BtnAo3C.ForeColor = Color.White
+        BtnAoHC.BackColor = Color.Blue
+        BtnAoHC.ForeColor = Color.White
+        BtnAoH.BackColor = Color.Blue
+        BtnAoH.ForeColor = Color.White
         ShowAkaWinner()
     End Sub
 
@@ -414,7 +442,7 @@
     End Sub
 
     ' ====================================================================================
-    '                         HELPER / SHARED FUNCTIONS
+    '                               HELPER / SHARED FUNCTIONS
     ' ====================================================================================
 
     Private Sub CheckPointGap()
@@ -570,26 +598,19 @@
 
             For i = 0 To 4
                 ' ================== LOGIKA AKA ==================
-                ' Cek spesifik: Apakah background tombol AKA sedang menggunakan warna penalti?
                 If akaBtns(i).BackColor = AkaPenaltyColor Then
-                    ' Jika ya, beri kotak fill warna di belakang teks (BackColor) dan ubah teks jadi Putih
                     frmScoreboard.AkaPenLabels(i).BackColor = AkaPenaltyColor
                     frmScoreboard.AkaPenLabels(i).ForeColor = Color.White
                 Else
-                    ' Jika tidak, buat background jadi transparan dan teksnya abu-abu (Default)
                     frmScoreboard.AkaPenLabels(i).BackColor = Color.Transparent
                     frmScoreboard.AkaPenLabels(i).ForeColor = Color.LightGray
                 End If
 
-
                 ' ================== LOGIKA AO ==================
-                ' Cek spesifik: Apakah background tombol AO sedang biru?
                 If aoBtns(i).BackColor = Color.Blue Then
-                    ' Jika ya, beri kotak fill biru di belakang teks dan ubah teks jadi Putih
                     frmScoreboard.AoPenLabels(i).BackColor = Color.Blue
                     frmScoreboard.AoPenLabels(i).ForeColor = Color.White
                 Else
-                    ' Jika tidak, kembalikan ke default
                     frmScoreboard.AoPenLabels(i).BackColor = Color.Transparent
                     frmScoreboard.AoPenLabels(i).ForeColor = Color.LightGray
                 End If

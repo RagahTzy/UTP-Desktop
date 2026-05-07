@@ -422,6 +422,23 @@
             Return
         End If
         Dim hasil As String = lblWinner.Text.Replace("Winner :", "").Trim()
+        ' Simpan ke DB dan beri tahu kumite untuk tampilkan pemenang
+        ModGlobalConfig.LogActivity("Hantei", "Hasil: " & hasil, "Hantei", "", Environment.UserName)
+
+        ' Kirim hasil ke form Kumite melalui event: set langsung pada public controls
+        Try
+            Dim parent = CType(Me.Owner, Kumite)
+            If parent IsNot Nothing Then
+                If hasil = "AKA" Then
+                    parent.ShowAkaWinner()
+                ElseIf hasil = "AO" Then
+                    parent.ShowAoWinner()
+                End If
+            End If
+        Catch
+            ' ignore
+        End Try
+
         MessageBox.Show("Hasil Hantei disimpan: " & hasil, "Hantei",
                         MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()

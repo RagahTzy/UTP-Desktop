@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-16"?>
 <MyApplicationData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <MySubMain>true</MySubMain>
+<<<<<<< HEAD
   <MainForm>QrGenerated</MainForm>
+=======
+  <MainForm>Dashboard</MainForm>
+>>>>>>> c6bae6bfd9489778aadcdce195e4199ccff4fbaa
   <SingleInstance>false</SingleInstance>
   <ShutdownMode>0</ShutdownMode>
   <EnableVisualStyles>true</EnableVisualStyles>

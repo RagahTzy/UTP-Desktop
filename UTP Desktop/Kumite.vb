@@ -1,7 +1,147 @@
 ﻿Public Class Kumite
+    ' ==================== TAMBAHAN UNTUK SHORTCUT ====================
+    ' Variabel lokal untuk menyimpan shortcut agar tidak terus-menerus memanggil Module
+    Private localShortcuts As New Dictionary(Of String, String)
+
+    ' Fungsi untuk menyegarkan data shortcut di Form Kumite jika ada perubahan di Form Shortcut
+    Private Sub RefreshLocalSettings()
+        localShortcuts.Clear()
+        For Each kvp In ModGlobalConfig.ShortcutSettings
+            localShortcuts.Add(kvp.Key, kvp.Value)
+        Next
+        ModGlobalConfig.NeedRefreshSettings = False
+    End Sub
+
+    ' Mesin Pendengar Keyboard
+    Private Sub Kumite_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        ' Cek apakah perlu refresh setting
+        If ModGlobalConfig.NeedRefreshSettings Then RefreshLocalSettings()
+
+        ' Cek apakah shortcut ON
+        If ModGlobalConfig.IsShortcutEnabled = False Then Exit Sub
+
+        ' Susun kombinasi tombol
+        Dim pressedKey As String = ""
+        If e.Control Then pressedKey &= "Control+"
+        If e.Shift Then pressedKey &= "Shift+"
+        If e.Alt Then pressedKey &= "Alt+"
+        pressedKey &= e.KeyCode.ToString()
+
+        ' Cari aksi yang sesuai
+        For Each kvp In localShortcuts
+            If kvp.Value = pressedKey Then
+                e.SuppressKeyPress = True
+                e.Handled = True
+                EksekusiAksiShortcut(kvp.Key)
+                Exit For
+            End If
+        Next
+    End Sub
+
+    ' Logika Eksekusi (Menghubungkan Nama di Shortcut ke Tombol Asli)
+    Private Sub EksekusiAksiShortcut(namaAksi As String)
+        Select Case namaAksi
+            Case "Start-Close Scoreboard"
+                BtnStartScoreboard.PerformClick()
+            Case "Match Timer Start-Stop"
+                ' Tambahkan tombol timer kamu di sini jika sudah ada
+            Case "Match Timer Reset"
+                ' Tambahkan tombol reset timer kamu di sini jika sudah ada
+            Case "AKA - Yuko(1)"
+                BtnAkaYuko.PerformClick()
+            Case "AKA - Wazaari(2)"
+                BtnAkaWazaari.PerformClick()
+            Case "AKA - Ippon(3)"
+                BtnAkaIppon.PerformClick()
+            Case "AKA - SENSHU"
+                BtnAkaSenshu.PerformClick()
+            Case "AO - Yuko(1)"
+                BtnAoYuko.PerformClick()
+            Case "AO - Wazaari(2)"
+                BtnAoWazaari.PerformClick()
+            Case "AO - Ippon(3)"
+                BtnAoIppon.PerformClick()
+            Case "AO - SENSHU"
+                BtnAoSenshu.PerformClick()
+        End Select
+    End Sub
+    ' ==================== END SHORTCUT SECTION ====================
+
+
+    ' ==================== Load Form ====================
+    Private Sub Kumite_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' 1. PENTING: Harus True agar form bisa menangkap tombol keyboard
+        Me.KeyPreview = True
+
+        ' 2. Inisialisasi data default ke Module
+        ModGlobalConfig.InitDefaultShortcuts()
+
+        ' 3. Ambil data shortcut dari Module ke variabel lokal
+        RefreshLocalSettings()
+
+        ' Inisialisasi Match Timer
+        AddHandler matchTimer.Tick, AddressOf MatchTimer_Tick
+        matchTimer.Interval = 100 ' Update setiap 100ms untuk presisi
+
+        ' Set NumWinPoint tidak bisa diubah saat load (harus pencet BtnEditWinPoint dulu)
+        NumWinPoint.Enabled = False
+
+        ' Set LblMatchTimerValue initial value
+        LblMatchTimerValue.Text = "0:00.0"
+    End Sub
+
+
+    ' ==================== Tombol Navigasi & Jendela Lain ====================
 
     Public Shared AkaPenaltyColor As Color = Color.Red
     Public frmScoreboard As Scoreboard
+
+    ' Temporary storage when choosing competitor from header icons
+    Private tempHeaderAkaName As String = ""
+    Private tempHeaderAkaTeam As String = ""
+    Private tempHeaderAkaTeamInfo As String = ""
+    Private tempHeaderAoName As String = ""
+    Private tempHeaderAoTeam As String = ""
+    Private tempHeaderAoTeamInfo As String = ""
+
+    ' Timer untuk countdown
+    Private matchTimer As New System.Windows.Forms.Timer()
+    Private totalSeconds As Integer = 0
+
+    ' Tombol Load Next Match: pindahkan value dari header (TxtAkaName/TxtAoName)
+    ' ke panel utama (TxtAkaNameMain/TxtAoNameMain) ketika pengguna konfirmasi
+    Private Sub BtnLoadNextMatch_Click(sender As Object, e As EventArgs) Handles BtnLoadNextMatch.Click
+        Dim changed As Boolean = False
+
+        If Not String.IsNullOrEmpty(tempHeaderAkaName) Then
+            TxtAkaNameMain.Text = tempHeaderAkaName
+            TxtAkaTeam.Text = tempHeaderAkaTeam
+            TxtAkaTeamInfo.Text = tempHeaderAkaTeamInfo
+            tempHeaderAkaName = ""
+            tempHeaderAkaTeam = ""
+            tempHeaderAkaTeamInfo = ""
+            changed = True
+        End If
+
+        If Not String.IsNullOrEmpty(tempHeaderAoName) Then
+            TxtAoNameMain.Text = tempHeaderAoName
+            TxtAoTeam.Text = tempHeaderAoTeam
+            TxtAoTeamInfo.Text = tempHeaderAoTeamInfo
+            tempHeaderAoName = ""
+            tempHeaderAoTeam = ""
+            tempHeaderAoTeamInfo = ""
+            changed = True
+        End If
+
+        If changed Then
+            ' Pastikan scoreboard ter-update dan catat aktivitas
+            UpdateScoreboardDisplay()
+            ModGlobalConfig.LogActivity("Match", "Load Next Match applied", "LoadNextMatch", LblMatchTimerValue.Text)
+            MessageBox.Show("Competitor dipindahkan ke Next Match.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBox.Show("Tidak ada competitor di header untuk dipindahkan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
 
     ' ==================== Buka Jendela ListOfCompetitor ====================
     Private Sub OpenCompetitor_Click(sender As Object, e As EventArgs) Handles BtnAkaIcon.Click, BtnAoIcon.Click, BtnAkaUserIcon1.Click, BtnAoUserIcon1.Click
@@ -11,19 +151,35 @@
         Dim clickedButton = CType(sender, Button)
 
         If frmCompetitor.SelectedCompetitorName <> "" Then
-            If clickedButton.Name = "BtnAkaIcon" Or clickedButton.Name = "BtnAkaUserIcon1" Then
+            ' Jika tombol di header (BtnAkaIcon/BtnAoIcon) — isi field header TxtAkaName/TxtAoName
+            ' Jika tombol di panel user (BtnAkaUserIcon1/BtnAoUserIcon1) — isi field utama TxtAkaNameMain/TxtAoNameMain
+            If clickedButton.Name = "BtnAkaIcon" Then
+                ' Header selection: only update header textbox and store temp values
+                TxtAkaName.Text = frmCompetitor.SelectedCompetitorName
+                tempHeaderAkaName = frmCompetitor.SelectedCompetitorName
+                tempHeaderAkaTeam = frmCompetitor.SelectedTeamName
+                tempHeaderAkaTeamInfo = frmCompetitor.SelectedTeamInfo
+            ElseIf clickedButton.Name = "BtnAoIcon" Then
+                TxtAoName.Text = frmCompetitor.SelectedCompetitorName
+                tempHeaderAoName = frmCompetitor.SelectedCompetitorName
+                tempHeaderAoTeam = frmCompetitor.SelectedTeamName
+                tempHeaderAoTeamInfo = frmCompetitor.SelectedTeamInfo
+            ElseIf clickedButton.Name = "BtnAkaUserIcon1" Then
                 TxtAkaNameMain.Text = frmCompetitor.SelectedCompetitorName
                 TxtAkaTeam.Text = frmCompetitor.SelectedTeamName
                 TxtAkaTeamInfo.Text = frmCompetitor.SelectedTeamInfo
-            ElseIf clickedButton.Name = "BtnAoIcon" Or clickedButton.Name = "BtnAoUserIcon1" Then
+            ElseIf clickedButton.Name = "BtnAoUserIcon1" Then
                 TxtAoNameMain.Text = frmCompetitor.SelectedCompetitorName
                 TxtAoTeam.Text = frmCompetitor.SelectedTeamName
                 TxtAoTeamInfo.Text = frmCompetitor.SelectedTeamInfo
             End If
+
+            ' Log activity: pemilihan competitor
+            Dim pihak = If(clickedButton.Name.Contains("Aka"), "AKA", "AO")
+            ModGlobalConfig.LogActivity("SelectCompetitor", pihak & ": " & frmCompetitor.SelectedCompetitorName, "Select", LblMatchTimerValue.Text)
         End If
     End Sub
 
-    ' ==================== Buka Jendela Pengaturan & Log ====================
     Private Sub BtnSettings_Click(sender As Object, e As EventArgs) Handles BtnSettings.Click
         Dim frmSettings As New FrmScoreboardSetting()
         frmSettings.ShowDialog()
@@ -35,6 +191,7 @@
     End Sub
 
     Private Sub BtnShortcut_Click(sender As Object, e As EventArgs) Handles BtnShortcut.Click
+        ' Membuka pengaturan shortcut
         Dim frmShortcut As New Shortcut()
         frmShortcut.ShowDialog()
     End Sub
@@ -42,7 +199,8 @@
     ' ==================== Buka Jendela Hantei ====================
     Private Sub BtnHantei_Click(sender As Object, e As EventArgs) Handles BtnHantei.Click
         Dim frmDecision As New ManualDecision()
-        frmDecision.ShowDialog()
+        ' Set owner so ManualDecision can notify this form when saved
+        frmDecision.ShowDialog(Me)
     End Sub
 
     ' ==================== Form Closed ====================
@@ -51,7 +209,7 @@
     End Sub
 
     ' ====================================================================================
-    '                              AKA SECTION
+    '                                 AKA SECTION
     ' ====================================================================================
 
     ' Button1 dipencet → AO jadi winner
@@ -77,46 +235,77 @@
             BtnAka1C.BackColor = SystemColors.Control
             BtnAka1C.ForeColor = Color.Black
         Else
-            BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-            BtnAka2C.BackColor = SystemColors.Control : BtnAka2C.ForeColor = Color.Black
-            BtnAka3C.BackColor = SystemColors.Control : BtnAka3C.ForeColor = Color.Black
-            BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
-            BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+            BtnAka1C.BackColor = AkaPenaltyColor
+            BtnAka1C.ForeColor = Color.White
+            BtnAka2C.BackColor = SystemColors.Control
+            BtnAka2C.ForeColor = Color.Black
+            BtnAka3C.BackColor = SystemColors.Control
+            BtnAka3C.ForeColor = Color.Black
+            BtnAkaHC.BackColor = SystemColors.Control
+            BtnAkaHC.ForeColor = Color.Black
+            BtnAkaH.BackColor = SystemColors.Control
+            BtnAkaH.ForeColor = Color.Black
         End If
+        ' Log penalty change
+        ModGlobalConfig.LogActivity("Penalty", "AKA penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     ' Lakukan hal yang sama untuk tombol lainnya:
     Private Sub BtnAka2C_Click(sender As Object, e As EventArgs) Handles BtnAka2C.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = SystemColors.Control : BtnAka3C.ForeColor = Color.Black
-        BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
-        BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = SystemColors.Control
+        BtnAka3C.ForeColor = Color.Black
+        BtnAkaHC.BackColor = SystemColors.Control
+        BtnAkaHC.ForeColor = Color.Black
+        BtnAkaH.BackColor = SystemColors.Control
+        BtnAkaH.ForeColor = Color.Black
+        ModGlobalConfig.LogActivity("Penalty", "AKA penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     Private Sub BtnAka3C_Click(sender As Object, e As EventArgs) Handles BtnAka3C.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = SystemColors.Control : BtnAkaHC.ForeColor = Color.Black
-        BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor
+        BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = SystemColors.Control
+        BtnAkaHC.ForeColor = Color.Black
+        BtnAkaH.BackColor = SystemColors.Control
+        BtnAkaH.ForeColor = Color.Black
+        ModGlobalConfig.LogActivity("Penalty", "AKA penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     Private Sub BtnAkaHC_Click(sender As Object, e As EventArgs) Handles BtnAkaHC.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = AkaPenaltyColor : BtnAkaHC.ForeColor = Color.White
-        BtnAkaH.BackColor = SystemColors.Control : BtnAkaH.ForeColor = Color.Black
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor
+        BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = AkaPenaltyColor
+        BtnAkaHC.ForeColor = Color.White
+        BtnAkaH.BackColor = SystemColors.Control
+        BtnAkaH.ForeColor = Color.Black
+        ModGlobalConfig.LogActivity("Penalty", "AKA penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     Private Sub BtnAkaH_Click(sender As Object, e As EventArgs) Handles BtnAkaH.Click
-        BtnAka1C.BackColor = AkaPenaltyColor : BtnAka1C.ForeColor = Color.White
-        BtnAka2C.BackColor = AkaPenaltyColor : BtnAka2C.ForeColor = Color.White
-        BtnAka3C.BackColor = AkaPenaltyColor : BtnAka3C.ForeColor = Color.White
-        BtnAkaHC.BackColor = AkaPenaltyColor : BtnAkaHC.ForeColor = Color.White
-        BtnAkaH.BackColor = AkaPenaltyColor : BtnAkaH.ForeColor = Color.White
+        BtnAka1C.BackColor = AkaPenaltyColor
+        BtnAka1C.ForeColor = Color.White
+        BtnAka2C.BackColor = AkaPenaltyColor
+        BtnAka2C.ForeColor = Color.White
+        BtnAka3C.BackColor = AkaPenaltyColor
+        BtnAka3C.ForeColor = Color.White
+        BtnAkaHC.BackColor = AkaPenaltyColor
+        BtnAkaHC.ForeColor = Color.White
+        BtnAkaH.BackColor = AkaPenaltyColor
+        BtnAkaH.ForeColor = Color.White
         ShowAoWinner()
+        ModGlobalConfig.LogActivity("Penalty", "AKA H (Hansoku) applied", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     ' ==================== AKA VR ====================
@@ -147,18 +336,21 @@
     ' BtnAkaYuko → tambah Yuko ke history
     Private Sub BtnAkaYuko_Click(sender As Object, e As EventArgs) Handles BtnAkaYuko.Click
         AddScoreToHistory(DgvAkaHistory, "(1)-Yuko", LblMatchTimerValue.Text)
+        ModGlobalConfig.LogActivity("Score", "AKA +Yuko", "Score", LblMatchTimerValue.Text)
         UpdateAkaMainScore()
     End Sub
 
     ' BtnAkaWazaari → tambah Waza-ari ke history
     Private Sub BtnAkaWazaari_Click(sender As Object, e As EventArgs) Handles BtnAkaWazaari.Click
         AddScoreToHistory(DgvAkaHistory, "(2)-Waza-ari", LblMatchTimerValue.Text)
+        ModGlobalConfig.LogActivity("Score", "AKA +Waza-ari", "Score", LblMatchTimerValue.Text)
         UpdateAkaMainScore()
     End Sub
 
     ' BtnAkaIppon → tambah Ippon ke history
     Private Sub BtnAkaIppon_Click(sender As Object, e As EventArgs) Handles BtnAkaIppon.Click
         AddScoreToHistory(DgvAkaHistory, "(3)-Ippon", LblMatchTimerValue.Text)
+        ModGlobalConfig.LogActivity("Score", "AKA +Ippon", "Score", LblMatchTimerValue.Text)
         UpdateAkaMainScore()
     End Sub
 
@@ -187,7 +379,7 @@
     End Sub
 
     ' ====================================================================================
-    '                              AO SECTION
+    '                                 AO SECTION
     ' ====================================================================================
 
     Private Sub BtnAoKiken_Click(sender As Object, e As EventArgs) Handles BtnAoKiken.Click
@@ -208,45 +400,75 @@
             BtnAo1C.BackColor = SystemColors.Control
             BtnAo1C.ForeColor = Color.Black
         Else
-            BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-            BtnAo2C.BackColor = SystemColors.Control : BtnAo2C.ForeColor = Color.Black
-            BtnAo3C.BackColor = SystemColors.Control : BtnAo3C.ForeColor = Color.Black
-            BtnAoHC.BackColor = SystemColors.Control : BtnAoHC.ForeColor = Color.Black
-            BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+            BtnAo1C.BackColor = Color.Blue
+            BtnAo1C.ForeColor = Color.White
+            BtnAo2C.BackColor = SystemColors.Control
+            BtnAo2C.ForeColor = Color.Black
+            BtnAo3C.BackColor = SystemColors.Control
+            BtnAo3C.ForeColor = Color.Black
+            BtnAoHC.BackColor = SystemColors.Control
+            BtnAoHC.ForeColor = Color.Black
+            BtnAoH.BackColor = SystemColors.Control
+            BtnAoH.ForeColor = Color.Black
         End If
+        ModGlobalConfig.LogActivity("Penalty", "AO penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     Private Sub BtnAo2C_Click(sender As Object, e As EventArgs) Handles BtnAo2C.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = SystemColors.Control : BtnAo3C.ForeColor = Color.Black
-        BtnAoHC.BackColor = SystemColors.Control : BtnAoHC.ForeColor = Color.Black
-        BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = SystemColors.Control
+        BtnAo3C.ForeColor = Color.Black
+        BtnAoHC.BackColor = SystemColors.Control
+        BtnAoHC.ForeColor = Color.Black
+        BtnAoH.BackColor = SystemColors.Control
+        BtnAoH.ForeColor = Color.Black
+        ModGlobalConfig.LogActivity("Penalty", "AO penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     Private Sub BtnAo3C_Click(sender As Object, e As EventArgs) Handles BtnAo3C.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = Color.Blue : BtnAo3C.ForeColor = Color.White
-        BtnAoHC.BackColor = SystemColors.Control : BtnAoHC.ForeColor = Color.Black
-        BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = Color.Blue
+        BtnAo3C.ForeColor = Color.White
+        BtnAoHC.BackColor = SystemColors.Control
+        BtnAoHC.ForeColor = Color.Black
+        BtnAoH.BackColor = SystemColors.Control
+        BtnAoH.ForeColor = Color.Black
+        ModGlobalConfig.LogActivity("Penalty", "AO penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     Private Sub BtnAoHC_Click(sender As Object, e As EventArgs) Handles BtnAoHC.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = Color.Blue : BtnAo3C.ForeColor = Color.White
-        BtnAoHC.BackColor = Color.Blue : BtnAoHC.ForeColor = Color.White
-        BtnAoH.BackColor = SystemColors.Control : BtnAoH.ForeColor = Color.Black
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = Color.Blue
+        BtnAo3C.ForeColor = Color.White
+        BtnAoHC.BackColor = Color.Blue
+        BtnAoHC.ForeColor = Color.White
+        BtnAoH.BackColor = SystemColors.Control
+        BtnAoH.ForeColor = Color.Black
+        ModGlobalConfig.LogActivity("Penalty", "AO penalty changed", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     Private Sub BtnAoH_Click(sender As Object, e As EventArgs) Handles BtnAoH.Click
-        BtnAo1C.BackColor = Color.Blue : BtnAo1C.ForeColor = Color.White
-        BtnAo2C.BackColor = Color.Blue : BtnAo2C.ForeColor = Color.White
-        BtnAo3C.BackColor = Color.Blue : BtnAo3C.ForeColor = Color.White
-        BtnAoHC.BackColor = Color.Blue : BtnAoHC.ForeColor = Color.White
-        BtnAoH.BackColor = Color.Blue : BtnAoH.ForeColor = Color.White
+        BtnAo1C.BackColor = Color.Blue
+        BtnAo1C.ForeColor = Color.White
+        BtnAo2C.BackColor = Color.Blue
+        BtnAo2C.ForeColor = Color.White
+        BtnAo3C.BackColor = Color.Blue
+        BtnAo3C.ForeColor = Color.White
+        BtnAoHC.BackColor = Color.Blue
+        BtnAoHC.ForeColor = Color.White
+        BtnAoH.BackColor = Color.Blue
+        BtnAoH.ForeColor = Color.White
         ShowAkaWinner()
+        ModGlobalConfig.LogActivity("Penalty", "AO H (Hansoku) applied", "Penalty", LblMatchTimerValue.Text)
     End Sub
 
     ' ==================== AO VR & SENSHU ====================
@@ -273,16 +495,19 @@
     ' ==================== AO SCORE HISTORY ====================
     Private Sub BtnAoYuko_Click(sender As Object, e As EventArgs) Handles BtnAoYuko.Click
         AddScoreToHistory(DgvAoHistory, "(1)-Yuko", LblMatchTimerValue.Text)
+        ModGlobalConfig.LogActivity("Score", "AO +Yuko", "Score", LblMatchTimerValue.Text)
         UpdateAoMainScore()
     End Sub
 
     Private Sub BtnAoWazaari_Click(sender As Object, e As EventArgs) Handles BtnAoWazaari.Click
         AddScoreToHistory(DgvAoHistory, "(2)-Waza-ari", LblMatchTimerValue.Text)
+        ModGlobalConfig.LogActivity("Score", "AO +Waza-ari", "Score", LblMatchTimerValue.Text)
         UpdateAoMainScore()
     End Sub
 
     Private Sub BtnAoIppon_Click(sender As Object, e As EventArgs) Handles BtnAoIppon.Click
         AddScoreToHistory(DgvAoHistory, "(3)-Ippon", LblMatchTimerValue.Text)
+        ModGlobalConfig.LogActivity("Score", "AO +Ippon", "Score", LblMatchTimerValue.Text)
         UpdateAoMainScore()
     End Sub
 
@@ -309,7 +534,7 @@
     End Sub
 
     ' ====================================================================================
-    '                         HELPER / SHARED FUNCTIONS
+    '                               HELPER / SHARED FUNCTIONS
     ' ====================================================================================
 
     Private Sub CheckPointGap()
@@ -333,7 +558,7 @@
         End If
     End Sub
 
-    Private Sub ShowAoWinner()
+    Public Sub ShowAoWinner()
         Dim winnerName As String = TxtAoNameMain.Text
         Dim teamName As String = TxtAoTeam.Text
         Dim teamInfo As String = TxtAoTeamInfo.Text
@@ -348,7 +573,7 @@
         frmWinner.ShowDialog()
     End Sub
 
-    Private Sub ShowAkaWinner()
+    Public Sub ShowAkaWinner()
         Dim winnerName As String = TxtAkaNameMain.Text
         Dim teamName As String = TxtAkaTeam.Text
         Dim teamInfo As String = TxtAkaTeamInfo.Text
@@ -375,33 +600,59 @@
 
     Private Sub UpdateAoMainScore()
         Dim totalScore As Integer = 0
+        Dim cntIppon As Integer = 0
+        Dim cntWazaari As Integer = 0
+        Dim cntYuko As Integer = 0
         For Each row As DataGridViewRow In DgvAoHistory.Rows
             Dim typeStr As String = If(row.Cells(2).Value IsNot Nothing, row.Cells(2).Value.ToString(), "")
             If typeStr.Contains("(3)") Then
                 totalScore += 3
+                cntIppon += 1
             ElseIf typeStr.Contains("(2)") Then
                 totalScore += 2
+                cntWazaari += 1
             ElseIf typeStr.Contains("(1)") Then
                 totalScore += 1
+                cntYuko += 1
             End If
         Next
         LblAoMainScore.Text = totalScore.ToString()
+        ' Update score summary labels
+        Try
+            LblAoIpponCount.Text = "Ippon  " & cntIppon.ToString()
+            LblAoWazaariCount.Text = "Waza-ari  " & cntWazaari.ToString()
+            LblAoYukoCount.Text = "Yuko  " & cntYuko.ToString()
+        Catch
+        End Try
         CheckPointGap()
     End Sub
 
     Private Sub UpdateAkaMainScore()
         Dim totalScore As Integer = 0
+        Dim cntIppon As Integer = 0
+        Dim cntWazaari As Integer = 0
+        Dim cntYuko As Integer = 0
         For Each row As DataGridViewRow In DgvAkaHistory.Rows
             Dim typeStr As String = If(row.Cells(2).Value IsNot Nothing, row.Cells(2).Value.ToString(), "")
             If typeStr.Contains("(3)") Then
                 totalScore += 3
+                cntIppon += 1
             ElseIf typeStr.Contains("(2)") Then
                 totalScore += 2
+                cntWazaari += 1
             ElseIf typeStr.Contains("(1)") Then
                 totalScore += 1
+                cntYuko += 1
             End If
         Next
         LblAkaMainScore.Text = totalScore.ToString()
+        ' Update score summary labels
+        Try
+            LblAkaIpponCount.Text = "Ippon  " & cntIppon.ToString()
+            LblAkaWazaariCount.Text = "Waza-ari  " & cntWazaari.ToString()
+            LblAkaYukoCount.Text = "Yuko  " & cntYuko.ToString()
+        Catch
+        End Try
         CheckPointGap()
     End Sub
 
@@ -465,26 +716,19 @@
 
             For i = 0 To 4
                 ' ================== LOGIKA AKA ==================
-                ' Cek spesifik: Apakah background tombol AKA sedang menggunakan warna penalti?
                 If akaBtns(i).BackColor = AkaPenaltyColor Then
-                    ' Jika ya, beri kotak fill warna di belakang teks (BackColor) dan ubah teks jadi Putih
                     frmScoreboard.AkaPenLabels(i).BackColor = AkaPenaltyColor
                     frmScoreboard.AkaPenLabels(i).ForeColor = Color.White
                 Else
-                    ' Jika tidak, buat background jadi transparan dan teksnya abu-abu (Default)
                     frmScoreboard.AkaPenLabels(i).BackColor = Color.Transparent
                     frmScoreboard.AkaPenLabels(i).ForeColor = Color.LightGray
                 End If
 
-
                 ' ================== LOGIKA AO ==================
-                ' Cek spesifik: Apakah background tombol AO sedang biru?
                 If aoBtns(i).BackColor = Color.Blue Then
-                    ' Jika ya, beri kotak fill biru di belakang teks dan ubah teks jadi Putih
                     frmScoreboard.AoPenLabels(i).BackColor = Color.Blue
                     frmScoreboard.AoPenLabels(i).ForeColor = Color.White
                 Else
-                    ' Jika tidak, kembalikan ke default
                     frmScoreboard.AoPenLabels(i).BackColor = Color.Transparent
                     frmScoreboard.AoPenLabels(i).ForeColor = Color.LightGray
                 End If
@@ -526,5 +770,159 @@
         Else
             MessageBox.Show("Scoreboard Extend sedang tidak berjalan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+    End Sub
+
+    ' ==================== WIN POINT MANAGEMENT ====================
+    Private Sub BtnEditWinPoint_Click(sender As Object, e As EventArgs) Handles BtnEditWinPoint.Click
+        NumWinPoint.Enabled = True
+        NumWinPoint.Focus()
+    End Sub
+
+    Private Sub BtnSaveWinPoint_Click(sender As Object, e As EventArgs) Handles BtnSaveWinPoint.Click
+        NumWinPoint.Enabled = False
+        ModGlobalConfig.LogActivity("Match", "Win Point set to: " & NumWinPoint.Value.ToString(), "Settings", LblMatchTimerValue.Text)
+        MessageBox.Show("Win Point telah disimpan: " & NumWinPoint.Value.ToString(), "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+
+    ' ==================== MATCH TIMER MANAGEMENT ====================
+    Private Sub BtnTime130_Click(sender As Object, e As EventArgs) Handles BtnTime130.Click
+        SetTimerValue(1, 30)
+    End Sub
+
+    Private Sub BtnTime200_Click(sender As Object, e As EventArgs) Handles BtnTime200.Click
+        SetTimerValue(2, 0)
+    End Sub
+
+    Private Sub BtnTime300_Click(sender As Object, e As EventArgs) Handles BtnTime300.Click
+        SetTimerValue(3, 0)
+    End Sub
+
+    Private Sub BtnMatchTimePlus_Click(sender As Object, e As EventArgs) Handles BtnMatchTimePlus.Click
+        ' Tambah 10 detik
+        Dim currentSec As Integer = GetTotalSeconds()
+        currentSec += 10
+        UpdateTimerFromSeconds(currentSec)
+    End Sub
+
+    Private Sub BtnMatchTimeMinus_Click(sender As Object, e As EventArgs) Handles BtnMatchTimeMinus.Click
+        ' Kurang 10 detik
+        Dim currentSec As Integer = GetTotalSeconds()
+        currentSec -= 10
+        If currentSec < 0 Then currentSec = 0
+        UpdateTimerFromSeconds(currentSec)
+    End Sub
+
+    Private Sub NumMatchMin_ValueChanged(sender As Object, e As EventArgs) Handles NumMatchMin.ValueChanged
+        UpdateTimerDisplay()
+    End Sub
+
+    Private Sub NumMatchSec_ValueChanged(sender As Object, e As EventArgs) Handles NumMatchSec.ValueChanged
+        UpdateTimerDisplay()
+    End Sub
+
+    ' Helper: Set timer dari preset (menit, detik)
+    Private Sub SetTimerValue(minutes As Integer, seconds As Integer)
+        NumMatchMin.Value = minutes
+        NumMatchSec.Value = seconds
+        UpdateTimerDisplay()
+        ModGlobalConfig.LogActivity("Match", "Timer set to " & minutes & ":" & seconds.ToString("00"), "Timer", LblMatchTimerValue.Text)
+    End Sub
+
+    ' Helper: Ambil total detik dari LblMatchTimerValue
+    Private Function GetTotalSeconds() As Integer
+        Dim timerText As String = LblMatchTimerValue.Text ' Format: "1:30.0" atau "2:00.5"
+        Dim parts As String() = timerText.Split(":"c)
+        If parts.Length >= 2 Then
+            Dim min As Integer = CInt(parts(0))
+            Dim secParts As String() = parts(1).Split("."c)
+            Dim sec As Integer = CInt(secParts(0))
+            Return (min * 60) + sec
+        End If
+        Return 0
+    End Function
+
+    ' Helper: Update LblMatchTimerValue dari total seconds
+    Private Sub UpdateTimerFromSeconds(totalSec As Integer)
+        Dim mins As Integer = totalSec \ 60
+        Dim secs As Integer = totalSec Mod 60
+        LblMatchTimerValue.Text = mins.ToString() & ":" & secs.ToString("00") & ".0"
+        NumMatchMin.Value = mins
+        NumMatchSec.Value = secs
+    End Sub
+
+    ' Helper: Update LblMatchTimerValue dari NumMatchMin & NumMatchSec
+    Private Sub UpdateTimerDisplay()
+        Dim mins As Integer = CInt(NumMatchMin.Value)
+        Dim secs As Integer = CInt(NumMatchSec.Value)
+        LblMatchTimerValue.Text = mins.ToString() & ":" & secs.ToString("00") & ".0"
+    End Sub
+
+    ' ==================== TIMER COUNTDOWN (SCOREBOARD) ====================
+    Private Sub BtnStartTimer_Click(sender As Object, e As EventArgs) Handles BtnStartTimer.Click
+        ' Jika timer sudah berjalan, hentikan
+        If matchTimer.Enabled Then
+            matchTimer.Stop()
+            MessageBox.Show("Timer dihentikan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+        End If
+
+        ' Pastikan scoreboard sudah aktif
+        If frmScoreboard Is Nothing OrElse frmScoreboard.IsDisposed Then
+            MessageBox.Show("Buka Scoreboard terlebih dahulu (BtnStartScoreboard).", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        ' Mulai countdown: ambil nilai dari LblMatchTimerValue
+        totalSeconds = GetTotalSeconds() * 10 ' Konversi ke desisecond (0.1 detik)
+        If totalSeconds <= 0 Then
+            MessageBox.Show("Set timer terlebih dahulu.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        matchTimer.Start()
+        ModGlobalConfig.LogActivity("Match", "Timer started: " & LblMatchTimerValue.Text, "Timer", LblMatchTimerValue.Text)
+    End Sub
+
+    Private Sub MatchTimer_Tick(sender As Object, e As EventArgs)
+        ' Kurangi 0.1 detik setiap tick (interval = 100ms)
+        If totalSeconds > 0 Then
+            totalSeconds -= 1
+            If totalSeconds < 0 Then totalSeconds = 0
+
+            ' Hitung menit, detik, dan desisecond (0.1 detik)
+            Dim mins As Integer = totalSeconds \ 600 ' 600 = 60 * 10
+            Dim remainingDeciSecs As Integer = totalSeconds Mod 600
+            Dim secs As Integer = remainingDeciSecs \ 10
+            Dim deciSec As Integer = remainingDeciSecs Mod 10
+
+            Dim timerDisplay As String = mins.ToString() & ":" & secs.ToString("00") & "." & deciSec.ToString()
+            LblMatchTimerValue.Text = timerDisplay
+
+            ' Update scoreboard jika ada
+            If frmScoreboard IsNot Nothing AndAlso Not frmScoreboard.IsDisposed Then
+                frmScoreboard.LblTimer.Text = timerDisplay
+            End If
+
+            ' Jika waktu habis, stop dan beri tahu
+            If totalSeconds = 0 Then
+                matchTimer.Stop()
+                MessageBox.Show("Waktu pertandingan selesai!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ModGlobalConfig.LogActivity("Match", "Timer finished", "Timer", LblMatchTimerValue.Text)
+            End If
+        End If
+    End Sub
+
+    Private Sub BtnResetTimer_Click(sender As Object, e As EventArgs) Handles BtnResetTimer.Click
+        ' Hentikan timer jika sedang berjalan
+        If matchTimer.Enabled Then
+            matchTimer.Stop()
+        End If
+        ' Reset ke 2:00.0
+        SetTimerValue(2, 0)
+        ModGlobalConfig.LogActivity("Match", "Timer reset to 2:00.0", "Timer", LblMatchTimerValue.Text)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles BtnSaveWinPoint.Click
+
     End Sub
 End Class

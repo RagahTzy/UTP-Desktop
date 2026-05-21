@@ -33,7 +33,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.UTP_Desktop.Dashboard
+            Me.MainForm = Global.UTP_Desktop.Kata
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _

@@ -33,11 +33,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-<<<<<<< HEAD
-            Me.MainForm = Global.UTP_Desktop.QrGenerated
-=======
             Me.MainForm = Global.UTP_Desktop.Dashboard
->>>>>>> c6bae6bfd9489778aadcdce195e4199ccff4fbaa
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _

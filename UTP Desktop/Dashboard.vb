@@ -18,6 +18,17 @@
         Me.Hide()
     End Sub
 
+    ' ==================== Buka QR Generated (Kata menu) ====================
+    Private Sub OpenQrGenerated_Click(sender As Object, e As EventArgs) Handles btnManageJudge.Click, pnlKata.Click, pbKata.Click, lblKata.Click
+        Try
+            Dim frmQr As New QrGenerated()
+            frmQr.Show()
+            Me.Hide()
+        Catch ex As Exception
+            MessageBox.Show("Gagal membuka QR Generated: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
     ' ==================== Form Closed ====================
     Private Sub Dashboard_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         ' Perintah ini yang akan menghentikan seluruh aplikasi secara total

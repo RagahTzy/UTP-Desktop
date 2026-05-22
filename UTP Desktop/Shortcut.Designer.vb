@@ -2,6 +2,7 @@
 Partial Class Shortcut
     Inherits System.Windows.Forms.Form
 
+    'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -13,8 +14,12 @@ Partial Class Shortcut
         End Try
     End Sub
 
+    'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         pnlStatus = New Panel()
@@ -36,7 +41,7 @@ Partial Class Shortcut
         CType(picKeyboard, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' pnlStatus (Header Hitam)
+        ' pnlStatus
         ' 
         pnlStatus.BackColor = Color.FromArgb(CByte(33), CByte(33), CByte(33))
         pnlStatus.Controls.Add(lblCurrentStatus)
@@ -60,7 +65,7 @@ Partial Class Shortcut
         lblCurrentStatus.TabIndex = 0
         lblCurrentStatus.Text = "Current Status"
         ' 
-        ' lblStatusValue (Teks Cyan)
+        ' lblStatusValue
         ' 
         lblStatusValue.AutoSize = True
         lblStatusValue.Font = New Font("Segoe UI", 14.0F, FontStyle.Bold)
@@ -82,7 +87,7 @@ Partial Class Shortcut
         lblTurnOff.TabIndex = 2
         lblTurnOff.Text = "Turn off"
         ' 
-        ' btnToggle (Switch Biru)
+        ' btnToggle
         ' 
         btnToggle.BackColor = Color.FromArgb(CByte(0), CByte(120), CByte(215))
         btnToggle.FlatAppearance.BorderSize = 0
@@ -97,13 +102,13 @@ Partial Class Shortcut
         btnToggle.TextAlign = ContentAlignment.MiddleRight
         btnToggle.UseVisualStyleBackColor = False
         ' 
-        ' lvShortcuts (Tabel Utama)
+        ' lvShortcuts
         ' 
         lvShortcuts.BorderStyle = BorderStyle.FixedSingle
         lvShortcuts.Columns.AddRange(New ColumnHeader() {colAction, colShortcut})
         lvShortcuts.Font = New Font("Segoe UI Semibold", 10.0F, FontStyle.Bold)
         lvShortcuts.FullRowSelect = True
-        lvShortcuts.HeaderStyle = ColumnHeaderStyle.None
+        lvShortcuts.HeaderStyle = ColumnHeaderStyle.Nonclickable
         lvShortcuts.Location = New Point(15, 65)
         lvShortcuts.MultiSelect = False
         lvShortcuts.Name = "lvShortcuts"
@@ -113,13 +118,19 @@ Partial Class Shortcut
         lvShortcuts.UseCompatibleStateImageBehavior = False
         lvShortcuts.View = View.Details
         ' 
-        ' colAction & colShortcut
+        ' colAction
         ' 
+        colAction.Text = "Action"
         colAction.Width = 280
+        ' 
+        ' colShortcut
+        ' 
+        colShortcut.Text = "Shortcut Key"
         colShortcut.Width = 180
         ' 
         ' btnChange
         ' 
+        btnChange.Cursor = Cursors.Hand
         btnChange.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnChange.Location = New Point(515, 65)
         btnChange.Name = "btnChange"
@@ -130,17 +141,19 @@ Partial Class Shortcut
         ' 
         ' btnRemove
         ' 
+        btnRemove.Cursor = Cursors.Hand
         btnRemove.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnRemove.Location = New Point(515, 110)
         btnRemove.Name = "btnRemove"
         btnRemove.Size = New Size(170, 35)
         btnRemove.TabIndex = 3
-        btnRemove.Text = "Remove  🚫" ' TYPO DIPERBAIKI DI SINI
+        btnRemove.Text = "Remove  🚫"
         btnRemove.UseVisualStyleBackColor = True
         ' 
         ' btnSave
         ' 
         btnSave.BackColor = Color.White
+        btnSave.Cursor = Cursors.Hand
         btnSave.Enabled = False
         btnSave.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         btnSave.ForeColor = Color.DarkGray
@@ -163,6 +176,7 @@ Partial Class Shortcut
         ' btnReset
         ' 
         btnReset.BackColor = Color.FromArgb(CByte(245), CByte(140), CByte(100))
+        btnReset.Cursor = Cursors.Hand
         btnReset.FlatAppearance.BorderSize = 0
         btnReset.FlatStyle = FlatStyle.Flat
         btnReset.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
@@ -210,9 +224,11 @@ Partial Class Shortcut
         Controls.Add(btnChange)
         Controls.Add(lvShortcuts)
         Controls.Add(pnlStatus)
+        DoubleBuffered = True
         FormBorderStyle = FormBorderStyle.FixedSingle
+        KeyPreview = True
         MaximizeBox = False
-        Name = "Shortcut" ' NAMA FORM DISAMAKAN DENGAN NAMA CLASS
+        Name = "Shortcut"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Keyboard Shortcut Setup"
         pnlStatus.ResumeLayout(False)

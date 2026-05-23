@@ -158,26 +158,18 @@ Partial Class Kata
     Friend WithEvents BtnAoFlagReset As System.Windows.Forms.Button
     Friend WithEvents LblAkaFlagCount As System.Windows.Forms.Label
     Friend WithEvents LblAoFlagCount As System.Windows.Forms.Label
-    Friend WithEvents LblAkaFlag1 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaNum1 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaFlag2 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaNum2 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaFlag3 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaNum3 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaFlag4 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaNum4 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaFlag5 As System.Windows.Forms.Label
-    Friend WithEvents LblAkaNum5 As System.Windows.Forms.Label
-    Friend WithEvents LblAoFlag1 As System.Windows.Forms.Label
-    Friend WithEvents LblAoNum1 As System.Windows.Forms.Label
-    Friend WithEvents LblAoFlag2 As System.Windows.Forms.Label
-    Friend WithEvents LblAoNum2 As System.Windows.Forms.Label
-    Friend WithEvents LblAoFlag3 As System.Windows.Forms.Label
-    Friend WithEvents LblAoNum3 As System.Windows.Forms.Label
-    Friend WithEvents LblAoFlag4 As System.Windows.Forms.Label
-    Friend WithEvents LblAoNum4 As System.Windows.Forms.Label
-    Friend WithEvents LblAoFlag5 As System.Windows.Forms.Label
-    Friend WithEvents LblAoNum5 As System.Windows.Forms.Label
+    ' Panel untuk flag+num AKA
+    Friend WithEvents PnlAkaFlagNum1 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAkaFlagNum2 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAkaFlagNum3 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAkaFlagNum4 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAkaFlagNum5 As System.Windows.Forms.Panel
+    ' Panel untuk flag+num AO
+    Friend WithEvents PnlAoFlagNum1 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAoFlagNum2 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAoFlagNum3 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAoFlagNum4 As System.Windows.Forms.Panel
+    Friend WithEvents PnlAoFlagNum5 As System.Windows.Forms.Panel
     Friend WithEvents PnlJ1 As System.Windows.Forms.Panel
     Friend WithEvents LblJ1 As System.Windows.Forms.Label
     Friend WithEvents BtnJ1Login As System.Windows.Forms.Button
@@ -198,6 +190,14 @@ Partial Class Kata
     Friend WithEvents LblJ5 As System.Windows.Forms.Label
     Friend WithEvents BtnJ5Login As System.Windows.Forms.Button
     Friend WithEvents BtnJ5Scoring As System.Windows.Forms.Button
+    Friend WithEvents PnlJ6 As System.Windows.Forms.Panel
+    Friend WithEvents LblJ6 As System.Windows.Forms.Label
+    Friend WithEvents BtnJ6Login As System.Windows.Forms.Button
+    Friend WithEvents BtnJ6Scoring As System.Windows.Forms.Button
+    Friend WithEvents PnlJ7 As System.Windows.Forms.Panel
+    Friend WithEvents LblJ7 As System.Windows.Forms.Label
+    Friend WithEvents BtnJ7Login As System.Windows.Forms.Button
+    Friend WithEvents BtnJ7Scoring As System.Windows.Forms.Button
     Friend WithEvents BtnQRCode As System.Windows.Forms.Button
     Friend WithEvents LblApiTimer As System.Windows.Forms.Label
     Friend WithEvents NumApiTimer As System.Windows.Forms.NumericUpDown
@@ -212,6 +212,18 @@ Partial Class Kata
     Friend WithEvents BtnShowScore As System.Windows.Forms.Button
     Friend WithEvents BtnResetMatch As System.Windows.Forms.Button
     Friend WithEvents BtnSaveMatch As System.Windows.Forms.Button
+    Friend WithEvents PanelAkaFlag6 As System.Windows.Forms.Panel
+    Friend WithEvents LblAkaFlag6 As System.Windows.Forms.Label
+    Friend WithEvents LblAkaNum6 As System.Windows.Forms.Label
+    Friend WithEvents PanelAkaFlag7 As System.Windows.Forms.Panel
+    Friend WithEvents LblAkaFlag7 As System.Windows.Forms.Label
+    Friend WithEvents LblAkaNum7 As System.Windows.Forms.Label
+    Friend WithEvents PanelAoFlag6 As System.Windows.Forms.Panel
+    Friend WithEvents LblAoFlag6 As System.Windows.Forms.Label
+    Friend WithEvents LblAoNum6 As System.Windows.Forms.Label
+    Friend WithEvents PanelAoFlag7 As System.Windows.Forms.Panel
+    Friend WithEvents LblAoFlag7 As System.Windows.Forms.Label
+    Friend WithEvents LblAoNum7 As System.Windows.Forms.Label
 
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.
@@ -282,6 +294,14 @@ Partial Class Kata
         LblJ5 = New Label()
         BtnJ5Login = New Button()
         BtnJ5Scoring = New Button()
+        PnlJ6 = New Panel()
+        LblJ6 = New Label()
+        BtnJ6Login = New Button()
+        BtnJ6Scoring = New Button()
+        PnlJ7 = New Panel()
+        LblJ7 = New Label()
+        BtnJ7Login = New Button()
+        BtnJ7Scoring = New Button()
         BtnQRCode = New Button()
         PanelRightSidebar = New Panel()
         StartTimer = New Button()
@@ -359,6 +379,10 @@ Partial Class Kata
         PanelJudgeScore = New Panel()
         LblJudgeScoreTitle = New Label()
         PanelAkaScore = New Panel()
+        LblAkaJ7 = New Label()
+        NumAkaJ7 = New NumericUpDown()
+        LblAkaJ6 = New Label()
+        NumAkaJ6 = New NumericUpDown()
         LblAkaJ1 = New Label()
         NumAkaJ1 = New NumericUpDown()
         LblAkaJ2 = New Label()
@@ -373,6 +397,10 @@ Partial Class Kata
         NumAkaTotalScore = New NumericUpDown()
         BtnAkaResetScore = New Button()
         PanelAoScore = New Panel()
+        LblAoJ7 = New Label()
+        NumAoJ7 = New NumericUpDown()
+        LblAoJ6 = New Label()
+        NumAoJ6 = New NumericUpDown()
         LblAoJ1 = New Label()
         NumAoJ1 = New NumericUpDown()
         LblAoJ2 = New Label()
@@ -389,33 +417,55 @@ Partial Class Kata
         PanelFlagSystem = New Panel()
         LblFlagSystemTitle = New Label()
         PanelAkaFlags = New Panel()
+        PanelAkaFlag4 = New Panel()
+        LblAkaFlag4 = New Label()
+        LblAkaNum4 = New Label()
+        PanelAkaFlag3 = New Panel()
+        LblAkaFlag3 = New Label()
+        LblAkaNum3 = New Label()
         LblAkaFlagTitle = New Label()
         LblAkaFlagCount = New Label()
         BtnAkaFlagReset = New Button()
-        PanelAoFlags = New Panel()
-        LblAoFlagTitle = New Label()
-        LblAoFlagCount = New Label()
-        BtnAoFlagReset = New Button()
-        LblAkaFlag1 = New Label()
-        LblAkaNum1 = New Label()
+        PanelAkaFlag2 = New Panel()
         LblAkaFlag2 = New Label()
         LblAkaNum2 = New Label()
-        LblAkaFlag3 = New Label()
-        LblAkaNum3 = New Label()
-        LblAkaFlag4 = New Label()
-        LblAkaNum4 = New Label()
+        PanelAkaFlag1 = New Panel()
+        LblAkaFlag1 = New Label()
+        LblAkaNum1 = New Label()
+        PanelAkaFlag5 = New Panel()
         LblAkaFlag5 = New Label()
         LblAkaNum5 = New Label()
-        LblAoFlag1 = New Label()
-        LblAoNum1 = New Label()
-        LblAoFlag2 = New Label()
-        LblAoNum2 = New Label()
-        LblAoFlag3 = New Label()
-        LblAoNum3 = New Label()
+        PanelAkaFlag6 = New Panel()
+        LblAkaFlag6 = New Label()
+        LblAkaNum6 = New Label()
+        PanelAkaFlag7 = New Panel()
+        LblAkaFlag7 = New Label()
+        LblAkaNum7 = New Label()
+        PanelAoFlags = New Panel()
+        PanelAoFlag4 = New Panel()
         LblAoFlag4 = New Label()
         LblAoNum4 = New Label()
+        LblAoFlagTitle = New Label()
+        LblAoFlagCount = New Label()
+        PanelAoFlag3 = New Panel()
+        LblAoFlag3 = New Label()
+        LblAoNum3 = New Label()
+        BtnAoFlagReset = New Button()
+        PanelAoFlag5 = New Panel()
         LblAoFlag5 = New Label()
         LblAoNum5 = New Label()
+        PanelAoFlag2 = New Panel()
+        LblAoFlag2 = New Label()
+        LblAoNum2 = New Label()
+        PanelAoFlag1 = New Panel()
+        LblAoFlag1 = New Label()
+        LblAoNum1 = New Label()
+        PanelAoFlag6 = New Panel()
+        LblAoFlag6 = New Label()
+        LblAoNum6 = New Label()
+        PanelAoFlag7 = New Panel()
+        LblAoFlag7 = New Label()
+        LblAoNum7 = New Label()
         PanelHeader.SuspendLayout()
         PanelAKA.SuspendLayout()
         CType(PicAkaSquarePlaceholder, ComponentModel.ISupportInitialize).BeginInit()
@@ -427,6 +477,8 @@ Partial Class Kata
         PnlJ3.SuspendLayout()
         PnlJ4.SuspendLayout()
         PnlJ5.SuspendLayout()
+        PnlJ6.SuspendLayout()
+        PnlJ7.SuspendLayout()
         PanelRightSidebar.SuspendLayout()
         TabRightSettings.SuspendLayout()
         PageMatchDetailRight.SuspendLayout()
@@ -443,6 +495,8 @@ Partial Class Kata
         CType(PicAoSquarePlaceholder, ComponentModel.ISupportInitialize).BeginInit()
         PanelJudgeScore.SuspendLayout()
         PanelAkaScore.SuspendLayout()
+        CType(NumAkaJ7, ComponentModel.ISupportInitialize).BeginInit()
+        CType(NumAkaJ6, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumAkaJ1, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumAkaJ2, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumAkaJ3, ComponentModel.ISupportInitialize).BeginInit()
@@ -450,6 +504,8 @@ Partial Class Kata
         CType(NumAkaJ5, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumAkaTotalScore, ComponentModel.ISupportInitialize).BeginInit()
         PanelAoScore.SuspendLayout()
+        CType(NumAoJ7, ComponentModel.ISupportInitialize).BeginInit()
+        CType(NumAoJ6, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumAoJ1, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumAoJ2, ComponentModel.ISupportInitialize).BeginInit()
         CType(NumAoJ3, ComponentModel.ISupportInitialize).BeginInit()
@@ -458,7 +514,21 @@ Partial Class Kata
         CType(NumAoTotalScore, ComponentModel.ISupportInitialize).BeginInit()
         PanelFlagSystem.SuspendLayout()
         PanelAkaFlags.SuspendLayout()
+        PanelAkaFlag4.SuspendLayout()
+        PanelAkaFlag3.SuspendLayout()
+        PanelAkaFlag2.SuspendLayout()
+        PanelAkaFlag1.SuspendLayout()
+        PanelAkaFlag5.SuspendLayout()
+        PanelAkaFlag6.SuspendLayout()
+        PanelAkaFlag7.SuspendLayout()
         PanelAoFlags.SuspendLayout()
+        PanelAoFlag4.SuspendLayout()
+        PanelAoFlag3.SuspendLayout()
+        PanelAoFlag5.SuspendLayout()
+        PanelAoFlag2.SuspendLayout()
+        PanelAoFlag1.SuspendLayout()
+        PanelAoFlag6.SuspendLayout()
+        PanelAoFlag7.SuspendLayout()
         SuspendLayout()
         ' 
         ' PanelHeader
@@ -476,7 +546,7 @@ Partial Class Kata
         PanelHeader.Dock = DockStyle.Top
         PanelHeader.Location = New Point(0, 0)
         PanelHeader.Name = "PanelHeader"
-        PanelHeader.Size = New Size(1200, 50)
+        PanelHeader.Size = New Size(1199, 50)
         PanelHeader.TabIndex = 0
         ' 
         ' LblJudgeStatusHeader
@@ -598,7 +668,7 @@ Partial Class Kata
         PanelAKA.Dock = DockStyle.Left
         PanelAKA.Location = New Point(0, 0)
         PanelAKA.Name = "PanelAKA"
-        PanelAKA.Size = New Size(280, 600)
+        PanelAKA.Size = New Size(280, 621)
         PanelAKA.TabIndex = 0
         ' 
         ' LblAkaTitle
@@ -784,9 +854,9 @@ Partial Class Kata
         PanelFooter.Controls.Add(BtnResetMatch)
         PanelFooter.Controls.Add(BtnSaveMatch)
         PanelFooter.Dock = DockStyle.Bottom
-        PanelFooter.Location = New Point(0, 650)
+        PanelFooter.Location = New Point(0, 671)
         PanelFooter.Name = "PanelFooter"
-        PanelFooter.Size = New Size(1200, 50)
+        PanelFooter.Size = New Size(1199, 50)
         PanelFooter.TabIndex = 1
         ' 
         ' APIInfo
@@ -956,11 +1026,13 @@ Partial Class Kata
         PanelLeftSidebar.Controls.Add(PnlJ3)
         PanelLeftSidebar.Controls.Add(PnlJ4)
         PanelLeftSidebar.Controls.Add(PnlJ5)
+        PanelLeftSidebar.Controls.Add(PnlJ6)
+        PanelLeftSidebar.Controls.Add(PnlJ7)
         PanelLeftSidebar.Controls.Add(BtnQRCode)
         PanelLeftSidebar.Dock = DockStyle.Left
         PanelLeftSidebar.Location = New Point(0, 50)
         PanelLeftSidebar.Name = "PanelLeftSidebar"
-        PanelLeftSidebar.Size = New Size(90, 600)
+        PanelLeftSidebar.Size = New Size(90, 621)
         PanelLeftSidebar.TabIndex = 2
         ' 
         ' PnlJ1
@@ -1208,6 +1280,106 @@ Partial Class Kata
         BtnJ5Scoring.Text = "Scoring"
         BtnJ5Scoring.UseVisualStyleBackColor = False
         ' 
+        ' PnlJ6
+        ' 
+        PnlJ6.BackColor = Color.Black
+        PnlJ6.Controls.Add(LblJ6)
+        PnlJ6.Controls.Add(BtnJ6Login)
+        PnlJ6.Controls.Add(BtnJ6Scoring)
+        PnlJ6.Location = New Point(10, 390)
+        PnlJ6.Name = "PnlJ6"
+        PnlJ6.Size = New Size(70, 68)
+        PnlJ6.TabIndex = 5
+        PnlJ6.Visible = False
+        ' 
+        ' LblJ6
+        ' 
+        LblJ6.BackColor = Color.Black
+        LblJ6.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblJ6.ForeColor = Color.White
+        LblJ6.Location = New Point(1, 1)
+        LblJ6.Name = "LblJ6"
+        LblJ6.Size = New Size(68, 20)
+        LblJ6.TabIndex = 0
+        LblJ6.Text = "J6"
+        LblJ6.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' BtnJ6Login
+        ' 
+        BtnJ6Login.BackColor = Color.White
+        BtnJ6Login.FlatAppearance.BorderSize = 0
+        BtnJ6Login.FlatStyle = FlatStyle.Flat
+        BtnJ6Login.Font = New Font("Segoe UI", 7.0F)
+        BtnJ6Login.Location = New Point(1, 22)
+        BtnJ6Login.Name = "BtnJ6Login"
+        BtnJ6Login.Size = New Size(68, 22)
+        BtnJ6Login.TabIndex = 1
+        BtnJ6Login.Text = "Login"
+        BtnJ6Login.UseVisualStyleBackColor = False
+        ' 
+        ' BtnJ6Scoring
+        ' 
+        BtnJ6Scoring.BackColor = Color.White
+        BtnJ6Scoring.FlatAppearance.BorderSize = 0
+        BtnJ6Scoring.FlatStyle = FlatStyle.Flat
+        BtnJ6Scoring.Font = New Font("Segoe UI", 7.0F)
+        BtnJ6Scoring.Location = New Point(1, 45)
+        BtnJ6Scoring.Name = "BtnJ6Scoring"
+        BtnJ6Scoring.Size = New Size(68, 22)
+        BtnJ6Scoring.TabIndex = 2
+        BtnJ6Scoring.Text = "Scoring"
+        BtnJ6Scoring.UseVisualStyleBackColor = False
+        ' 
+        ' PnlJ7
+        ' 
+        PnlJ7.BackColor = Color.Black
+        PnlJ7.Controls.Add(LblJ7)
+        PnlJ7.Controls.Add(BtnJ7Login)
+        PnlJ7.Controls.Add(BtnJ7Scoring)
+        PnlJ7.Location = New Point(10, 465)
+        PnlJ7.Name = "PnlJ7"
+        PnlJ7.Size = New Size(70, 68)
+        PnlJ7.TabIndex = 6
+        PnlJ7.Visible = False
+        ' 
+        ' LblJ7
+        ' 
+        LblJ7.BackColor = Color.Black
+        LblJ7.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblJ7.ForeColor = Color.White
+        LblJ7.Location = New Point(1, 1)
+        LblJ7.Name = "LblJ7"
+        LblJ7.Size = New Size(68, 20)
+        LblJ7.TabIndex = 0
+        LblJ7.Text = "J7"
+        LblJ7.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' BtnJ7Login
+        ' 
+        BtnJ7Login.BackColor = Color.White
+        BtnJ7Login.FlatAppearance.BorderSize = 0
+        BtnJ7Login.FlatStyle = FlatStyle.Flat
+        BtnJ7Login.Font = New Font("Segoe UI", 7.0F)
+        BtnJ7Login.Location = New Point(1, 22)
+        BtnJ7Login.Name = "BtnJ7Login"
+        BtnJ7Login.Size = New Size(68, 22)
+        BtnJ7Login.TabIndex = 1
+        BtnJ7Login.Text = "Login"
+        BtnJ7Login.UseVisualStyleBackColor = False
+        ' 
+        ' BtnJ7Scoring
+        ' 
+        BtnJ7Scoring.BackColor = Color.White
+        BtnJ7Scoring.FlatAppearance.BorderSize = 0
+        BtnJ7Scoring.FlatStyle = FlatStyle.Flat
+        BtnJ7Scoring.Font = New Font("Segoe UI", 7.0F)
+        BtnJ7Scoring.Location = New Point(1, 45)
+        BtnJ7Scoring.Name = "BtnJ7Scoring"
+        BtnJ7Scoring.Size = New Size(68, 22)
+        BtnJ7Scoring.TabIndex = 2
+        BtnJ7Scoring.Text = "Scoring"
+        BtnJ7Scoring.UseVisualStyleBackColor = False
+        ' 
         ' BtnQRCode
         ' 
         BtnQRCode.BackColor = Color.White
@@ -1259,9 +1431,9 @@ Partial Class Kata
         PanelRightSidebar.Controls.Add(BtnSearchWait)
         PanelRightSidebar.Controls.Add(BtnStartTimerRight)
         PanelRightSidebar.Dock = DockStyle.Right
-        PanelRightSidebar.Location = New Point(933, 50)
+        PanelRightSidebar.Location = New Point(932, 50)
         PanelRightSidebar.Name = "PanelRightSidebar"
-        PanelRightSidebar.Size = New Size(267, 600)
+        PanelRightSidebar.Size = New Size(267, 621)
         PanelRightSidebar.TabIndex = 3
         ' 
         ' StartTimer
@@ -1791,7 +1963,7 @@ Partial Class Kata
         PanelMainCenter.Dock = DockStyle.Fill
         PanelMainCenter.Location = New Point(90, 50)
         PanelMainCenter.Name = "PanelMainCenter"
-        PanelMainCenter.Size = New Size(843, 600)
+        PanelMainCenter.Size = New Size(842, 621)
         PanelMainCenter.TabIndex = 4
         ' 
         ' PanelAO
@@ -1817,7 +1989,7 @@ Partial Class Kata
         PanelAO.Dock = DockStyle.Fill
         PanelAO.Location = New Point(840, 0)
         PanelAO.Name = "PanelAO"
-        PanelAO.Size = New Size(3, 600)
+        PanelAO.Size = New Size(2, 621)
         PanelAO.TabIndex = 2
         ' 
         ' LblAoTitle
@@ -1828,7 +2000,7 @@ Partial Class Kata
         LblAoTitle.ForeColor = Color.White
         LblAoTitle.Location = New Point(0, 0)
         LblAoTitle.Name = "LblAoTitle"
-        LblAoTitle.Size = New Size(1, 25)
+        LblAoTitle.Size = New Size(0, 25)
         LblAoTitle.TabIndex = 0
         LblAoTitle.Text = "AO"
         LblAoTitle.TextAlign = ContentAlignment.MiddleCenter
@@ -1993,7 +2165,7 @@ Partial Class Kata
         PanelJudgeScore.Dock = DockStyle.Left
         PanelJudgeScore.Location = New Point(560, 0)
         PanelJudgeScore.Name = "PanelJudgeScore"
-        PanelJudgeScore.Size = New Size(280, 600)
+        PanelJudgeScore.Size = New Size(280, 621)
         PanelJudgeScore.TabIndex = 1
         ' 
         ' LblJudgeScoreTitle
@@ -2010,6 +2182,10 @@ Partial Class Kata
         ' PanelAkaScore
         ' 
         PanelAkaScore.BorderStyle = BorderStyle.FixedSingle
+        PanelAkaScore.Controls.Add(LblAkaJ7)
+        PanelAkaScore.Controls.Add(NumAkaJ7)
+        PanelAkaScore.Controls.Add(LblAkaJ6)
+        PanelAkaScore.Controls.Add(NumAkaJ6)
         PanelAkaScore.Controls.Add(LblAkaJ1)
         PanelAkaScore.Controls.Add(NumAkaJ1)
         PanelAkaScore.Controls.Add(LblAkaJ2)
@@ -2027,6 +2203,44 @@ Partial Class Kata
         PanelAkaScore.Name = "PanelAkaScore"
         PanelAkaScore.Size = New Size(125, 400)
         PanelAkaScore.TabIndex = 1
+        ' 
+        ' LblAkaJ7
+        ' 
+        LblAkaJ7.AutoSize = True
+        LblAkaJ7.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblAkaJ7.Location = New Point(10, 226)
+        LblAkaJ7.Name = "LblAkaJ7"
+        LblAkaJ7.Size = New Size(19, 15)
+        LblAkaJ7.TabIndex = 15
+        LblAkaJ7.Text = "J7"
+        ' 
+        ' NumAkaJ7
+        ' 
+        NumAkaJ7.DecimalPlaces = 1
+        NumAkaJ7.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        NumAkaJ7.Location = New Point(40, 225)
+        NumAkaJ7.Name = "NumAkaJ7"
+        NumAkaJ7.Size = New Size(70, 27)
+        NumAkaJ7.TabIndex = 16
+        ' 
+        ' LblAkaJ6
+        ' 
+        LblAkaJ6.AutoSize = True
+        LblAkaJ6.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblAkaJ6.Location = New Point(10, 192)
+        LblAkaJ6.Name = "LblAkaJ6"
+        LblAkaJ6.Size = New Size(19, 15)
+        LblAkaJ6.TabIndex = 13
+        LblAkaJ6.Text = "J6"
+        ' 
+        ' NumAkaJ6
+        ' 
+        NumAkaJ6.DecimalPlaces = 1
+        NumAkaJ6.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        NumAkaJ6.Location = New Point(40, 190)
+        NumAkaJ6.Name = "NumAkaJ6"
+        NumAkaJ6.Size = New Size(70, 27)
+        NumAkaJ6.TabIndex = 14
         ' 
         ' LblAkaJ1
         ' 
@@ -2155,6 +2369,10 @@ Partial Class Kata
         ' PanelAoScore
         ' 
         PanelAoScore.BorderStyle = BorderStyle.FixedSingle
+        PanelAoScore.Controls.Add(LblAoJ7)
+        PanelAoScore.Controls.Add(NumAoJ7)
+        PanelAoScore.Controls.Add(LblAoJ6)
+        PanelAoScore.Controls.Add(NumAoJ6)
         PanelAoScore.Controls.Add(LblAoJ1)
         PanelAoScore.Controls.Add(NumAoJ1)
         PanelAoScore.Controls.Add(LblAoJ2)
@@ -2172,6 +2390,44 @@ Partial Class Kata
         PanelAoScore.Name = "PanelAoScore"
         PanelAoScore.Size = New Size(125, 400)
         PanelAoScore.TabIndex = 2
+        ' 
+        ' LblAoJ7
+        ' 
+        LblAoJ7.AutoSize = True
+        LblAoJ7.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblAoJ7.Location = New Point(95, 226)
+        LblAoJ7.Name = "LblAoJ7"
+        LblAoJ7.Size = New Size(19, 15)
+        LblAoJ7.TabIndex = 15
+        LblAoJ7.Text = "J7"
+        ' 
+        ' NumAoJ7
+        ' 
+        NumAoJ7.DecimalPlaces = 1
+        NumAoJ7.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        NumAoJ7.Location = New Point(15, 225)
+        NumAoJ7.Name = "NumAoJ7"
+        NumAoJ7.Size = New Size(70, 27)
+        NumAoJ7.TabIndex = 16
+        ' 
+        ' LblAoJ6
+        ' 
+        LblAoJ6.AutoSize = True
+        LblAoJ6.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        LblAoJ6.Location = New Point(95, 192)
+        LblAoJ6.Name = "LblAoJ6"
+        LblAoJ6.Size = New Size(19, 15)
+        LblAoJ6.TabIndex = 13
+        LblAoJ6.Text = "J6"
+        ' 
+        ' NumAoJ6
+        ' 
+        NumAoJ6.DecimalPlaces = 1
+        NumAoJ6.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
+        NumAoJ6.Location = New Point(15, 190)
+        NumAoJ6.Name = "NumAoJ6"
+        NumAoJ6.Size = New Size(70, 27)
+        NumAoJ6.TabIndex = 14
         ' 
         ' LblAoJ1
         ' 
@@ -2305,7 +2561,7 @@ Partial Class Kata
         PanelFlagSystem.Dock = DockStyle.Left
         PanelFlagSystem.Location = New Point(280, 0)
         PanelFlagSystem.Name = "PanelFlagSystem"
-        PanelFlagSystem.Size = New Size(280, 600)
+        PanelFlagSystem.Size = New Size(280, 621)
         PanelFlagSystem.TabIndex = 5
         PanelFlagSystem.Visible = False
         ' 
@@ -2323,25 +2579,78 @@ Partial Class Kata
         ' PanelAkaFlags
         ' 
         PanelAkaFlags.BorderStyle = BorderStyle.FixedSingle
+        PanelAkaFlags.Controls.Add(PanelAkaFlag4)
+        PanelAkaFlags.Controls.Add(PanelAkaFlag3)
         PanelAkaFlags.Controls.Add(LblAkaFlagTitle)
         PanelAkaFlags.Controls.Add(LblAkaFlagCount)
         PanelAkaFlags.Controls.Add(BtnAkaFlagReset)
-        ' --- Tambahkan kontrol bendera dan angka AKA ---
-        PanelAkaFlags.Controls.Add(LblAkaFlag5)
-        PanelAkaFlags.Controls.Add(LblAkaNum5)
-        PanelAkaFlags.Controls.Add(LblAkaFlag4)
-        PanelAkaFlags.Controls.Add(LblAkaNum4)
-        PanelAkaFlags.Controls.Add(LblAkaFlag3)
-        PanelAkaFlags.Controls.Add(LblAkaNum3)
-        PanelAkaFlags.Controls.Add(LblAkaFlag2)
-        PanelAkaFlags.Controls.Add(LblAkaNum2)
-        PanelAkaFlags.Controls.Add(LblAkaFlag1)
-        PanelAkaFlags.Controls.Add(LblAkaNum1)
+        PanelAkaFlags.Controls.Add(PanelAkaFlag2)
+        PanelAkaFlags.Controls.Add(PanelAkaFlag1)
+        PanelAkaFlags.Controls.Add(PanelAkaFlag5)
+        PanelAkaFlags.Controls.Add(PanelAkaFlag6)
+        PanelAkaFlags.Controls.Add(PanelAkaFlag7)
         PanelAkaFlags.Location = New Point(10, 30)
         PanelAkaFlags.Name = "PanelAkaFlags"
         PanelAkaFlags.Size = New Size(125, 400)
         PanelAkaFlags.TabIndex = 1
-
+        ' 
+        ' PanelAkaFlag4
+        ' 
+        PanelAkaFlag4.Controls.Add(LblAkaFlag4)
+        PanelAkaFlag4.Controls.Add(LblAkaNum4)
+        PanelAkaFlag4.Location = New Point(15, 115)
+        PanelAkaFlag4.Name = "PanelAkaFlag4"
+        PanelAkaFlag4.Size = New Size(93, 34)
+        PanelAkaFlag4.TabIndex = 17
+        ' 
+        ' LblAkaFlag4
+        ' 
+        LblAkaFlag4.AutoSize = True
+        LblAkaFlag4.Font = New Font("Segoe UI", 12.0F)
+        LblAkaFlag4.Location = New Point(10, 7)
+        LblAkaFlag4.Name = "LblAkaFlag4"
+        LblAkaFlag4.Size = New Size(32, 21)
+        LblAkaFlag4.TabIndex = 6
+        LblAkaFlag4.Text = "🚩"
+        ' 
+        ' LblAkaNum4
+        ' 
+        LblAkaNum4.AutoSize = True
+        LblAkaNum4.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAkaNum4.Location = New Point(60, 7)
+        LblAkaNum4.Name = "LblAkaNum4"
+        LblAkaNum4.Size = New Size(19, 21)
+        LblAkaNum4.TabIndex = 5
+        LblAkaNum4.Text = "4"
+        ' 
+        ' PanelAkaFlag3
+        ' 
+        PanelAkaFlag3.Controls.Add(LblAkaFlag3)
+        PanelAkaFlag3.Controls.Add(LblAkaNum3)
+        PanelAkaFlag3.Location = New Point(15, 150)
+        PanelAkaFlag3.Name = "PanelAkaFlag3"
+        PanelAkaFlag3.Size = New Size(93, 34)
+        PanelAkaFlag3.TabIndex = 16
+        ' 
+        ' LblAkaFlag3
+        ' 
+        LblAkaFlag3.AutoSize = True
+        LblAkaFlag3.Font = New Font("Segoe UI", 12.0F)
+        LblAkaFlag3.Location = New Point(10, 7)
+        LblAkaFlag3.Name = "LblAkaFlag3"
+        LblAkaFlag3.Size = New Size(32, 21)
+        LblAkaFlag3.TabIndex = 6
+        LblAkaFlag3.Text = "🚩"
+        ' 
+        ' LblAkaNum3
+        ' 
+        LblAkaNum3.AutoSize = True
+        LblAkaNum3.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAkaNum3.Location = New Point(60, 7)
+        LblAkaNum3.Name = "LblAkaNum3"
+        LblAkaNum3.Size = New Size(19, 21)
+        LblAkaNum3.TabIndex = 5
+        LblAkaNum3.Text = "3"
         ' 
         ' LblAkaFlagTitle
         ' 
@@ -2373,27 +2682,200 @@ Partial Class Kata
         BtnAkaFlagReset.TabIndex = 2
         BtnAkaFlagReset.Text = "Reset Flag"
         ' 
+        ' PanelAkaFlag2
+        ' 
+        PanelAkaFlag2.Controls.Add(LblAkaFlag2)
+        PanelAkaFlag2.Controls.Add(LblAkaNum2)
+        PanelAkaFlag2.Location = New Point(15, 185)
+        PanelAkaFlag2.Name = "PanelAkaFlag2"
+        PanelAkaFlag2.Size = New Size(93, 34)
+        PanelAkaFlag2.TabIndex = 15
+        ' 
+        ' LblAkaFlag2
+        ' 
+        LblAkaFlag2.AutoSize = True
+        LblAkaFlag2.Font = New Font("Segoe UI", 12.0F)
+        LblAkaFlag2.Location = New Point(10, 7)
+        LblAkaFlag2.Name = "LblAkaFlag2"
+        LblAkaFlag2.Size = New Size(32, 21)
+        LblAkaFlag2.TabIndex = 6
+        LblAkaFlag2.Text = "🚩"
+        ' 
+        ' LblAkaNum2
+        ' 
+        LblAkaNum2.AutoSize = True
+        LblAkaNum2.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAkaNum2.Location = New Point(60, 7)
+        LblAkaNum2.Name = "LblAkaNum2"
+        LblAkaNum2.Size = New Size(19, 21)
+        LblAkaNum2.TabIndex = 5
+        LblAkaNum2.Text = "2"
+        ' 
+        ' PanelAkaFlag1
+        ' 
+        PanelAkaFlag1.Controls.Add(LblAkaFlag1)
+        PanelAkaFlag1.Controls.Add(LblAkaNum1)
+        PanelAkaFlag1.Location = New Point(15, 220)
+        PanelAkaFlag1.Name = "PanelAkaFlag1"
+        PanelAkaFlag1.Size = New Size(93, 34)
+        PanelAkaFlag1.TabIndex = 14
+        ' 
+        ' LblAkaFlag1
+        ' 
+        LblAkaFlag1.AutoSize = True
+        LblAkaFlag1.Font = New Font("Segoe UI", 12.0F)
+        LblAkaFlag1.Location = New Point(10, 7)
+        LblAkaFlag1.Name = "LblAkaFlag1"
+        LblAkaFlag1.Size = New Size(32, 21)
+        LblAkaFlag1.TabIndex = 6
+        LblAkaFlag1.Text = "🚩"
+        ' 
+        ' LblAkaNum1
+        ' 
+        LblAkaNum1.AutoSize = True
+        LblAkaNum1.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAkaNum1.Location = New Point(60, 7)
+        LblAkaNum1.Name = "LblAkaNum1"
+        LblAkaNum1.Size = New Size(19, 21)
+        LblAkaNum1.TabIndex = 5
+        LblAkaNum1.Text = "1"
+        ' 
+        ' PanelAkaFlag5
+        ' 
+        PanelAkaFlag5.Controls.Add(LblAkaFlag5)
+        PanelAkaFlag5.Controls.Add(LblAkaNum5)
+        PanelAkaFlag5.Location = New Point(15, 80)
+        PanelAkaFlag5.Name = "PanelAkaFlag5"
+        PanelAkaFlag5.Size = New Size(93, 34)
+        PanelAkaFlag5.TabIndex = 13
+        ' 
+        ' LblAkaFlag5
+        ' 
+        LblAkaFlag5.AutoSize = True
+        LblAkaFlag5.Font = New Font("Segoe UI", 12.0F)
+        LblAkaFlag5.Location = New Point(10, 7)
+        LblAkaFlag5.Name = "LblAkaFlag5"
+        LblAkaFlag5.Size = New Size(32, 21)
+        LblAkaFlag5.TabIndex = 6
+        LblAkaFlag5.Text = "🚩"
+        ' 
+        ' LblAkaNum5
+        ' 
+        LblAkaNum5.AutoSize = True
+        LblAkaNum5.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAkaNum5.Location = New Point(60, 7)
+        LblAkaNum5.Name = "LblAkaNum5"
+        LblAkaNum5.Size = New Size(19, 21)
+        LblAkaNum5.TabIndex = 5
+        LblAkaNum5.Text = "5"
+        ' 
+        ' PanelAkaFlag6
+        ' 
+        PanelAkaFlag6.Controls.Add(LblAkaFlag6)
+        PanelAkaFlag6.Controls.Add(LblAkaNum6)
+        PanelAkaFlag6.Location = New Point(15, 44)
+        PanelAkaFlag6.Name = "PanelAkaFlag6"
+        PanelAkaFlag6.Size = New Size(93, 34)
+        PanelAkaFlag6.TabIndex = 25
+        PanelAkaFlag6.Visible = False
+        ' 
+        ' LblAkaFlag6
+        ' 
+        LblAkaFlag6.AutoSize = True
+        LblAkaFlag6.Font = New Font("Segoe UI", 12.0F)
+        LblAkaFlag6.Location = New Point(10, 7)
+        LblAkaFlag6.Name = "LblAkaFlag6"
+        LblAkaFlag6.Size = New Size(32, 21)
+        LblAkaFlag6.TabIndex = 6
+        LblAkaFlag6.Text = "🚩"
+        ' 
+        ' LblAkaNum6
+        ' 
+        LblAkaNum6.AutoSize = True
+        LblAkaNum6.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAkaNum6.Location = New Point(60, 7)
+        LblAkaNum6.Name = "LblAkaNum6"
+        LblAkaNum6.Size = New Size(19, 21)
+        LblAkaNum6.TabIndex = 5
+        LblAkaNum6.Text = "6"
+        ' 
+        ' PanelAkaFlag7
+        ' 
+        PanelAkaFlag7.Controls.Add(LblAkaFlag7)
+        PanelAkaFlag7.Controls.Add(LblAkaNum7)
+        PanelAkaFlag7.Location = New Point(15, 9)
+        PanelAkaFlag7.Name = "PanelAkaFlag7"
+        PanelAkaFlag7.Size = New Size(93, 34)
+        PanelAkaFlag7.TabIndex = 26
+        PanelAkaFlag7.Visible = False
+        ' 
+        ' LblAkaFlag7
+        ' 
+        LblAkaFlag7.AutoSize = True
+        LblAkaFlag7.Font = New Font("Segoe UI", 12.0F)
+        LblAkaFlag7.Location = New Point(10, 7)
+        LblAkaFlag7.Name = "LblAkaFlag7"
+        LblAkaFlag7.Size = New Size(32, 21)
+        LblAkaFlag7.TabIndex = 6
+        LblAkaFlag7.Text = "🚩"
+        ' 
+        ' LblAkaNum7
+        ' 
+        LblAkaNum7.AutoSize = True
+        LblAkaNum7.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAkaNum7.Location = New Point(60, 7)
+        LblAkaNum7.Name = "LblAkaNum7"
+        LblAkaNum7.Size = New Size(19, 21)
+        LblAkaNum7.TabIndex = 5
+        LblAkaNum7.Text = "7"
+        ' 
         ' PanelAoFlags
         ' 
         PanelAoFlags.BorderStyle = BorderStyle.FixedSingle
+        PanelAoFlags.Controls.Add(PanelAoFlag4)
         PanelAoFlags.Controls.Add(LblAoFlagTitle)
         PanelAoFlags.Controls.Add(LblAoFlagCount)
+        PanelAoFlags.Controls.Add(PanelAoFlag3)
         PanelAoFlags.Controls.Add(BtnAoFlagReset)
-        ' --- Tambahkan kontrol bendera dan angka AO ---
-        PanelAoFlags.Controls.Add(LblAoFlag5)
-        PanelAoFlags.Controls.Add(LblAoNum5)
-        PanelAoFlags.Controls.Add(LblAoFlag4)
-        PanelAoFlags.Controls.Add(LblAoNum4)
-        PanelAoFlags.Controls.Add(LblAoFlag3)
-        PanelAoFlags.Controls.Add(LblAoNum3)
-        PanelAoFlags.Controls.Add(LblAoFlag2)
-        PanelAoFlags.Controls.Add(LblAoNum2)
-        PanelAoFlags.Controls.Add(LblAoFlag1)
-        PanelAoFlags.Controls.Add(LblAoNum1)
+        PanelAoFlags.Controls.Add(PanelAoFlag5)
+        PanelAoFlags.Controls.Add(PanelAoFlag2)
+        PanelAoFlags.Controls.Add(PanelAoFlag1)
+        PanelAoFlags.Controls.Add(PanelAoFlag6)
+        PanelAoFlags.Controls.Add(PanelAoFlag7)
         PanelAoFlags.Location = New Point(145, 30)
         PanelAoFlags.Name = "PanelAoFlags"
         PanelAoFlags.Size = New Size(125, 400)
         PanelAoFlags.TabIndex = 2
+        ' 
+        ' PanelAoFlag4
+        ' 
+        PanelAoFlag4.Controls.Add(LblAoFlag4)
+        PanelAoFlag4.Controls.Add(LblAoNum4)
+        PanelAoFlag4.Location = New Point(15, 115)
+        PanelAoFlag4.Name = "PanelAoFlag4"
+        PanelAoFlag4.Size = New Size(93, 34)
+        PanelAoFlag4.TabIndex = 22
+        ' 
+        ' LblAoFlag4
+        ' 
+        LblAoFlag4.AutoSize = True
+        LblAoFlag4.Font = New Font("Segoe UI", 12.0F)
+        LblAoFlag4.Location = New Point(10, 7)
+        LblAoFlag4.Name = "LblAoFlag4"
+        LblAoFlag4.Size = New Size(32, 21)
+        LblAoFlag4.TabIndex = 6
+        LblAoFlag4.Text = "🚩"
+        ' 
+        ' LblAoNum4
+        ' 
+        LblAoNum4.AutoSize = True
+        LblAoNum4.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAoNum4.Location = New Point(60, 7)
+        LblAoNum4.Name = "LblAoNum4"
+        LblAoNum4.Size = New Size(19, 21)
+        LblAoNum4.TabIndex = 5
+        LblAoNum4.Text = "4"
+        ' 
         ' LblAoFlagTitle
         ' 
         LblAoFlagTitle.BackColor = Color.DodgerBlue
@@ -2416,6 +2898,35 @@ Partial Class Kata
         LblAoFlagCount.Text = "0"
         LblAoFlagCount.TextAlign = ContentAlignment.MiddleCenter
         ' 
+        ' PanelAoFlag3
+        ' 
+        PanelAoFlag3.Controls.Add(LblAoFlag3)
+        PanelAoFlag3.Controls.Add(LblAoNum3)
+        PanelAoFlag3.Location = New Point(15, 150)
+        PanelAoFlag3.Name = "PanelAoFlag3"
+        PanelAoFlag3.Size = New Size(93, 34)
+        PanelAoFlag3.TabIndex = 21
+        ' 
+        ' LblAoFlag3
+        ' 
+        LblAoFlag3.AutoSize = True
+        LblAoFlag3.Font = New Font("Segoe UI", 12.0F)
+        LblAoFlag3.Location = New Point(10, 7)
+        LblAoFlag3.Name = "LblAoFlag3"
+        LblAoFlag3.Size = New Size(32, 21)
+        LblAoFlag3.TabIndex = 6
+        LblAoFlag3.Text = "🚩"
+        ' 
+        ' LblAoNum3
+        ' 
+        LblAoNum3.AutoSize = True
+        LblAoNum3.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAoNum3.Location = New Point(60, 7)
+        LblAoNum3.Name = "LblAoNum3"
+        LblAoNum3.Size = New Size(19, 21)
+        LblAoNum3.TabIndex = 5
+        LblAoNum3.Text = "3"
+        ' 
         ' BtnAoFlagReset
         ' 
         BtnAoFlagReset.Location = New Point(15, 345)
@@ -2423,145 +2934,159 @@ Partial Class Kata
         BtnAoFlagReset.Size = New Size(93, 25)
         BtnAoFlagReset.TabIndex = 2
         BtnAoFlagReset.Text = "Reset Flag"
-        ' --- AKA FLAGS (MERAH) ---
-        ' 5
-        LblAkaFlag5.AutoSize = True
-        LblAkaFlag5.Font = New Font("Segoe UI", 12.0F)
-        LblAkaFlag5.Location = New Point(25, 15)
-        LblAkaFlag5.Name = "LblAkaFlag5"
-        LblAkaFlag5.TabIndex = 3
-        LblAkaFlag5.Text = "🚩"
-        LblAkaNum5.AutoSize = True
-        LblAkaNum5.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAkaNum5.Location = New Point(75, 15)
-        LblAkaNum5.Name = "LblAkaNum5"
-        LblAkaNum5.TabIndex = 4
-        LblAkaNum5.Text = "5"
-        ' 4
-        LblAkaFlag4.AutoSize = True
-        LblAkaFlag4.Font = New Font("Segoe UI", 12.0F)
-        LblAkaFlag4.Location = New Point(25, 50)
-        LblAkaFlag4.Name = "LblAkaFlag4"
-        LblAkaFlag4.TabIndex = 5
-        LblAkaFlag4.Text = "🚩"
-        LblAkaNum4.AutoSize = True
-        LblAkaNum4.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAkaNum4.Location = New Point(75, 50)
-        LblAkaNum4.Name = "LblAkaNum4"
-        LblAkaNum4.TabIndex = 6
-        LblAkaNum4.Text = "4"
-        ' 3
-        LblAkaFlag3.AutoSize = True
-        LblAkaFlag3.Font = New Font("Segoe UI", 12.0F)
-        LblAkaFlag3.Location = New Point(25, 85)
-        LblAkaFlag3.Name = "LblAkaFlag3"
-        LblAkaFlag3.TabIndex = 7
-        LblAkaFlag3.Text = "🚩"
-        LblAkaNum3.AutoSize = True
-        LblAkaNum3.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAkaNum3.Location = New Point(75, 85)
-        LblAkaNum3.Name = "LblAkaNum3"
-        LblAkaNum3.TabIndex = 8
-        LblAkaNum3.Text = "3"
-        ' 2
-        LblAkaFlag2.AutoSize = True
-        LblAkaFlag2.Font = New Font("Segoe UI", 12.0F)
-        LblAkaFlag2.Location = New Point(25, 120)
-        LblAkaFlag2.Name = "LblAkaFlag2"
-        LblAkaFlag2.TabIndex = 9
-        LblAkaFlag2.Text = "🚩"
-        LblAkaNum2.AutoSize = True
-        LblAkaNum2.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAkaNum2.Location = New Point(75, 120)
-        LblAkaNum2.Name = "LblAkaNum2"
-        LblAkaNum2.TabIndex = 10
-        LblAkaNum2.Text = "2"
-        ' 1
-        LblAkaFlag1.AutoSize = True
-        LblAkaFlag1.Font = New Font("Segoe UI", 12.0F)
-        LblAkaFlag1.Location = New Point(25, 155)
-        LblAkaFlag1.Name = "LblAkaFlag1"
-        LblAkaFlag1.TabIndex = 11
-        LblAkaFlag1.Text = "🚩"
-        LblAkaNum1.AutoSize = True
-        LblAkaNum1.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAkaNum1.Location = New Point(75, 155)
-        LblAkaNum1.Name = "LblAkaNum1"
-        LblAkaNum1.TabIndex = 12
-        LblAkaNum1.Text = "1"
-
-        ' --- AO FLAGS (BIRU/HITAM) ---
-        ' 5
-        LblAoNum5.AutoSize = True
-        LblAoNum5.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAoNum5.Location = New Point(35, 15)
-        LblAoNum5.Name = "LblAoNum5"
-        LblAoNum5.TabIndex = 13
-        LblAoNum5.Text = "5"
+        ' 
+        ' PanelAoFlag5
+        ' 
+        PanelAoFlag5.Controls.Add(LblAoFlag5)
+        PanelAoFlag5.Controls.Add(LblAoNum5)
+        PanelAoFlag5.Location = New Point(15, 80)
+        PanelAoFlag5.Name = "PanelAoFlag5"
+        PanelAoFlag5.Size = New Size(93, 34)
+        PanelAoFlag5.TabIndex = 18
+        ' 
+        ' LblAoFlag5
+        ' 
         LblAoFlag5.AutoSize = True
         LblAoFlag5.Font = New Font("Segoe UI", 12.0F)
-        LblAoFlag5.Location = New Point(75, 15)
+        LblAoFlag5.Location = New Point(10, 7)
         LblAoFlag5.Name = "LblAoFlag5"
-        LblAoFlag5.TabIndex = 14
-        LblAoFlag5.Text = "🏴"
-        ' 4
-        LblAoNum4.AutoSize = True
-        LblAoNum4.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAoNum4.Location = New Point(35, 50)
-        LblAoNum4.Name = "LblAoNum4"
-        LblAoNum4.TabIndex = 15
-        LblAoNum4.Text = "4"
-        LblAoFlag4.AutoSize = True
-        LblAoFlag4.Font = New Font("Segoe UI", 12.0F)
-        LblAoFlag4.Location = New Point(75, 50)
-        LblAoFlag4.Name = "LblAoFlag4"
-        LblAoFlag4.TabIndex = 16
-        LblAoFlag4.Text = "🏴"
-        ' 3
-        LblAoNum3.AutoSize = True
-        LblAoNum3.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAoNum3.Location = New Point(35, 85)
-        LblAoNum3.Name = "LblAoNum3"
-        LblAoNum3.TabIndex = 17
-        LblAoNum3.Text = "3"
-        LblAoFlag3.AutoSize = True
-        LblAoFlag3.Font = New Font("Segoe UI", 12.0F)
-        LblAoFlag3.Location = New Point(75, 85)
-        LblAoFlag3.Name = "LblAoFlag3"
-        LblAoFlag3.TabIndex = 18
-        LblAoFlag3.Text = "🏴"
-        ' 2
-        LblAoNum2.AutoSize = True
-        LblAoNum2.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAoNum2.Location = New Point(35, 120)
-        LblAoNum2.Name = "LblAoNum2"
-        LblAoNum2.TabIndex = 19
-        LblAoNum2.Text = "2"
+        LblAoFlag5.Size = New Size(32, 21)
+        LblAoFlag5.TabIndex = 6
+        LblAoFlag5.Text = "🚩"
+        ' 
+        ' LblAoNum5
+        ' 
+        LblAoNum5.AutoSize = True
+        LblAoNum5.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAoNum5.Location = New Point(60, 7)
+        LblAoNum5.Name = "LblAoNum5"
+        LblAoNum5.Size = New Size(19, 21)
+        LblAoNum5.TabIndex = 5
+        LblAoNum5.Text = "5"
+        ' 
+        ' PanelAoFlag2
+        ' 
+        PanelAoFlag2.Controls.Add(LblAoFlag2)
+        PanelAoFlag2.Controls.Add(LblAoNum2)
+        PanelAoFlag2.Location = New Point(15, 185)
+        PanelAoFlag2.Name = "PanelAoFlag2"
+        PanelAoFlag2.Size = New Size(93, 34)
+        PanelAoFlag2.TabIndex = 20
+        ' 
+        ' LblAoFlag2
+        ' 
         LblAoFlag2.AutoSize = True
         LblAoFlag2.Font = New Font("Segoe UI", 12.0F)
-        LblAoFlag2.Location = New Point(75, 120)
+        LblAoFlag2.Location = New Point(10, 7)
         LblAoFlag2.Name = "LblAoFlag2"
-        LblAoFlag2.TabIndex = 20
-        LblAoFlag2.Text = "🏴"
-        ' 1
-        LblAoNum1.AutoSize = True
-        LblAoNum1.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
-        LblAoNum1.Location = New Point(35, 155)
-        LblAoNum1.Name = "LblAoNum1"
-        LblAoNum1.TabIndex = 21
-        LblAoNum1.Text = "1"
+        LblAoFlag2.Size = New Size(32, 21)
+        LblAoFlag2.TabIndex = 6
+        LblAoFlag2.Text = "🚩"
+        ' 
+        ' LblAoNum2
+        ' 
+        LblAoNum2.AutoSize = True
+        LblAoNum2.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAoNum2.Location = New Point(60, 7)
+        LblAoNum2.Name = "LblAoNum2"
+        LblAoNum2.Size = New Size(19, 21)
+        LblAoNum2.TabIndex = 5
+        LblAoNum2.Text = "2"
+        ' 
+        ' PanelAoFlag1
+        ' 
+        PanelAoFlag1.Controls.Add(LblAoFlag1)
+        PanelAoFlag1.Controls.Add(LblAoNum1)
+        PanelAoFlag1.Location = New Point(15, 220)
+        PanelAoFlag1.Name = "PanelAoFlag1"
+        PanelAoFlag1.Size = New Size(93, 34)
+        PanelAoFlag1.TabIndex = 19
+        ' 
+        ' LblAoFlag1
+        ' 
         LblAoFlag1.AutoSize = True
         LblAoFlag1.Font = New Font("Segoe UI", 12.0F)
-        LblAoFlag1.Location = New Point(75, 155)
+        LblAoFlag1.Location = New Point(10, 7)
         LblAoFlag1.Name = "LblAoFlag1"
-        LblAoFlag1.TabIndex = 22
-        LblAoFlag1.Text = "🏴"
+        LblAoFlag1.Size = New Size(32, 21)
+        LblAoFlag1.TabIndex = 6
+        LblAoFlag1.Text = "🚩"
+        ' 
+        ' LblAoNum1
+        ' 
+        LblAoNum1.AutoSize = True
+        LblAoNum1.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAoNum1.Location = New Point(60, 7)
+        LblAoNum1.Name = "LblAoNum1"
+        LblAoNum1.Size = New Size(19, 21)
+        LblAoNum1.TabIndex = 5
+        LblAoNum1.Text = "1"
+        ' 
+        ' PanelAoFlag6
+        ' 
+        PanelAoFlag6.Controls.Add(LblAoFlag6)
+        PanelAoFlag6.Controls.Add(LblAoNum6)
+        PanelAoFlag6.Location = New Point(15, 44)
+        PanelAoFlag6.Name = "PanelAoFlag6"
+        PanelAoFlag6.Size = New Size(93, 34)
+        PanelAoFlag6.TabIndex = 23
+        PanelAoFlag6.Visible = False
+        ' 
+        ' LblAoFlag6
+        ' 
+        LblAoFlag6.AutoSize = True
+        LblAoFlag6.Font = New Font("Segoe UI", 12.0F)
+        LblAoFlag6.Location = New Point(10, 7)
+        LblAoFlag6.Name = "LblAoFlag6"
+        LblAoFlag6.Size = New Size(32, 21)
+        LblAoFlag6.TabIndex = 6
+        LblAoFlag6.Text = "🚩"
+        ' 
+        ' LblAoNum6
+        ' 
+        LblAoNum6.AutoSize = True
+        LblAoNum6.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAoNum6.Location = New Point(60, 7)
+        LblAoNum6.Name = "LblAoNum6"
+        LblAoNum6.Size = New Size(19, 21)
+        LblAoNum6.TabIndex = 5
+        LblAoNum6.Text = "6"
+        ' 
+        ' PanelAoFlag7
+        ' 
+        PanelAoFlag7.Controls.Add(LblAoFlag7)
+        PanelAoFlag7.Controls.Add(LblAoNum7)
+        PanelAoFlag7.Location = New Point(15, 9)
+        PanelAoFlag7.Name = "PanelAoFlag7"
+        PanelAoFlag7.Size = New Size(93, 34)
+        PanelAoFlag7.TabIndex = 24
+        PanelAoFlag7.Visible = False
+        ' 
+        ' LblAoFlag7
+        ' 
+        LblAoFlag7.AutoSize = True
+        LblAoFlag7.Font = New Font("Segoe UI", 12.0F)
+        LblAoFlag7.Location = New Point(10, 7)
+        LblAoFlag7.Name = "LblAoFlag7"
+        LblAoFlag7.Size = New Size(32, 21)
+        LblAoFlag7.TabIndex = 6
+        LblAoFlag7.Text = "🚩"
+        ' 
+        ' LblAoNum7
+        ' 
+        LblAoNum7.AutoSize = True
+        LblAoNum7.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+        LblAoNum7.Location = New Point(60, 7)
+        LblAoNum7.Name = "LblAoNum7"
+        LblAoNum7.Size = New Size(19, 21)
+        LblAoNum7.TabIndex = 5
+        LblAoNum7.Text = "7"
         ' 
         ' Kata
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1200, 700)
+        ClientSize = New Size(1199, 721)
         Controls.Add(PanelMainCenter)
         Controls.Add(PanelRightSidebar)
         Controls.Add(PanelLeftSidebar)
@@ -2584,6 +3109,8 @@ Partial Class Kata
         PnlJ3.ResumeLayout(False)
         PnlJ4.ResumeLayout(False)
         PnlJ5.ResumeLayout(False)
+        PnlJ6.ResumeLayout(False)
+        PnlJ7.ResumeLayout(False)
         PanelRightSidebar.ResumeLayout(False)
         PanelRightSidebar.PerformLayout()
         TabRightSettings.ResumeLayout(False)
@@ -2605,6 +3132,8 @@ Partial Class Kata
         PanelJudgeScore.ResumeLayout(False)
         PanelAkaScore.ResumeLayout(False)
         PanelAkaScore.PerformLayout()
+        CType(NumAkaJ7, ComponentModel.ISupportInitialize).EndInit()
+        CType(NumAkaJ6, ComponentModel.ISupportInitialize).EndInit()
         CType(NumAkaJ1, ComponentModel.ISupportInitialize).EndInit()
         CType(NumAkaJ2, ComponentModel.ISupportInitialize).EndInit()
         CType(NumAkaJ3, ComponentModel.ISupportInitialize).EndInit()
@@ -2613,6 +3142,8 @@ Partial Class Kata
         CType(NumAkaTotalScore, ComponentModel.ISupportInitialize).EndInit()
         PanelAoScore.ResumeLayout(False)
         PanelAoScore.PerformLayout()
+        CType(NumAoJ7, ComponentModel.ISupportInitialize).EndInit()
+        CType(NumAoJ6, ComponentModel.ISupportInitialize).EndInit()
         CType(NumAoJ1, ComponentModel.ISupportInitialize).EndInit()
         CType(NumAoJ2, ComponentModel.ISupportInitialize).EndInit()
         CType(NumAoJ3, ComponentModel.ISupportInitialize).EndInit()
@@ -2621,9 +3152,75 @@ Partial Class Kata
         CType(NumAoTotalScore, ComponentModel.ISupportInitialize).EndInit()
         PanelFlagSystem.ResumeLayout(False)
         PanelAkaFlags.ResumeLayout(False)
+        PanelAkaFlag4.ResumeLayout(False)
+        PanelAkaFlag4.PerformLayout()
+        PanelAkaFlag3.ResumeLayout(False)
+        PanelAkaFlag3.PerformLayout()
+        PanelAkaFlag2.ResumeLayout(False)
+        PanelAkaFlag2.PerformLayout()
+        PanelAkaFlag1.ResumeLayout(False)
+        PanelAkaFlag1.PerformLayout()
+        PanelAkaFlag5.ResumeLayout(False)
+        PanelAkaFlag5.PerformLayout()
+        PanelAkaFlag6.ResumeLayout(False)
+        PanelAkaFlag6.PerformLayout()
+        PanelAkaFlag7.ResumeLayout(False)
+        PanelAkaFlag7.PerformLayout()
         PanelAoFlags.ResumeLayout(False)
+        PanelAoFlag4.ResumeLayout(False)
+        PanelAoFlag4.PerformLayout()
+        PanelAoFlag3.ResumeLayout(False)
+        PanelAoFlag3.PerformLayout()
+        PanelAoFlag5.ResumeLayout(False)
+        PanelAoFlag5.PerformLayout()
+        PanelAoFlag2.ResumeLayout(False)
+        PanelAoFlag2.PerformLayout()
+        PanelAoFlag1.ResumeLayout(False)
+        PanelAoFlag1.PerformLayout()
+        PanelAoFlag6.ResumeLayout(False)
+        PanelAoFlag6.PerformLayout()
+        PanelAoFlag7.ResumeLayout(False)
+        PanelAoFlag7.PerformLayout()
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents APIInfo As Button
+    Friend WithEvents PanelAkaFlag5 As Panel
+    Friend WithEvents PanelAkaFlag1 As Panel
+    Friend WithEvents LblAkaFlag1 As Label
+    Friend WithEvents LblAkaNum1 As Label
+    Friend WithEvents LblAkaFlag5 As Label
+    Friend WithEvents LblAkaNum5 As Label
+    Friend WithEvents PanelAkaFlag2 As Panel
+    Friend WithEvents LblAkaFlag2 As Label
+    Friend WithEvents LblAkaNum2 As Label
+    Friend WithEvents PanelAoFlag4 As Panel
+    Friend WithEvents LblAoFlag4 As Label
+    Friend WithEvents LblAoNum4 As Label
+    Friend WithEvents PanelAoFlag3 As Panel
+    Friend WithEvents LblAoFlag3 As Label
+    Friend WithEvents LblAoNum3 As Label
+    Friend WithEvents PanelAkaFlag4 As Panel
+    Friend WithEvents LblAkaFlag4 As Label
+    Friend WithEvents LblAkaNum4 As Label
+    Friend WithEvents PanelAkaFlag3 As Panel
+    Friend WithEvents LblAkaFlag3 As Label
+    Friend WithEvents LblAkaNum3 As Label
+    Friend WithEvents PanelAoFlag2 As Panel
+    Friend WithEvents LblAoFlag2 As Label
+    Friend WithEvents LblAoNum2 As Label
+    Friend WithEvents PanelAoFlag1 As Panel
+    Friend WithEvents LblAoFlag1 As Label
+    Friend WithEvents LblAoNum1 As Label
+    Friend WithEvents PanelAoFlag5 As Panel
+    Friend WithEvents LblAoFlag5 As Label
+    Friend WithEvents LblAoNum5 As Label
+    Friend WithEvents LblAkaJ7 As Label
+    Friend WithEvents NumAkaJ7 As NumericUpDown
+    Friend WithEvents LblAkaJ6 As Label
+    Friend WithEvents NumAkaJ6 As NumericUpDown
+    Friend WithEvents LblAoJ7 As Label
+    Friend WithEvents NumAoJ7 As NumericUpDown
+    Friend WithEvents LblAoJ6 As Label
+    Friend WithEvents NumAoJ6 As NumericUpDown
 End Class

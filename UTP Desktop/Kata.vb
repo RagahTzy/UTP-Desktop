@@ -830,4 +830,26 @@ Public Class Kata
         SetFlagColors(judgeCount - 7, 7)
         LogActivityToDb("Flag", "AO Flag 7 clicked", "Action")
     End Sub
+    Private Sub BtnStartScoreboardRight_Click(sender As Object, e As EventArgs) Handles BtnStartScoreboardRight.Click
+        If Screen.AllScreens.Length < 2 Then
+            Dim hasil As DialogResult = MessageBox.Show(
+                "No extended display detected." & vbNewLine &
+                "Please connect a second screen and set it to Extend mode." & vbNewLine &
+                "Continue show in main screen?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            )
+            If hasil = DialogResult.Yes Then
+                BukaScoreboard()
+            End If
+        Else
+            BukaScoreboard()
+        End If
+    End Sub
+
+    Private Sub BukaScoreboard()
+        Dim splash As New FrmSplashKata()
+        splash.Show()
+    End Sub
 End Class

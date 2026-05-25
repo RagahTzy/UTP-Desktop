@@ -2,6 +2,7 @@
     Inherits System.Windows.Forms.Form
 
     Private splashTimer As New Timer()  ' ← BARU
+    Public Event ScoreboardOpened(scoreboard As KataScoreboard)
 
     Private Sub FrmSplashKata_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
@@ -18,6 +19,7 @@
     Private Sub SplashSelesai(sender As Object, e As EventArgs)
         splashTimer.Stop()
         Dim scoreboard As New KataScoreboard()
+        RaiseEvent ScoreboardOpened(scoreboard)
         scoreboard.Show()
         Me.Close()
     End Sub

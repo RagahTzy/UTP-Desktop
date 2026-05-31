@@ -6,6 +6,8 @@ Public Class Kata
     End Sub
 
     Private lastWinnerSide As String = ""
+    Private scoreboardActive As Boolean = False
+    Private splashForm As FrmSplashKata = Nothing
 
     Private Sub Kata_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         SetJudgeCount(GetCurrentJudgeCount())
@@ -830,4 +832,58 @@ Public Class Kata
         SetFlagColors(judgeCount - 7, 7)
         LogActivityToDb("Flag", "AO Flag 7 clicked", "Action")
     End Sub
+    Private Sub BtnStartScoreboardRight_Click(sender As Object, e As EventArgs) Handles BtnStartScoreboardRight.Click
+        If scoreboardActive Then
+            TutupScoreboard()
+        Else
+            If Screen.AllScreens.Length < 2 Then
+                Dim hasil As DialogResult = MessageBox.Show(
+                    "No extended display detected." & vbNewLine &
+                    "Please connect a second screen and set it to Extend mode." & vbNewLine &
+                    "Continue show in main screen?",
+                    "Confirmation",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                )
+                If hasil = DialogResult.Yes Then
+                    BukaScoreboard()
+                End If
+            Else
+                BukaScoreboard()
+            End If
+        End If
+    End Sub
+
+    Private Sub BukaScoreboard()
+        splashForm = New FrmSplashKata()
+        AddHandler splashForm.FormClosed, AddressOf SplashClosed
+        AddHandler splashForm.ScoreboardOpened, AddressOf OnScoreboardOpened
+        splashForm.Show()
+        scoreboardActive = True
+        BtnStartScoreboardRight.Text = "Close Scoreboard"
+        BtnStartScoreboardRight.BackColor = Color.OrangeRed
+    End Sub
+
+    Private Sub SplashClosed(sender As Object, e As EventArgs)
+        ' Splash sudah tutup, tunggu ScoreboardClosed
+    End Sub
+
+    Private Sub OnScoreboardOpened(scoreboard As KataScoreboard)
+        AddHandler scoreboard.FormClosed, AddressOf ScoreboardClosed
+    End Sub
+
+    Private Sub TutupScoreboard()
+        If splashForm IsNot Nothing AndAlso Not splashForm.IsDisposed Then
+            splashForm.Close()
+        End If
+        ScoreboardClosed(Nothing, Nothing)
+    End Sub
+
+    Private Sub ScoreboardClosed(sender As Object, e As EventArgs)
+        scoreboardActive = False
+        splashForm = Nothing
+        BtnStartScoreboardRight.Text = "Start Scoreboard"
+        BtnStartScoreboardRight.BackColor = Color.LimeGreen
+    End Sub
+
 End Class

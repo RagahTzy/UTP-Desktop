@@ -124,10 +124,42 @@ Public Class KataScoreboard
     Private Sub UpdateDataFromKata(sender As Object, e As EventArgs)
         If kataForm IsNot Nothing Then
             Try
-                Dim akaNameVal As String = kataForm.TxtAkaNameHeader.Text
-                Dim akaTeamVal As String = kataForm.GetAkaTeamName()
-                Dim aoNameVal As String = kataForm.TxtAoNameHeader.Text
-                Dim aoTeamVal As String = kataForm.GetAoTeamName()
+                ' Prefer detail panel name if set (TxtAkaName/TxtAoName), otherwise use header name
+                Dim akaNameVal As String = ""
+                Try
+                    If kataForm.TxtAkaName IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(kataForm.TxtAkaName.Text) Then
+                        akaNameVal = kataForm.TxtAkaName.Text
+                    Else
+                        akaNameVal = kataForm.TxtAkaNameHeader.Text
+                    End If
+                Catch exNameA As Exception
+                    akaNameVal = kataForm.TxtAkaNameHeader.Text
+                End Try
+
+                Dim akaTeamVal As String = ""
+                Try
+                    akaTeamVal = kataForm.GetAkaTeamName()
+                Catch exTeamA As Exception
+                    akaTeamVal = ""
+                End Try
+
+                Dim aoNameVal As String = ""
+                Try
+                    If kataForm.TxtAoName IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(kataForm.TxtAoName.Text) Then
+                        aoNameVal = kataForm.TxtAoName.Text
+                    Else
+                        aoNameVal = kataForm.TxtAoNameHeader.Text
+                    End If
+                Catch exNameO As Exception
+                    aoNameVal = kataForm.TxtAoNameHeader.Text
+                End Try
+
+                Dim aoTeamVal As String = ""
+                Try
+                    aoTeamVal = kataForm.GetAoTeamName()
+                Catch exTeamO As Exception
+                    aoTeamVal = ""
+                End Try
 
                 ' Debug - log setiap kali update
                 Debug.WriteLine($"[UpdateDataFromKata] AKA: '{akaNameVal}' | Team: '{akaTeamVal}' | AO: '{aoNameVal}' | Team: '{aoTeamVal}'")

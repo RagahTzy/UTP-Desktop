@@ -1,8 +1,15 @@
 ﻿Public Class FrmSplashKata
     Inherits System.Windows.Forms.Form
 
-    Private splashTimer As New Timer()  ' ← BARU
+    Private splashTimer As New Timer()
     Public Event ScoreboardOpened(scoreboard As KataScoreboard)
+
+    ' === REFERENCE KE KATA FORM ===
+    Private kataForm As Kata = Nothing
+
+    Public Sub New(Optional parentKataForm As Kata = Nothing)
+        kataForm = parentKataForm
+    End Sub
 
     Private Sub FrmSplashKata_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
@@ -19,6 +26,14 @@
     Private Sub SplashSelesai(sender As Object, e As EventArgs)
         splashTimer.Stop()
         Dim scoreboard As New KataScoreboard()
+
+        ' === PASS REFERENCE KATA KE KATASCOREBBOARD UNTUK REAL-TIME UPDATE ===
+        If kataForm IsNot Nothing Then
+            scoreboard.SetKataReference(kataForm)
+        Else
+            MessageBox.Show("Error: kataForm is Nothing!", "Error")
+        End If
+
         RaiseEvent ScoreboardOpened(scoreboard)
         scoreboard.Show()
         Me.Close()

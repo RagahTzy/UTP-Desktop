@@ -95,6 +95,7 @@ Public Class ListOfCompetitor
 
     ' CLOSE
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
+        Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
 
@@ -109,6 +110,7 @@ Public Class ListOfCompetitor
             SelectedTeamName = If(drv("TeamName") IsNot Nothing, drv("TeamName").ToString(), "")
             SelectedTeamInfo = If(drv("TeamInfo") IsNot Nothing, drv("TeamInfo").ToString(), "")
 
+            Me.DialogResult = DialogResult.OK
             Me.Close()
         Else
             MessageBox.Show("Pilih kompetitor terlebih dahulu.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)

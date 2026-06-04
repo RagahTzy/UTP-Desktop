@@ -32,6 +32,33 @@ Public Class Kata
     Private aoSelectedTeamInfo As String = ""
 
     ''' <summary>
+    ''' Public properties untuk akses dari KataScoreboard
+    ''' </summary>
+    Public ReadOnly Property AkaCompetitorNameValue As String
+        Get
+            Return TxtAkaNameHeader.Text
+        End Get
+    End Property
+
+    Public ReadOnly Property AoCompetitorNameValue As String
+        Get
+            Return TxtAoNameHeader.Text
+        End Get
+    End Property
+
+    Public ReadOnly Property AkaTeamNameValue As String
+        Get
+            Return akaSelectedTeam
+        End Get
+    End Property
+
+    Public ReadOnly Property AoTeamNameValue As String
+        Get
+            Return aoSelectedTeam
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Helper function untuk logging activity ke database
     ''' </summary>
     Private Sub LogActivityToDb(category As String, activity As String, activityType As String, Optional matchTime As String = "")
@@ -855,7 +882,7 @@ Public Class Kata
     End Sub
 
     Private Sub BukaScoreboard()
-        splashForm = New FrmSplashKata()
+        splashForm = New FrmSplashKata(Me)
         AddHandler splashForm.FormClosed, AddressOf SplashClosed
         AddHandler splashForm.ScoreboardOpened, AddressOf OnScoreboardOpened
         splashForm.Show()
@@ -885,5 +912,46 @@ Public Class Kata
         BtnStartScoreboardRight.Text = "Start Scoreboard"
         BtnStartScoreboardRight.BackColor = Color.LimeGreen
     End Sub
+
+    ' === HELPER METHODS UNTUK KATASCOREBBOARD ===
+    Public Function GetAkaTeamName() As String
+        ' Baca dari TxtAkaTeam (nama team yang ditampilkan)
+        If TxtAkaTeam IsNot Nothing AndAlso Not String.IsNullOrEmpty(TxtAkaTeam.Text) Then
+            Return TxtAkaTeam.Text
+        End If
+        ' Fallback ke variable
+        If Not String.IsNullOrEmpty(akaSelectedTeam) Then
+            Return akaSelectedTeam
+        End If
+        Return ""
+    End Function
+
+    Public Function GetAoTeamName() As String
+        ' Baca dari TxtAoTeam (nama team yang ditampilkan)
+        If TxtAoTeam IsNot Nothing AndAlso Not String.IsNullOrEmpty(TxtAoTeam.Text) Then
+            Return TxtAoTeam.Text
+        End If
+        ' Fallback ke variable
+        If Not String.IsNullOrEmpty(aoSelectedTeam) Then
+            Return aoSelectedTeam
+        End If
+        Return ""
+    End Function
+
+    Public Function GetAkaScore() As Integer
+        If RadFlagSystem.Checked Then
+            Return CountAkaFlags()
+        Else
+            Return CInt(NumAkaTotalScore.Value)
+        End If
+    End Function
+
+    Public Function GetAoScore() As Integer
+        If RadFlagSystem.Checked Then
+            Return CountAoFlags()
+        Else
+            Return CInt(NumAoTotalScore.Value)
+        End If
+    End Function
 
 End Class

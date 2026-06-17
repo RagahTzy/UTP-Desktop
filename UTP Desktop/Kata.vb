@@ -1,6 +1,73 @@
 ﻿Imports System.Data.SQLite
 
 Public Class Kata
+    ' ==================== TAMBAHAN UNTUK SHORTCUT ====================
+    Private localShortcuts As New Dictionary(Of String, String)
+
+    Private Sub RefreshLocalSettings()
+        localShortcuts.Clear()
+        For Each kvp In ModGlobalConfig.KataShortcuts
+            localShortcuts.Add(kvp.Key, kvp.Value)
+        Next
+        ModGlobalConfig.NeedRefreshSettings = False
+    End Sub
+
+    Private Sub Kata_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If ModGlobalConfig.NeedRefreshSettings Then RefreshLocalSettings()
+        If ModGlobalConfig.IsShortcutEnabled = False Then Exit Sub
+
+        Dim pressedKey As String = ""
+        If e.Control Then pressedKey &= "Control+"
+        If e.Shift Then pressedKey &= "Shift+"
+        If e.Alt Then pressedKey &= "Alt+"
+        pressedKey &= e.KeyCode.ToString()
+
+        For Each kvp In localShortcuts
+            If kvp.Value = pressedKey Then
+                e.SuppressKeyPress = True
+                e.Handled = True
+                EksekusiAksiShortcut(kvp.Key)
+                Exit For
+            End If
+        Next
+    End Sub
+
+    Private Sub EksekusiAksiShortcut(namaAksi As String)
+        Select Case namaAksi
+            Case "Start-Close Scoreboard"
+                BtnStartScoreboardRight.PerformClick()
+            Case "Timer Waiting Start-Stop"
+                BtnStartWaitingTimer.PerformClick()
+            Case "Match Timer Start-Stop"
+                BtnStartTimerRight.PerformClick()
+            Case "Match Timer Reset"
+                ResetTimer.PerformClick()
+            Case "Hide-Show KATA Timer"
+                BtnEye.PerformClick()
+            Case "Show Winner"
+                If lastWinnerSide = "AKA" Then
+                    BtnAkaShowWinner.PerformClick()
+                ElseIf lastWinnerSide = "AO" Then
+                    BtnAoShowWinner.PerformClick()
+                End If
+            Case "Show Score to Scoreboard"
+                BtnShowScore.PerformClick()
+            Case "Assign Task to Judges"
+                BtnAssignTask.PerformClick()
+            Case "Next Match"
+                BtnLoadNextMatch.PerformClick()
+            Case "Save Match Result"
+                BtnSaveMatch.PerformClick()
+            Case "Show Competitor 1 (AKA)"
+                RadCompetitor1.Checked = True
+            Case "Show Competitor 2 (AO)"
+                RadCompetitor2.Checked = True
+            Case "Show All Competitor"
+                RadAllCompetitor.Checked = True
+        End Select
+    End Sub
+    ' ==================== END SHORTCUT SECTION ====================
+
     Public Sub New()
         InitializeComponent()
     End Sub
@@ -10,6 +77,10 @@ Public Class Kata
     Private splashForm As FrmSplashKata = Nothing
 
     Private Sub Kata_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.KeyPreview = True
+        ModGlobalConfig.InitDefaultShortcuts()
+        RefreshLocalSettings()
+
         SetJudgeCount(GetCurrentJudgeCount())
         ResetFlagPanelColors()
         UpdateFlagCountLabels()
@@ -214,6 +285,7 @@ Public Class Kata
     Private Sub BtnShortcut_Click(sender As Object, e As EventArgs) Handles BtnShortcut.Click
         Try
             Dim formShortcut As New Shortcut()
+            formShortcut.CurrentMode = Shortcut.ShortcutMode.Kata
             formShortcut.ShowDialog()
             LogActivityToDb("UI", "Open Shortcut Form", "Action")
         Catch ex As Exception

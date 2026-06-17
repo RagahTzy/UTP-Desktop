@@ -6,7 +6,7 @@
     ' Fungsi untuk menyegarkan data shortcut di Form Kumite jika ada perubahan di Form Shortcut
     Private Sub RefreshLocalSettings()
         localShortcuts.Clear()
-        For Each kvp In ModGlobalConfig.ShortcutSettings
+        For Each kvp In ModGlobalConfig.KumiteShortcuts
             localShortcuts.Add(kvp.Key, kvp.Value)
         Next
         ModGlobalConfig.NeedRefreshSettings = False
@@ -191,8 +191,9 @@
     End Sub
 
     Private Sub BtnShortcut_Click(sender As Object, e As EventArgs) Handles BtnShortcut.Click
-        ' Membuka pengaturan shortcut
+        ' Membuka pengaturan shortcut dengan mode KUMITE
         Dim frmShortcut As New Shortcut()
+        frmShortcut.CurrentMode = Shortcut.ShortcutMode.Kumite
         frmShortcut.ShowDialog()
     End Sub
 

@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Log_Activity
     Inherits System.Windows.Forms.Form
 
@@ -36,7 +36,6 @@ Partial Class Log_Activity
         colActivityType = New DataGridViewTextBoxColumn()
         colDateTime = New DataGridViewTextBoxColumn()
         colMatchTime = New DataGridViewTextBoxColumn()
-        colUserName = New DataGridViewTextBoxColumn()
         btnExport = New Button()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -157,13 +156,6 @@ Partial Class Log_Activity
         colMatchTime.Name = "colMatchTime"
         colMatchTime.ReadOnly = True
         ' 
-        ' colUserName
-        ' 
-        colUserName.HeaderText = "UserName"
-        colUserName.MinimumWidth = 8
-        colUserName.Name = "colUserName"
-        colUserName.ReadOnly = True
-        ' 
         ' btnExport
         ' 
         btnExport.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
@@ -212,8 +204,5 @@ Partial Class Log_Activity
     Friend WithEvents colActivityType As DataGridViewTextBoxColumn
     Friend WithEvents colDateTime As DataGridViewTextBoxColumn
     Friend WithEvents colMatchTime As DataGridViewTextBoxColumn
-    Friend WithEvents btnExport As Button
-End Class
-tBoxColumn
     Friend WithEvents btnExport As Button
 End Class

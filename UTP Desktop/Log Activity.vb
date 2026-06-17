@@ -1,4 +1,4 @@
-﻿Imports System.Data.SQLite
+Imports System.Data.SQLite
 Imports ClosedXML.Excel
 
 Public Class Log_Activity
@@ -15,8 +15,7 @@ Public Class Log_Activity
                     Activity TEXT,
                     ActivityType TEXT,
                     DateTime TEXT,
-                    MatchTime TEXT,
-                    UserName TEXT
+                    MatchTime TEXT
                 )"
                 Using cmd As New SQLiteCommand(sql, conn)
                     cmd.ExecuteNonQuery()
@@ -32,7 +31,7 @@ Public Class Log_Activity
             Using conn As New SQLiteConnection(connString)
                 conn.Open()
 
-                Dim sql As String = "SELECT Categories, Activity, ActivityType, DateTime, MatchTime, UserName FROM LogActivity WHERE 1=1"
+                Dim sql As String = "SELECT Categories, Activity, ActivityType, DateTime, MatchTime FROM LogActivity WHERE 1=1"
 
                 sql &= " AND DATE(DateTime) = '" & DateTimePicker1.Value.ToString("yyyy-MM-dd") & "'"
 
@@ -58,7 +57,6 @@ Public Class Log_Activity
                 colActivityType.DataPropertyName = "ActivityType"
                 colDateTime.DataPropertyName = "DateTime"
                 colMatchTime.DataPropertyName = "MatchTime"
-                colUserName.DataPropertyName = "UserName"
             End Using
         Catch ex As Exception
             MessageBox.Show("Gagal load data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

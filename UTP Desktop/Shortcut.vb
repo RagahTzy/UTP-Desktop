@@ -3,6 +3,14 @@ Public Class Shortcut
     Private isRecording As Boolean = False
     Private isShortcutActive As Boolean = True ' Status ON/OFF lokal
 
+    ' Mode Shortcut: Kumite atau Kata
+    Public Enum ShortcutMode
+        Kumite
+        Kata
+    End Enum
+
+    Public Property CurrentMode As ShortcutMode = ShortcutMode.Kumite
+
     Private Sub Shortcut_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.DoubleBuffered = True
         Me.KeyPreview = True ' Penting agar KeyDown form berfungsi
@@ -13,39 +21,49 @@ Public Class Shortcut
 
         If lvShortcuts IsNot Nothing Then
             lvShortcuts.OwnerDraw = True
-            ' 1. Load data default dulu
+            ' 1. Load data default dulu berdasarkan mode
             isiDataShortcut()
 
             ' 2. Ambil data yang sudah tersimpan di GlobalConfig (jika ada) 
-            ' agar ListView menampilkan shortcut yang sedang aktif saat ini
             MuatDariGlobalConfig()
         End If
     End Sub
 
     ' --- FUNGSI: MENGIRIM DATA KE MODULE ---
     Private Sub SimpanKeGlobalConfig()
-        ModGlobalConfig.ShortcutSettings.Clear()
-        For Each item As ListViewItem In lvShortcuts.Items
-            Dim aksi As String = item.Text
-            Dim tombol As String = item.SubItems(1).Text
-            If tombol <> "None" Then
-                ModGlobalConfig.ShortcutSettings(aksi) = tombol
-            End If
-        Next
+        If CurrentMode = ShortcutMode.Kumite Then
+            ModGlobalConfig.KumiteShortcuts.Clear()
+            For Each item As ListViewItem In lvShortcuts.Items
+                Dim aksi As String = item.Text
+                Dim tombol As String = item.SubItems(1).Text
+                If tombol <> "None" Then
+                    ModGlobalConfig.KumiteShortcuts(aksi) = tombol
+                End If
+            Next
+        Else
+            ModGlobalConfig.KataShortcuts.Clear()
+            For Each item As ListViewItem In lvShortcuts.Items
+                Dim aksi As String = item.Text
+                Dim tombol As String = item.SubItems(1).Text
+                If tombol <> "None" Then
+                    ModGlobalConfig.KataShortcuts(aksi) = tombol
+                End If
+            Next
+        End If
+        
         ModGlobalConfig.IsShortcutEnabled = isShortcutActive
-
-        ' Signal ke form lain (Kumite) bahwa pengaturan telah berubah
         ModGlobalConfig.NeedRefreshSettings = True
     End Sub
 
     ' --- FUNGSI: MEMBACA DATA DARI MODULE KE LISTVIEW ---
     Private Sub MuatDariGlobalConfig()
-        ' Jika module kosong, gunakan default dari isiDataShortcut()
-        If ModGlobalConfig.ShortcutSettings.Count = 0 Then Exit Sub
+        Dim targetDict As Dictionary(Of String, String) = If(CurrentMode = ShortcutMode.Kumite, ModGlobalConfig.KumiteShortcuts, ModGlobalConfig.KataShortcuts)
+        
+        If targetDict.Count = 0 Then Exit Sub
 
         For Each item As ListViewItem In lvShortcuts.Items
-            If ModGlobalConfig.ShortcutSettings.ContainsKey(item.Text) Then
-                item.SubItems(1).Text = ModGlobalConfig.ShortcutSettings(item.Text)
+            If targetDict.ContainsKey(item.Text) Then
+                item.SubItems(1).Text = targetDict(item.Text)
             End If
         Next
     End Sub
@@ -118,7 +136,6 @@ Public Class Shortcut
         MessageBox.Show("Pengaturan shortcut berhasil diterapkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
         btnSave.Enabled = False
         btnSave.ForeColor = Color.DarkGray
-        ' Otomatis tutup agar perubahan langsung di-load di Form Kumite
         Me.Close()
     End Sub
 
@@ -127,7 +144,7 @@ Public Class Shortcut
         isShortcutActive = Not isShortcutActive
         UpdateToggleUI()
 
-        ' Langsung update status global agar form Kumite tahu status terbaru
+        ' Langsung update status global agar form tahu status terbaru
         ModGlobalConfig.IsShortcutEnabled = isShortcutActive
         ModGlobalConfig.NeedRefreshSettings = True
     End Sub
@@ -165,22 +182,39 @@ Public Class Shortcut
         If lvShortcuts Is Nothing Then Exit Sub
         lvShortcuts.Items.Clear()
 
-        ' DAFTAR AKSI - Harus SAMA PERSIS dengan Select Case di Kumite.vb
-        tambahItem("Start-Close Scoreboard", "Control+B")
-        tambahItem("Match Timer Start-Stop", "Space")
-        tambahItem("Match Timer Reset", "Control+R")
+        If CurrentMode = ShortcutMode.Kumite Then
+            ' DAFTAR AKSI KUMITE
+            tambahItem("Start-Close Scoreboard", "Control+B")
+            tambahItem("Match Timer Start-Stop", "Space")
+            tambahItem("Match Timer Reset", "Control+R")
 
-        ' AKA Group
-        tambahItem("AKA - Yuko(1)", "Shift+A")
-        tambahItem("AKA - Wazaari(2)", "Shift+S")
-        tambahItem("AKA - Ippon(3)", "Shift+D")
-        tambahItem("AKA - SENSHU", "Shift+Q")
+            ' AKA Group
+            tambahItem("AKA - Yuko(1)", "Shift+A")
+            tambahItem("AKA - Wazaari(2)", "Shift+S")
+            tambahItem("AKA - Ippon(3)", "Shift+D")
+            tambahItem("AKA - SENSHU", "Shift+Q")
 
-        ' AO Group
-        tambahItem("AO - Yuko(1)", "Shift+J")
-        tambahItem("AO - Wazaari(2)", "Shift+K")
-        tambahItem("AO - Ippon(3)", "Shift+L")
-        tambahItem("AO - SENSHU", "Shift+P")
+            ' AO Group
+            tambahItem("AO - Yuko(1)", "Shift+J")
+            tambahItem("AO - Wazaari(2)", "Shift+K")
+            tambahItem("AO - Ippon(3)", "Shift+L")
+            tambahItem("AO - SENSHU", "Shift+P")
+        Else
+            ' DAFTAR AKSI KATA (Sesuai Referensi Gambar)
+            tambahItem("Start-Close Scoreboard", "Control+B")
+            tambahItem("Timer Waiting Start-Stop", "Control+W")
+            tambahItem("Match Timer Start-Stop", "Control+T")
+            tambahItem("Match Timer Reset", "Control+R")
+            tambahItem("Hide-Show KATA Timer", "Control+H")
+            tambahItem("Show Winner", "Control+E")
+            tambahItem("Show Score to Scoreboard", "Control+K")
+            tambahItem("Assign Task to Judges", "Control+J")
+            tambahItem("Next Match", "Control+N")
+            tambahItem("Save Match Result", "Control+S")
+            tambahItem("Show Competitor 1 (AKA)", "Control+D1")
+            tambahItem("Show Competitor 2 (AO)", "Control+D2")
+            tambahItem("Show All Competitor", "Control+D3")
+        End If
     End Sub
 
     Private Sub tambahItem(action As String, shortcut As String)
@@ -207,8 +241,8 @@ Public Class Shortcut
         ' Pewarnaan teks (Merah untuk AKA, Biru untuk AO)
         Dim textColor As Color = Color.Black
         If Not String.IsNullOrEmpty(e.Item.Text) Then
-            If e.Item.Text.Contains("AKA") Then textColor = Color.Red
-            If e.Item.Text.Contains("AO") Then textColor = Color.Blue
+            If e.Item.Text.Contains("(AKA)") Or e.Item.Text.Contains("AKA -") Then textColor = Color.Red
+            If e.Item.Text.Contains("(AO)") Or e.Item.Text.Contains("AO -") Then textColor = Color.Blue
         End If
 
         If e.ColumnIndex = 1 Then textColor = Color.Black

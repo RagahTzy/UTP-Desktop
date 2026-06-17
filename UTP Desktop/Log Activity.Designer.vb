@@ -113,7 +113,7 @@ Partial Class Log_Activity
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         DataGridView1.BackgroundColor = SystemColors.ButtonFace
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {colCategories, colActivity, colActivityType, colDateTime, colMatchTime, colUserName})
+        DataGridView1.Columns.AddRange(New DataGridViewColumn() {colCategories, colActivity, colActivityType, colDateTime, colMatchTime})
         DataGridView1.GridColor = SystemColors.Window
         DataGridView1.Location = New Point(12, 253)
         DataGridView1.Name = "DataGridView1"
@@ -212,6 +212,8 @@ Partial Class Log_Activity
     Friend WithEvents colActivityType As DataGridViewTextBoxColumn
     Friend WithEvents colDateTime As DataGridViewTextBoxColumn
     Friend WithEvents colMatchTime As DataGridViewTextBoxColumn
-    Friend WithEvents colUserName As DataGridViewTextBoxColumn
+    Friend WithEvents btnExport As Button
+End Class
+tBoxColumn
     Friend WithEvents btnExport As Button
 End Class

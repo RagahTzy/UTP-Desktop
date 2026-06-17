@@ -105,7 +105,7 @@ Public Class Log_Activity
                 Using wb As New XLWorkbook()
                     Dim ws = wb.Worksheets.Add("Log Activity")
 
-                    Dim headers() As String = {"Categories", "Activity", "ActivityType", "Date Time", "MatchTime", "UserName"}
+                    Dim headers() As String = {"Categories", "Activity", "ActivityType", "Date Time", "MatchTime"}
                     For i = 0 To headers.Length - 1
                         ws.Cell(1, i + 1).Value = headers(i)
                         ws.Cell(1, i + 1).Style.Font.Bold = True

@@ -2,6 +2,8 @@
 
     Private Sub Dashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.CenterScreen
+        ' Pastikan table MatchResult sudah ada
+        ModGlobalConfig.InitMatchResultTable()
     End Sub
 
     ' ==================== Buka Competitor ====================
@@ -18,29 +20,25 @@
         Me.Hide()
     End Sub
 
-    ' ==================== Buka QR Generated (Kata menu) ====================
-    Private Sub OpenQrGenerated_Click(sender As Object, e As EventArgs) Handles btnManageJudge.Click, pnlKata.Click, pbKata.Click, lblKata.Click
-        Try
-            Dim frmQr As New QrGenerated()
-            frmQr.Show()
-            Me.Hide()
-        Catch ex As Exception
-            MessageBox.Show("Gagal membuka QR Generated: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
     ' ==================== Form Closed ====================
     Private Sub Dashboard_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         ' Perintah ini yang akan menghentikan seluruh aplikasi secara total
         Application.Exit()
     End Sub
 
-    Private Sub pnlMain_Paint(sender As Object, e As PaintEventArgs) Handles pnlMain.Paint
-        ' Biarkan kosong jika tidak ada custom paint
+    Private Sub OpenKata_Click(sender As Object, e As EventArgs) Handles pnlKata.Click, pbKata.Click
+        Dim Kata As New Kata()
+        Kata.Show()
+        Me.Hide()
     End Sub
 
-    Private Sub lblTatamiID_Click(sender As Object, e As EventArgs) Handles lblTatamiID.Click
-        ' Biarkan kosong jika tidak ada aksi saat diklik
+    ' ==================== Buka List of Match Result ====================
+    Private Sub OpenResult_Click(sender As Object, e As EventArgs) Handles pnlResult.Click, pbResult.Click, lblResult.Click
+        Dim frmResult As New ListofMatchResult()
+        frmResult.ShowDialog()
     End Sub
 
+    Private Sub lblWebsite_Click(sender As Object, e As EventArgs)
+
+    End Sub
 End Class

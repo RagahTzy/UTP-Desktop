@@ -925,4 +925,30 @@
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles BtnSaveWinPoint.Click
 
     End Sub
-End Class
+
+    Private Sub BtnSaveMatch_Click(sender As Object, e As EventArgs) Handles BtnSaveMatch.Click
+        Dim akaName As String = TxtAkaNameMain.Text
+        Dim akaTeam As String = TxtAkaTeam.Text
+        Dim aoName As String = TxtAoNameMain.Text
+        Dim aoTeam As String = TxtAoTeam.Text
+        Dim akaScore As String = LblAkaMainScore.Text
+        Dim aoScore As String = LblAoMainScore.Text
+        Dim category As String = TxtMatchDesc.Text
+        Dim tatami As String = NumTatami.Value.ToString()
+
+        Dim winner As String = "DRAW"
+        Dim akaS As Integer = 0
+        Dim aoS As Integer = 0
+        Integer.TryParse(akaScore, akaS)
+        Integer.TryParse(aoScore, aoS)
+
+        If akaS > aoS Then
+            winner = "AKA"
+        ElseIf aoS > akaS Then
+            winner = "AO"
+        End If
+
+        ModGlobalConfig.SaveMatchResult("KUMITE", akaName, akaTeam, aoName, aoTeam, akaScore, aoScore, winner, category, "", tatami)
+        MessageBox.Show("Match result saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+    End Class

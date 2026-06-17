@@ -25,9 +25,6 @@ Partial Class Dashboard
         lblTatamiVal = New Label()
         lblTatamiID = New Label()
         pnlMain = New Panel()
-        lblWebsite = New Label()
-        btnManageJudge = New Button()
-        btnKataServer = New Button()
         pnlStatusTable = New Panel()
         lblLocalStatus = New Label()
         lblYabinyaStatus = New Label()
@@ -44,6 +41,9 @@ Partial Class Dashboard
         pnlResult = New Panel()
         lblResult = New Label()
         pbResult = New PictureBox()
+        lblWebsite = New Label()
+        btnManageJudge = New Button()
+        btnKataServer = New Button()
         pnlHeader.SuspendLayout()
         CType(pbLogo, ComponentModel.ISupportInitialize).BeginInit()
         pnlMain.SuspendLayout()
@@ -86,7 +86,7 @@ Partial Class Dashboard
         ' 
         btnActivation.FlatAppearance.BorderColor = Color.Cyan
         btnActivation.FlatStyle = FlatStyle.Flat
-        btnActivation.Font = New Font("Segoe UI", 10.0F)
+        btnActivation.Font = New Font("Segoe UI", 10F)
         btnActivation.ForeColor = Color.Cyan
         btnActivation.Location = New Point(400, 55)
         btnActivation.Name = "btnActivation"
@@ -98,7 +98,7 @@ Partial Class Dashboard
         ' lblActivationReq
         ' 
         lblActivationReq.AutoSize = True
-        lblActivationReq.Font = New Font("Segoe UI Black", 12.0F, FontStyle.Bold)
+        lblActivationReq.Font = New Font("Segoe UI Black", 12F, FontStyle.Bold)
         lblActivationReq.ForeColor = Color.Red
         lblActivationReq.Location = New Point(400, 25)
         lblActivationReq.Name = "lblActivationReq"
@@ -109,7 +109,7 @@ Partial Class Dashboard
         ' lblTatamiVal
         ' 
         lblTatamiVal.AutoSize = True
-        lblTatamiVal.Font = New Font("Segoe UI Black", 20.0F, FontStyle.Bold)
+        lblTatamiVal.Font = New Font("Segoe UI Black", 20F, FontStyle.Bold)
         lblTatamiVal.ForeColor = Color.White
         lblTatamiVal.Location = New Point(25, 45)
         lblTatamiVal.Name = "lblTatamiVal"
@@ -120,7 +120,7 @@ Partial Class Dashboard
         ' lblTatamiID
         ' 
         lblTatamiID.AutoSize = True
-        lblTatamiID.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        lblTatamiID.Font = New Font("Segoe UI", 10F, FontStyle.Bold)
         lblTatamiID.ForeColor = Color.Yellow
         lblTatamiID.Location = New Point(30, 20)
         lblTatamiID.Name = "lblTatamiID"
@@ -145,10 +145,175 @@ Partial Class Dashboard
         pnlMain.Size = New Size(800, 431)
         pnlMain.TabIndex = 1
         ' 
+        ' pnlStatusTable
+        ' 
+        pnlStatusTable.BackColor = Color.White
+        pnlStatusTable.BorderStyle = BorderStyle.FixedSingle
+        pnlStatusTable.Controls.Add(lblLocalStatus)
+        pnlStatusTable.Controls.Add(lblYabinyaStatus)
+        pnlStatusTable.Controls.Add(lblStatusHeader)
+        pnlStatusTable.Location = New Point(280, 260)
+        pnlStatusTable.Name = "pnlStatusTable"
+        pnlStatusTable.Size = New Size(240, 90)
+        pnlStatusTable.TabIndex = 4
+        ' 
+        ' lblLocalStatus
+        ' 
+        lblLocalStatus.AutoSize = True
+        lblLocalStatus.Font = New Font("Segoe UI", 9F)
+        lblLocalStatus.Location = New Point(10, 60)
+        lblLocalStatus.Name = "lblLocalStatus"
+        lblLocalStatus.Size = New Size(157, 15)
+        lblLocalStatus.TabIndex = 2
+        lblLocalStatus.Text = "Local Server    [Unregistered]"
+        ' 
+        ' lblYabinyaStatus
+        ' 
+        lblYabinyaStatus.AutoSize = True
+        lblYabinyaStatus.Font = New Font("Segoe UI", 9F)
+        lblYabinyaStatus.Location = New Point(10, 35)
+        lblYabinyaStatus.Name = "lblYabinyaStatus"
+        lblYabinyaStatus.Size = New Size(153, 15)
+        lblYabinyaStatus.TabIndex = 1
+        lblYabinyaStatus.Text = "Karate Server [Unregistered]"
+        ' 
+        ' lblStatusHeader
+        ' 
+        lblStatusHeader.BackColor = Color.Crimson
+        lblStatusHeader.Dock = DockStyle.Top
+        lblStatusHeader.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblStatusHeader.ForeColor = Color.White
+        lblStatusHeader.Location = New Point(0, 0)
+        lblStatusHeader.Name = "lblStatusHeader"
+        lblStatusHeader.Size = New Size(238, 25)
+        lblStatusHeader.TabIndex = 0
+        lblStatusHeader.Text = "Kata Scoring Server Status"
+        lblStatusHeader.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' pnlKata
+        ' 
+        pnlKata.Controls.Add(lblKata)
+        pnlKata.Controls.Add(pbKata)
+        pnlKata.Location = New Point(550, 40)
+        pnlKata.Name = "pnlKata"
+        pnlKata.Size = New Size(160, 180)
+        pnlKata.TabIndex = 2
+        ' 
+        ' lblKata
+        ' 
+        lblKata.Dock = DockStyle.Bottom
+        lblKata.Font = New Font("Segoe UI Black", 12F, FontStyle.Bold)
+        lblKata.Location = New Point(0, 145)
+        lblKata.Name = "lblKata"
+        lblKata.Size = New Size(160, 35)
+        lblKata.TabIndex = 1
+        lblKata.Text = "KATA"
+        lblKata.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' pbKata
+        ' 
+        pbKata.Image = CType(resources.GetObject("pbKata.Image"), Image)
+        pbKata.Location = New Point(15, 10)
+        pbKata.Name = "pbKata"
+        pbKata.Size = New Size(130, 130)
+        pbKata.SizeMode = PictureBoxSizeMode.Zoom
+        pbKata.TabIndex = 0
+        pbKata.TabStop = False
+        ' 
+        ' pnlKumite
+        ' 
+        pnlKumite.Controls.Add(lblKumite)
+        pnlKumite.Controls.Add(pbKumite)
+        pnlKumite.Location = New Point(320, 40)
+        pnlKumite.Name = "pnlKumite"
+        pnlKumite.Size = New Size(160, 180)
+        pnlKumite.TabIndex = 1
+        ' 
+        ' lblKumite
+        ' 
+        lblKumite.Dock = DockStyle.Bottom
+        lblKumite.Font = New Font("Segoe UI Black", 12F, FontStyle.Bold)
+        lblKumite.Location = New Point(0, 145)
+        lblKumite.Name = "lblKumite"
+        lblKumite.Size = New Size(160, 35)
+        lblKumite.TabIndex = 1
+        lblKumite.Text = "KUMITE"
+        lblKumite.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' pbKumite
+        ' 
+        pbKumite.Image = CType(resources.GetObject("pbKumite.Image"), Image)
+        pbKumite.Location = New Point(15, 10)
+        pbKumite.Name = "pbKumite"
+        pbKumite.Size = New Size(130, 130)
+        pbKumite.SizeMode = PictureBoxSizeMode.Zoom
+        pbKumite.TabIndex = 0
+        pbKumite.TabStop = False
+        ' 
+        ' pnlCompetitors
+        ' 
+        pnlCompetitors.Controls.Add(lblCompetitors)
+        pnlCompetitors.Controls.Add(pbCompetitors)
+        pnlCompetitors.Location = New Point(90, 40)
+        pnlCompetitors.Name = "pnlCompetitors"
+        pnlCompetitors.Size = New Size(160, 180)
+        pnlCompetitors.TabIndex = 0
+        ' 
+        ' lblCompetitors
+        ' 
+        lblCompetitors.Dock = DockStyle.Bottom
+        lblCompetitors.Font = New Font("Segoe UI Black", 12F, FontStyle.Bold)
+        lblCompetitors.Location = New Point(0, 145)
+        lblCompetitors.Name = "lblCompetitors"
+        lblCompetitors.Size = New Size(160, 35)
+        lblCompetitors.TabIndex = 1
+        lblCompetitors.Text = "Competitors"
+        lblCompetitors.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' pbCompetitors
+        ' 
+        pbCompetitors.Image = CType(resources.GetObject("pbCompetitors.Image"), Image)
+        pbCompetitors.Location = New Point(15, 10)
+        pbCompetitors.Name = "pbCompetitors"
+        pbCompetitors.Size = New Size(130, 130)
+        pbCompetitors.SizeMode = PictureBoxSizeMode.Zoom
+        pbCompetitors.TabIndex = 0
+        pbCompetitors.TabStop = False
+        ' 
+        ' pnlResult
+        ' 
+        pnlResult.Controls.Add(lblResult)
+        pnlResult.Controls.Add(pbResult)
+        pnlResult.Location = New Point(90, 240)
+        pnlResult.Name = "pnlResult"
+        pnlResult.Size = New Size(160, 150)
+        pnlResult.TabIndex = 3
+        ' 
+        ' lblResult
+        ' 
+        lblResult.Dock = DockStyle.Bottom
+        lblResult.Font = New Font("Segoe UI Black", 10F, FontStyle.Bold)
+        lblResult.Location = New Point(0, 120)
+        lblResult.Name = "lblResult"
+        lblResult.Size = New Size(160, 30)
+        lblResult.TabIndex = 1
+        lblResult.Text = "List of Match Result"
+        lblResult.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' pbResult
+        ' 
+        pbResult.Image = CType(resources.GetObject("pbResult.Image"), Image)
+        pbResult.Location = New Point(30, 10)
+        pbResult.Name = "pbResult"
+        pbResult.Size = New Size(100, 100)
+        pbResult.SizeMode = PictureBoxSizeMode.Zoom
+        pbResult.TabIndex = 0
+        pbResult.TabStop = False
+        ' 
         ' lblWebsite
         ' 
         lblWebsite.Dock = DockStyle.Bottom
-        lblWebsite.Font = New Font("Segoe UI", 9.0F)
+        lblWebsite.Font = New Font("Segoe UI", 9F)
         lblWebsite.ForeColor = Color.DimGray
         lblWebsite.Location = New Point(0, 406)
         lblWebsite.Name = "lblWebsite"
@@ -183,172 +348,9 @@ Partial Class Dashboard
         btnKataServer.Text = "Kata Scoring Server"
         btnKataServer.UseVisualStyleBackColor = False
         ' 
-        ' pnlStatusTable
-        ' 
-        pnlStatusTable.BackColor = Color.White
-        pnlStatusTable.BorderStyle = BorderStyle.FixedSingle
-        pnlStatusTable.Controls.Add(lblLocalStatus)
-        pnlStatusTable.Controls.Add(lblYabinyaStatus)
-        pnlStatusTable.Controls.Add(lblStatusHeader)
-        pnlStatusTable.Location = New Point(280, 260)
-        pnlStatusTable.Name = "pnlStatusTable"
-        pnlStatusTable.Size = New Size(240, 90)
-        pnlStatusTable.TabIndex = 4
-        ' 
-        ' lblLocalStatus
-        ' 
-        lblLocalStatus.AutoSize = True
-        lblLocalStatus.Font = New Font("Segoe UI", 9.0F)
-        lblLocalStatus.Location = New Point(10, 60)
-        lblLocalStatus.Name = "lblLocalStatus"
-        lblLocalStatus.Size = New Size(157, 15)
-        lblLocalStatus.TabIndex = 2
-        lblLocalStatus.Text = "Local Server    [Unregistered]"
-        ' 
-        ' lblYabinyaStatus
-        ' 
-        lblYabinyaStatus.AutoSize = True
-        lblYabinyaStatus.Font = New Font("Segoe UI", 9.0F)
-        lblYabinyaStatus.Location = New Point(10, 35)
-        lblYabinyaStatus.Name = "lblYabinyaStatus"
-        lblYabinyaStatus.Size = New Size(161, 15)
-        lblYabinyaStatus.TabIndex = 1
-        lblYabinyaStatus.Text = "Yabinya Server [Unregistered]"
-        ' 
-        ' lblStatusHeader
-        ' 
-        lblStatusHeader.BackColor = Color.Crimson
-        lblStatusHeader.Dock = DockStyle.Top
-        lblStatusHeader.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        lblStatusHeader.ForeColor = Color.White
-        lblStatusHeader.Location = New Point(0, 0)
-        lblStatusHeader.Name = "lblStatusHeader"
-        lblStatusHeader.Size = New Size(238, 25)
-        lblStatusHeader.TabIndex = 0
-        lblStatusHeader.Text = "Kata Scoring Server Status"
-        lblStatusHeader.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' pnlKata
-        ' 
-        pnlKata.Controls.Add(lblKata)
-        pnlKata.Controls.Add(pbKata)
-        pnlKata.Location = New Point(550, 40)
-        pnlKata.Name = "pnlKata"
-        pnlKata.Size = New Size(160, 180)
-        pnlKata.TabIndex = 2
-        ' 
-        ' lblKata
-        ' 
-        lblKata.Dock = DockStyle.Bottom
-        lblKata.Font = New Font("Segoe UI Black", 12.0F, FontStyle.Bold)
-        lblKata.Location = New Point(0, 145)
-        lblKata.Name = "lblKata"
-        lblKata.Size = New Size(160, 35)
-        lblKata.TabIndex = 1
-        lblKata.Text = "KATA"
-        lblKata.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' pbKata
-        ' 
-        pbKata.Location = New Point(15, 10)
-        pbKata.Name = "pbKata"
-        pbKata.Size = New Size(130, 130)
-        pbKata.SizeMode = PictureBoxSizeMode.Zoom
-        pbKata.TabIndex = 0
-        pbKata.TabStop = False
-        ' 
-        ' pnlKumite
-        ' 
-        pnlKumite.Controls.Add(lblKumite)
-        pnlKumite.Controls.Add(pbKumite)
-        pnlKumite.Location = New Point(320, 40)
-        pnlKumite.Name = "pnlKumite"
-        pnlKumite.Size = New Size(160, 180)
-        pnlKumite.TabIndex = 1
-        ' 
-        ' lblKumite
-        ' 
-        lblKumite.Dock = DockStyle.Bottom
-        lblKumite.Font = New Font("Segoe UI Black", 12.0F, FontStyle.Bold)
-        lblKumite.Location = New Point(0, 145)
-        lblKumite.Name = "lblKumite"
-        lblKumite.Size = New Size(160, 35)
-        lblKumite.TabIndex = 1
-        lblKumite.Text = "KUMITE"
-        lblKumite.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' pbKumite
-        ' 
-        pbKumite.Image = CType(resources.GetObject("pbKumite.Image"), Image)
-        pbKumite.Location = New Point(15, 10)
-        pbKumite.Name = "pbKumite"
-        pbKumite.Size = New Size(130, 130)
-        pbKumite.SizeMode = PictureBoxSizeMode.Zoom
-        pbKumite.TabIndex = 0
-        pbKumite.TabStop = False
-        ' 
-        ' pnlCompetitors
-        ' 
-        pnlCompetitors.Controls.Add(lblCompetitors)
-        pnlCompetitors.Controls.Add(pbCompetitors)
-        pnlCompetitors.Location = New Point(90, 40)
-        pnlCompetitors.Name = "pnlCompetitors"
-        pnlCompetitors.Size = New Size(160, 180)
-        pnlCompetitors.TabIndex = 0
-        ' 
-        ' lblCompetitors
-        ' 
-        lblCompetitors.Dock = DockStyle.Bottom
-        lblCompetitors.Font = New Font("Segoe UI Black", 12.0F, FontStyle.Bold)
-        lblCompetitors.Location = New Point(0, 145)
-        lblCompetitors.Name = "lblCompetitors"
-        lblCompetitors.Size = New Size(160, 35)
-        lblCompetitors.TabIndex = 1
-        lblCompetitors.Text = "Competitors"
-        lblCompetitors.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' pbCompetitors
-        ' 
-        pbCompetitors.Image = CType(resources.GetObject("pbCompetitors.Image"), Image)
-        pbCompetitors.Location = New Point(15, 10)
-        pbCompetitors.Name = "pbCompetitors"
-        pbCompetitors.Size = New Size(130, 130)
-        pbCompetitors.SizeMode = PictureBoxSizeMode.Zoom
-        pbCompetitors.TabIndex = 0
-        pbCompetitors.TabStop = False
-        ' 
-        ' pnlResult
-        ' 
-        pnlResult.Controls.Add(lblResult)
-        pnlResult.Controls.Add(pbResult)
-        pnlResult.Location = New Point(90, 240)
-        pnlResult.Name = "pnlResult"
-        pnlResult.Size = New Size(160, 150)
-        pnlResult.TabIndex = 3
-        ' 
-        ' lblResult
-        ' 
-        lblResult.Dock = DockStyle.Bottom
-        lblResult.Font = New Font("Segoe UI Black", 10.0F, FontStyle.Bold)
-        lblResult.Location = New Point(0, 120)
-        lblResult.Name = "lblResult"
-        lblResult.Size = New Size(160, 30)
-        lblResult.TabIndex = 1
-        lblResult.Text = "List of Match Result"
-        lblResult.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' pbResult
-        ' 
-        pbResult.Location = New Point(30, 10)
-        pbResult.Name = "pbResult"
-        pbResult.Size = New Size(100, 100)
-        pbResult.SizeMode = PictureBoxSizeMode.Zoom
-        pbResult.TabIndex = 0
-        pbResult.TabStop = False
-        ' 
         ' Dashboard
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 561)
         Controls.Add(pnlMain)
@@ -399,7 +401,7 @@ Partial Class Dashboard
     Friend WithEvents lblStatusHeader As Label
     Friend WithEvents lblYabinyaStatus As Label
     Friend WithEvents lblLocalStatus As Label
-    Friend WithEvents btnKataServer As Button
-    Friend WithEvents btnManageJudge As Button
     Friend WithEvents lblWebsite As Label
+    Friend WithEvents btnManageJudge As Button
+    Friend WithEvents btnKataServer As Button
 End Class

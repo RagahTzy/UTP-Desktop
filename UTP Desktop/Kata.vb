@@ -954,4 +954,37 @@ Public Class Kata
         End If
     End Function
 
+    Private Sub BtnSaveMatch_Click(sender As Object, e As EventArgs) Handles BtnSaveMatch.Click
+        Dim akaName As String = TxtAkaName.Text
+        Dim akaTeam As String = TxtAkaTeam.Text
+        Dim aoName As String = TxtAoName.Text
+        Dim aoTeam As String = TxtAoTeam.Text
+        Dim akaScore As String = GetAkaScore().ToString()
+        Dim aoScore As String = GetAoScore().ToString()
+        Dim category As String = TxtKataCategoryDetail.Text
+        Dim tatami As String = NumTatamiRight.Value.ToString()
+        Dim winner As String = lastWinnerSide
+
+        If String.IsNullOrEmpty(winner) Then
+            Dim akaS As Double = 0
+            Dim aoS As Double = 0
+            Double.TryParse(akaScore, akaS)
+            Double.TryParse(aoScore, aoS)
+            If akaS > aoS Then
+                winner = "AKA"
+            ElseIf aoS > akaS Then
+                winner = "AO"
+            Else
+                winner = "DRAW"
+            End If
+        End If
+
+        ModGlobalConfig.SaveMatchResult("KATA", akaName, akaTeam, aoName, aoTeam, akaScore, aoScore, winner, category, "", tatami)
+        MessageBox.Show("Match result saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+
+    Private Sub Kata_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Dashboard.Show()
+    End Sub
+
 End Class

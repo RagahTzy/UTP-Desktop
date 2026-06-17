@@ -109,7 +109,7 @@ Public Class Log_Activity
                     For i = 0 To headers.Length - 1
                         ws.Cell(1, i + 1).Value = headers(i)
                         ws.Cell(1, i + 1).Style.Font.Bold = True
-                        ws.Cell(1, i + 1).Style.Fill.BackgroundColor = XLColor.LightBlue
+                        ws.Cell(1, i + 1).Style.Fill.BackgroundColor = XLColor.FromArgb(173, 216, 230)
                     Next
 
                     For row = 0 To DataGridView1.Rows.Count - 1
